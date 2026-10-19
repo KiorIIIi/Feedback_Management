@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="503.844" height="147.237" viewBox="0 0 503.844 147.237" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="App" d="M0 116.437C17.9944 116.437 27.3515 82.837 46.7855 90.3037C66.2195 97.7703 79.1755 119.237 100.769 84.7037C122.362 50.1703 129.56 68.837 151.153 77.237C172.747 85.637 179.944 14.7037 201.538 31.5037C223.131 48.3037 230.329 84.7037 251.922 62.3037C273.515 39.9037 280.713 49.237 302.306 55.7703C323.9 62.3037 334.696 6.30367 352.691 23.1037C370.685 39.9037 381.482 39.9037 403.075 27.7703C424.668 15.637 435.465 45.5037 453.46 29.637C471.454 13.7703 485.85 -5.82966 503.844 1.637V147.237H0V116.437Z" fill="url(#paint0_linear_0_60)"/>
+<defs>
+<linearGradient id="paint0_linear_0_60" x1="0" y1="-3.81349e-08" x2="0" y2="147.237" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00994F" stop-opacity="0.16"/>
+<stop offset="1" stop-color="#00994F" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

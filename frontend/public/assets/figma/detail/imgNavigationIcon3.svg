@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Navigation icon">
+<mask id="stroke0_0_35" fill="white">
+<path d="M10 2.5L12.3343 7.33223L17.67 8.08206L13.835 11.8312L14.7521 17.08L10 14.5806L5.24793 17.08L6.165 11.8312L2.33 8.08206L7.66565 7.33223L10 2.5Z"/>
+</mask>
+<path id="Glyph" d="M10 2.5L12.3343 7.33223L17.67 8.08206L13.835 11.8312L14.7521 17.08L10 14.5806L5.24793 17.08L6.165 11.8312L2.33 8.08206L7.66565 7.33223L10 2.5Z" stroke-width="2.76" stroke-linecap="round" stroke="#43584C" mask="url(#stroke0_0_35)"/>
+</g>
+</svg>

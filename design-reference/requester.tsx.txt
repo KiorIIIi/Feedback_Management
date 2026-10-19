@@ -1,0 +1,525 @@
+const imgClsuLogo = "https://www.figma.com/api/mcp/asset/384ed358-5dd6-4dae-aebf-5d629413e61f.png";
+const imgLayoutDashboard = "https://www.figma.com/api/mcp/asset/ba9422f2-5636-40d8-8feb-be46e461d86f.svg";
+const imgFiles = "https://www.figma.com/api/mcp/asset/42538240-ecf7-4248-9fff-63d9ef0d46be.svg";
+const imgMessageSquare = "https://www.figma.com/api/mcp/asset/ee065315-f0aa-4b06-8deb-d1189ecd3115.svg";
+const imgBell = "https://www.figma.com/api/mcp/asset/65b1f376-7905-425e-910d-adfacabebd60.svg";
+const imgLogOut = "https://www.figma.com/api/mcp/asset/4509c862-83b2-4f75-aaaa-3420ec7944e1.svg";
+const imgGraduationCap = "https://www.figma.com/api/mcp/asset/8ee7fe74-ab1d-48cb-9fc3-cc62939c6026.svg";
+const imgBell1 = "https://www.figma.com/api/mcp/asset/f4e013bf-4e71-4732-841d-ee59d5d44af8.svg";
+const imgUnreadIndicator = "https://www.figma.com/api/mcp/asset/9273123b-9e44-4a43-9e2a-4b2605311f7f.svg";
+const imgMessageSquare1 = "https://www.figma.com/api/mcp/asset/9abd160e-c0ca-4ce2-97ba-dd8f85899f82.svg";
+const imgPlus = "https://www.figma.com/api/mcp/asset/cd8eff6b-4bd6-4836-ad6e-2f405e04617f.svg";
+const imgFiles1 = "https://www.figma.com/api/mcp/asset/edff7c48-c7c2-4616-9ec6-5a6495ebe053.svg";
+const imgClock3 = "https://www.figma.com/api/mcp/asset/62751907-930e-4520-a5da-0f6c8405f806.svg";
+const imgCircleCheck = "https://www.figma.com/api/mcp/asset/dd6328f4-2090-458f-8276-f17f83b6865f.svg";
+const imgStar = "https://www.figma.com/api/mcp/asset/307bbb49-2c46-4832-8485-aab93aa0daf7.svg";
+const imgMessageSquareText = "https://www.figma.com/api/mcp/asset/cf222a02-9b64-4ceb-b060-4f93b4031bc6.svg";
+const imgArrowRight = "https://www.figma.com/api/mcp/asset/5239318a-0068-4d16-a3ea-d8613117e52e.svg";
+const imgClock4 = "https://www.figma.com/api/mcp/asset/5545525d-bb29-4043-a366-0bdb8665187b.svg";
+const imgMessageSquareText1 = "https://www.figma.com/api/mcp/asset/27488bdd-b686-40a8-b3ce-e302f44b09ae.svg";
+const imgLoaderCircle = "https://www.figma.com/api/mcp/asset/1d316861-6ed4-4574-a376-20b73761a5b2.svg";
+const imgCircleCheck1 = "https://www.figma.com/api/mcp/asset/6b789895-b4ba-4b32-9d86-8cd4a090d962.svg";
+const imgLockKeyhole = "https://www.figma.com/api/mcp/asset/e57dfbb4-a9b1-43bc-b1aa-102d1ebb2dc1.svg";
+const imgStar1 = "https://www.figma.com/api/mcp/asset/5100a902-96fc-40b9-bbae-40e54fa4ef04.svg";
+const imgMessageSquareText2 = "https://www.figma.com/api/mcp/asset/7f2cb61b-a158-4232-8307-81d922ea2939.svg";
+const imgCheck = "https://www.figma.com/api/mcp/asset/18b5a250-5957-4606-90df-fc3e203b7184.svg";
+const imgWrench = "https://www.figma.com/api/mcp/asset/9ea1843b-e36a-4cc1-a801-aa3a55717975.svg";
+const imgCircleHelp = "https://www.figma.com/api/mcp/asset/413c2dd8-4c43-49c1-9f95-50551f5e75d1.svg";
+const imgArrowUpRight = "https://www.figma.com/api/mcp/asset/f945d575-9dab-4f76-82a1-5075b679e6b2.svg";
+
+export default function YourDashboard() {
+  return (
+    <div className="bg-[#f5f8f6] content-stretch flex flex-col items-start relative size-full" data-node-id="26:22477" data-name="Your dashboard">
+      <div className="bg-white border-[#dce5df] border-b border-solid content-stretch flex h-[100px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="27:1041" data-name="Requester navigation">
+        <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-node-id="27:1042" data-name="University identity">
+          <div className="content-stretch flex h-[46px] items-center justify-center relative rounded-[8px] shrink-0 w-[44px]" data-node-id="27:1043" data-name="CLSU university seal">
+            <div className="relative shrink-0 size-[44px]" data-node-id="61:74" data-name="CLSU logo">
+              <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgClsuLogo} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Plus_Jakarta_Sans:Bold'] font-bold gap-[5px] items-start leading-[normal] relative shrink-0 whitespace-nowrap" data-node-id="27:1045" data-name="Portal identity">
+            <p className="relative shrink-0 text-[#008447] text-[10px]" data-node-id="27:1046">
+              CENTRAL LUZON STATE UNIVERSITY
+            </p>
+            <p className="relative shrink-0 text-[#005b30] text-[18px]" data-node-id="27:1047">
+              MISO Service Portal
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex items-center justify-between relative shrink-0 w-[588px]" data-node-id="27:1048" data-name="Portal links">
+          <div className="bg-[#12553d] content-stretch flex gap-[10px] h-[44px] items-center px-[12px] relative rounded-[8px] shrink-0" data-node-id="27:1069" data-name="Navigation item">
+            <div className="relative shrink-0 size-[18px]" data-node-id="27:1070" data-name="layout-dashboard">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLayoutDashboard} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[13px] text-white whitespace-nowrap" data-node-id="27:1072">
+              Dashboard
+            </p>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:1073">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:1074" data-name="files">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFiles} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:1076">
+                My requests
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:1077">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:1078" data-name="message-square">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquare} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:1080">
+                Feedback history
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:1081">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:1082" data-name="bell">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBell} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:1084">
+                Notifications
+              </p>
+              <div className="bg-[#eaf3ed] content-stretch flex items-center justify-center relative rounded-[5px] shrink-0 size-[20px]" data-node-id="27:1085" data-name="Unread count">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="27:1086">
+                  4
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[10px] h-[40px] items-center relative shrink-0 w-[201px]" data-node-id="27:1087" data-name="Requester account">
+          <div className="bg-[#faf4e4] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[34px]" data-node-id="27:1088" data-name="Avatar">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#795b16] text-[12px] whitespace-nowrap" data-node-id="27:1089">
+              AS
+            </p>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[3px] items-start leading-[normal] relative shrink-0 text-[12px] w-[131px] whitespace-nowrap" data-node-id="27:1090" data-name="Profile">
+            <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029]" data-node-id="27:1091">
+              Andrea Santos
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169]" data-node-id="27:1092">
+              Faculty · Engineering
+            </p>
+          </div>
+          <div className="relative shrink-0 size-[16px]" data-node-id="27:1093" data-name="log-out">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLogOut} />
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex h-[48px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="26:22517" data-name="Utility header">
+        <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="26:22518" data-name="Portal context">
+          <div className="relative shrink-0 size-[20px]" data-node-id="26:23930" data-name="graduation-cap">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGraduationCap} />
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:22520">
+            Requester portal
+          </p>
+          <div className="bg-[#dee5df] h-[18px] relative shrink-0 w-px" data-node-id="26:22521" data-name="Divider" />
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22522">
+            Your records, in one place
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[20px] items-center relative shrink-0 w-[199px]" data-node-id="26:22523" data-name="Header actions">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22524">
+            Friday, 16 October 2026
+          </p>
+          <div className="relative shrink-0 size-[18px]" data-node-id="26:23933" data-name="bell">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBell1} />
+          </div>
+          <div className="relative shrink-0 size-[6px]" data-node-id="26:22526" data-name="Unread indicator">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgUnreadIndicator} />
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex flex-col gap-[24px] items-start pb-[40px] pt-[32px] px-[64px] relative shrink-0 w-[1440px]" data-node-id="26:22527" data-name="Main content">
+        <div className="content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-[1312px]" data-node-id="26:22528" data-name="Page introduction">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22529">
+            My workspace / Dashboard
+          </p>
+          <div className="content-stretch flex gap-[24px] items-center relative shrink-0 w-[1312px]" data-node-id="26:22530" data-name="Title and action">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[40px] relative shrink-0 text-[#1e3029] text-[32px] w-[971px]" data-node-id="26:22531">
+              Good morning, Andrea.
+            </p>
+            <div className="content-stretch flex gap-[10px] items-start relative shrink-0 w-[317px]" data-node-id="26:22532" data-name="Quick actions">
+              <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[8px] h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[164px]" data-node-id="26:22533" data-name="Action">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23936" data-name="message-square">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquare1} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] whitespace-nowrap" data-node-id="26:22535">
+                  Share feedback
+                </p>
+              </div>
+              <div className="bg-[#12553d] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[143px]" data-node-id="26:22536" data-name="Action">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23939" data-name="plus">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgPlus} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[14px] text-white whitespace-nowrap" data-node-id="26:22538">
+                  New request
+                </p>
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[14px] w-[1312px]" data-node-id="26:22539">
+            Here’s where your service requests stand. We’ll keep you in the loop.
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[16px] items-start relative shrink-0 w-[1312px]" data-node-id="26:22540" data-name="Personal request overview">
+          <div className="bg-white border border-[#dee5df] border-solid content-stretch flex flex-col gap-[16px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[316px]" data-node-id="26:22541" data-name="Personal metric">
+            <div className="content-stretch flex items-center justify-between relative shrink-0 w-[268px]" data-node-id="26:22542" data-name="Metric label">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22543">
+                My requests
+              </p>
+              <div className="relative shrink-0 size-[17px]" data-node-id="26:23942" data-name="files">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFiles1} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[32px] whitespace-nowrap" data-node-id="26:22545">
+              07
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22546">
+              All your submissions
+            </p>
+          </div>
+          <div className="bg-white border border-[#dee5df] border-solid content-stretch flex flex-col gap-[16px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[316px]" data-node-id="26:22547" data-name="Personal metric">
+            <div className="content-stretch flex items-center justify-between relative shrink-0 w-[268px]" data-node-id="26:22548" data-name="Metric label">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22549">
+                Open requests
+              </p>
+              <div className="relative shrink-0 size-[17px]" data-node-id="26:23945" data-name="clock-3">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgClock3} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[32px] whitespace-nowrap" data-node-id="26:22551">
+              05
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22552">
+              Across active statuses
+            </p>
+          </div>
+          <div className="bg-white border border-[#dee5df] border-solid content-stretch flex flex-col gap-[16px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[316px]" data-node-id="26:22553" data-name="Personal metric">
+            <div className="content-stretch flex items-center justify-between relative shrink-0 w-[268px]" data-node-id="26:22554" data-name="Metric label">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22555">
+                Completed
+              </p>
+              <div className="relative shrink-0 size-[17px]" data-node-id="26:23948" data-name="circle-check">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircleCheck} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[32px] whitespace-nowrap" data-node-id="26:22557">
+              02
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22558">
+              Services delivered
+            </p>
+          </div>
+          <div className="bg-white border border-[#dee5df] border-solid content-stretch flex flex-col gap-[16px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[316px]" data-node-id="26:22559" data-name="Personal metric">
+            <div className="content-stretch flex items-center justify-between relative shrink-0 w-[268px]" data-node-id="26:22560" data-name="Metric label">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22561">
+                Awaiting my rating
+              </p>
+              <div className="relative shrink-0 size-[17px]" data-node-id="26:23951" data-name="star">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[32px] whitespace-nowrap" data-node-id="26:22563">
+              01
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22564">
+              Share your experience
+            </p>
+          </div>
+        </div>
+        <div className="bg-[#fff3dd] border border-[#eddebd] border-solid content-stretch flex gap-[16px] items-center p-[20px] relative rounded-[12px] shrink-0 w-[1312px]" data-node-id="26:22565" data-name="Clarification callout">
+          <div className="relative shrink-0 size-[24px]" data-node-id="26:23954" data-name="message-square-text">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquareText} />
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[1044px]" data-node-id="26:22567" data-name="Clarification summary">
+            <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#8a581b] text-[14px] whitespace-nowrap" data-node-id="26:22568">
+              A few more details will help us move forward
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[1044px]" data-node-id="26:22569">
+              FMS 2026 000126 · MISO needs the event date, venue, and equipment requirements.
+            </p>
+          </div>
+          <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[8px] h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[172px]" data-node-id="26:22570" data-name="Action">
+            <div className="relative shrink-0 size-[16px]" data-node-id="26:23957" data-name="arrow-right">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22572">
+              Provide clarification
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-[1312px]" data-node-id="26:22573" data-name="Request overview and updates">
+          <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-[936px]" data-node-id="26:22574" data-name="Recent request column">
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start relative rounded-[12px] shrink-0 w-[936px]" data-node-id="26:22575" data-name="Panel">
+              <div className="content-stretch flex items-center justify-between pt-[24px] px-[24px] relative shrink-0 w-[936px]" data-node-id="26:22576" data-name="Panel header">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[766px]" data-node-id="26:22577">
+                  Recent requests
+                </p>
+                <div className="bg-[rgba(255,255,255,0)] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[36px] items-center justify-center relative rounded-[8px] shrink-0 w-[122px]" data-node-id="26:22578" data-name="Action">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="26:23960" data-name="arrow-right">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22580">
+                    View all requests
+                  </p>
+                </div>
+              </div>
+              <div className="[word-break:break-word] bg-[#f8faf8] content-stretch flex font-['Plus_Jakarta_Sans:SemiBold'] font-semibold gap-[16px] items-start leading-[normal] px-[24px] py-[12px] relative shrink-0 text-[#617169] text-[10px] w-[936px]" data-node-id="26:22581" data-name="Table header">
+                <p className="relative shrink-0 w-[637px]" data-node-id="26:22582">
+                  REQUEST / SERVICE
+                </p>
+                <p className="relative shrink-0 w-[130px]" data-node-id="26:22583">
+                  STATUS
+                </p>
+                <p className="relative shrink-0 w-[89px]" data-node-id="26:22584">
+                  SUBMITTED
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[936px]" data-node-id="26:22585" data-name="Recent records">
+                <div className="border-[#dee5df] border-b border-solid content-stretch flex gap-[16px] items-center px-[24px] py-[17px] relative shrink-0 w-[936px]" data-node-id="26:22586" data-name="Request row">
+                  <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[637px]" data-node-id="26:22587" data-name="Request">
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="26:22588">
+                      FMS 2026 000127
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029] text-[13px] w-[637px]" data-node-id="26:22589">
+                      Leaking faucet in faculty room
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[12px] w-[637px]" data-node-id="26:22590">
+                      Plumbing
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[130px]" data-node-id="26:22591" data-name="Status and action">
+                    <div className="bg-[#faf4e4] content-stretch flex gap-[5px] items-center px-[9px] py-[6px] relative rounded-[6px] shrink-0" data-node-id="26:22592" data-name="Service status">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:23963" data-name="clock-3">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgClock4} />
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#795b16] text-[12px] whitespace-nowrap" data-node-id="26:22594">
+                        Pending
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22595">
+                      View request →
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] w-[89px]" data-node-id="26:22596">
+                    16 Oct 2026
+                  </p>
+                </div>
+                <div className="border-[#dee5df] border-b border-solid content-stretch flex gap-[16px] items-center px-[24px] py-[17px] relative shrink-0 w-[936px]" data-node-id="26:22597" data-name="Request row">
+                  <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[637px]" data-node-id="26:22598" data-name="Request">
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="26:22599">
+                      FMS 2026 000126
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029] text-[13px] w-[637px]" data-node-id="26:22600">
+                      Event technical support
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[12px] w-[637px]" data-node-id="26:22601">
+                      Technical/event support
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[130px]" data-node-id="26:22602" data-name="Status and action">
+                    <div className="bg-[#fff3dd] content-stretch flex gap-[5px] items-center px-[9px] py-[6px] relative rounded-[6px] shrink-0" data-node-id="26:22603" data-name="Service status">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:23966" data-name="message-square-text">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquareText1} />
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#8a581b] text-[12px] whitespace-nowrap" data-node-id="26:22605">
+                        For Clarification
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22606">
+                      Clarify request →
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] w-[89px]" data-node-id="26:22607">
+                    16 Oct 2026
+                  </p>
+                </div>
+                <div className="border-[#dee5df] border-b border-solid content-stretch flex gap-[16px] items-center px-[24px] py-[17px] relative shrink-0 w-[936px]" data-node-id="26:22608" data-name="Request row">
+                  <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[637px]" data-node-id="26:22609" data-name="Request">
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="26:22610">
+                      FMS 2026 000125
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029] text-[13px] w-[637px]" data-node-id="26:22611">
+                      Wi-Fi connectivity issue
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[12px] w-[637px]" data-node-id="26:22612">
+                      Wi-Fi/IDF troubleshooting
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[130px]" data-node-id="26:22613" data-name="Status and action">
+                    <div className="bg-[#edf3fa] content-stretch flex gap-[5px] items-center px-[9px] py-[6px] relative rounded-[6px] shrink-0" data-node-id="26:22614" data-name="Service status">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:23969" data-name="loader-circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLoaderCircle} />
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#295e8f] text-[12px] whitespace-nowrap" data-node-id="26:22616">
+                        In Progress
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22617">
+                      Track request →
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] w-[89px]" data-node-id="26:22618">
+                    15 Oct 2026
+                  </p>
+                </div>
+                <div className="border-[#dee5df] border-b border-solid content-stretch flex gap-[16px] items-center px-[24px] py-[17px] relative shrink-0 w-[936px]" data-node-id="26:22619" data-name="Request row">
+                  <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[637px]" data-node-id="26:22620" data-name="Request">
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="26:22621">
+                      FMS 2026 000119
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029] text-[13px] w-[637px]" data-node-id="26:22622">
+                      Projector maintenance
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[12px] w-[637px]" data-node-id="26:22623">
+                      Equipment maintenance
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[130px]" data-node-id="26:22624" data-name="Status and action">
+                    <div className="bg-[#eaf3ed] content-stretch flex gap-[5px] items-center px-[9px] py-[6px] relative rounded-[6px] shrink-0" data-node-id="26:22625" data-name="Service status">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:23972" data-name="circle-check">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircleCheck1} />
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22627">
+                        Completed
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22628">
+                      Rate service →
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] w-[89px]" data-node-id="26:22629">
+                    12 Oct 2026
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-[936px]" data-node-id="26:22630" data-name="Private record assurance">
+              <div className="relative shrink-0 size-[14px]" data-node-id="26:23975" data-name="lock-keyhole">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLockKeyhole} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[914px]" data-node-id="26:22632">
+                This overview includes only requests submitted by you.
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-[352px]" data-node-id="26:22633" data-name="Action and activity column">
+            <div className="bg-[#12553d] content-stretch flex flex-col gap-[15px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:22634" data-name="Service rating reminder">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-[304px]" data-node-id="26:22635" data-name="Rating label">
+                <div className="relative shrink-0 size-[18px]" data-node-id="26:23978" data-name="star">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar1} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#e6c675] text-[10px] whitespace-nowrap" data-node-id="26:22637">
+                  YOUR FEEDBACK MATTERS
+                </p>
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.3] relative shrink-0 text-[20px] text-white w-[304px]" data-node-id="26:22638">
+                How was your service?
+              </p>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.6] relative shrink-0 text-[#c0d6c9] text-[13px] w-[304px]" data-node-id="26:22639">
+                Your projector maintenance is complete. Tell us how we did.
+              </p>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#c0d6c9] text-[12px] whitespace-nowrap" data-node-id="26:22640">
+                FMS 2026 000119 · Completed 15 Oct
+              </p>
+              <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[8px] h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[217px]" data-node-id="26:22641" data-name="Action">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23981" data-name="arrow-right">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] whitespace-nowrap" data-node-id="26:22643">
+                  Rate completed service
+                </p>
+              </div>
+            </div>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:22644" data-name="Panel">
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[304px]" data-node-id="26:22645" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[304px]" data-node-id="26:22646">
+                  Latest updates
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[11px] items-start relative shrink-0 w-[304px]" data-node-id="26:22647" data-name="Latest update">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23984" data-name="message-square-text">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquareText2} />
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[277px]" data-node-id="26:22649" data-name="Update details">
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium relative shrink-0 text-[#1e3029] text-[12px] w-[277px]" data-node-id="26:22650">
+                    Clarification requested
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22651">
+                    FMS 2026 000126
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[10px] whitespace-nowrap" data-node-id="26:22652">
+                    Today, 11:05 AM
+                  </p>
+                </div>
+              </div>
+              <div className="content-stretch flex gap-[11px] items-start relative shrink-0 w-[304px]" data-node-id="26:22653" data-name="Latest update">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23987" data-name="check">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCheck} />
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[277px]" data-node-id="26:22655" data-name="Update details">
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium relative shrink-0 text-[#1e3029] text-[12px] w-[277px]" data-node-id="26:22656">
+                    Request received
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22657">
+                    FMS 2026 000127
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[10px] whitespace-nowrap" data-node-id="26:22658">
+                    Today, 10:42 AM
+                  </p>
+                </div>
+              </div>
+              <div className="content-stretch flex gap-[11px] items-start relative shrink-0 w-[304px]" data-node-id="26:22659" data-name="Latest update">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23990" data-name="wrench">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgWrench} />
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start leading-[normal] relative shrink-0 w-[277px]" data-node-id="26:22661" data-name="Update details">
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium relative shrink-0 text-[#1e3029] text-[12px] w-[277px]" data-node-id="26:22662">
+                    Wi-Fi troubleshooting update
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22663">
+                    FMS 2026 000125
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169] text-[10px] whitespace-nowrap" data-node-id="26:22664">
+                    Today, 10:15 AM
+                  </p>
+                </div>
+              </div>
+              <div className="bg-[rgba(255,255,255,0)] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[36px] items-center justify-center relative rounded-[8px] shrink-0 w-[114px]" data-node-id="26:22665" data-name="Action">
+                <div className="relative shrink-0 size-[16px]" data-node-id="26:23993" data-name="arrow-right">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22667">
+                  All notifications
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[#eaf3ed] content-stretch flex flex-col gap-[12px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[1312px]" data-node-id="26:22501" data-name="Help card">
+          <div className="relative shrink-0 size-[18px]" data-node-id="26:23921" data-name="circle-help">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircleHelp} />
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[13px] whitespace-nowrap" data-node-id="26:22503">
+            A little guidance?
+          </p>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[1264px]" data-node-id="26:22504">
+            Get help with requests, access, or understanding an update.
+          </p>
+          <div className="bg-[rgba(255,255,255,0)] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[36px] items-center justify-center relative rounded-[8px] shrink-0 w-[112px]" data-node-id="26:22505" data-name="Action">
+            <div className="relative shrink-0 size-[16px]" data-node-id="26:23924" data-name="arrow-up-right">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowUpRight} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22507">{`Help & support`}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

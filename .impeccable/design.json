@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T00:00:00+08:00",
+  "title": "Design System: CLSU Feedback Management System and Service Tracker",
+  "extensions": {
+    "colorMeta": {
+      "green": { "role": "primary", "displayName": "Admin Green" },
+      "portal": { "role": "primary", "displayName": "Portal Forest Green" },
+      "gold": { "role": "secondary", "displayName": "Gold Accent" },
+      "surface": { "role": "neutral", "displayName": "Workspace Surface" }
+    },
+    "shadows": [
+      { "name": "mobile-sidebar", "value": "10px 0 25px #163b2b14", "purpose": "Mobile admin drawer; shared desktop panels remain flat." },
+      { "name": "requester-dashboard-panel", "value": "0 3px 6px #123e2a08", "purpose": "Scoped requester dashboard panels, matching Figma frame 26:22477; do not apply to admin panels." }
+    ],
+    "motion": [
+      { "name": "control-state", "value": "background-color 160ms ease-out, color 160ms ease-out", "purpose": "Links and buttons." },
+      { "name": "main-enter", "value": "enter 250ms ease-out", "purpose": "Main opacity changes from 0.9 to 1." },
+      { "name": "drawer", "value": "transform 180ms ease-out", "purpose": "Mobile sidebar." },
+      { "name": "loading", "value": "spin 0.8s linear infinite", "purpose": "Loading indicator rotation." }
+    ],
+    "breakpoints": [
+      { "name": "wide-welcome-min", "value": "1600px" },
+      { "name": "compact-desktop-max", "value": "1250px" },
+      { "name": "tablet-max", "value": "1000px" },
+      { "name": "mobile-max", "value": "760px" },
+      { "name": "small-mobile-max", "value": "420px" }
+    ],
+    "focus": { "value": "3px solid #bd8e1a", "offset": "3px", "purpose": "Global focus-visible outline." },
+    "reducedMotion": "The prefers-reduced-motion: reduce query disables all animations and transitions.",
+    "source": ["frontend/src/styles.css", "frontend/src/components.tsx", "frontend/src/App.tsx", "frontend/src/main.tsx", "frontend/src/RequesterDashboard.tsx", "frontend/src/requester-dashboard.css", "design-reference/admin.tsx.txt", "design-reference/portal.tsx.txt", "design-reference/requester.tsx.txt"],
+    "requesterDashboard": {
+      "route": "/app/requester",
+      "figmaFrame": "26:22477",
+      "sourceName": "Your dashboard",
+      "authority": "The middle supplied Figma dashboard frame, exported as design-reference/requester.tsx.txt.",
+      "layout": "1440px maximum main width; 32px 64px 40px padding; centered navigation in a 100px grid header; 48px context strip; four metric columns with 16px gaps; main columns 936fr/352fr with 24px gap; full-width help; hidden footer.",
+      "responsive": "At 1250px gutters become 35px. At 1000px gutters become 24px, metrics become two columns and main columns become 1.7fr/minmax(230px,1fr). At 760px the header is 85px, context strip 44px, gutters 20px, title 27px, main columns stack, metric columns stay two, and table overflow scrolls. At 420px metric padding is 15px. Mobile behavior is a responsive adaptation of the supplied desktop frame.",
+      "assets": "RequesterIcon resolves exact original exports through Asset screen=requester at /assets/figma/requester/. Preserve colored source variants; do not replace them with shared admin icons or invert primary-action icons.",
+      "data": "The four metrics are all-time authenticated-owner counts: My requests, Open requests, Completed, Awaiting my rating. The limited recent list does not define those counts. Clarification and rating prompts are conditional on real records; notification indicators reflect actual unread counts. Empty, loading and error states replace illustrative Figma content. MCP remains disabled.",
+      "evidencePaths": [".impeccable/review/requester-match-1440.png", ".impeccable/review/requester-match-429.png"],
+      "evidenceStatus": "Screenshot paths identify review artifacts; this documentation update did not capture or certify those images."
+    },
+    "extractionPolicy": "Only observed implementation values are recorded. No synthetic tonal ramps, named metaphor, or marketing language were introduced. Component previews omit exported icons rather than replace them."
+  },
+  "components": [
+    {
+      "name": "Portal Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Shared requester primary action.",
+      "html": "<button class=\"ds-primary\">Submit request</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--portal,#12553d);color:white;border:1px solid var(--portal,#12553d);border-radius:6px;padding:11px 15px;font:600 12px 'Plus Jakarta Sans',sans-serif;min-height:40px;cursor:pointer;transition:background-color 160ms ease-out,color 160ms ease-out}.ds-primary:hover{background:#0d432f}.ds-primary:focus-visible{outline:3px solid #bd8e1a;outline-offset:3px}.ds-primary:disabled{opacity:.55;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Admin Primary Button",
+      "kind": "button",
+      "refersTo": "button-admin-primary",
+      "description": "Admin green action, including the existing hover fill.",
+      "html": "<button class=\"ds-admin-primary\">Export report</button>",
+      "css": ".ds-admin-primary{background:var(--green,#008447);color:white;border:1px solid var(--green,#008447);border-radius:6px;padding:11px 15px;font:600 12px 'Plus Jakarta Sans',sans-serif;min-height:40px;cursor:pointer;transition:background-color 160ms ease-out,color 160ms ease-out}.ds-admin-primary:hover{background:var(--green,#008447)}.ds-admin-primary:focus-visible{outline:3px solid #bd8e1a;outline-offset:3px}.ds-admin-primary:disabled{opacity:.55;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-admin-primary{transition:none}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Bordered supporting action.",
+      "html": "<button class=\"ds-secondary\">Cancel</button>",
+      "css": ".ds-secondary{background:white;color:var(--portal,#12553d);border:1px solid var(--line,#dce3de);border-radius:6px;padding:11px 15px;font:600 12px 'Plus Jakarta Sans',sans-serif;min-height:40px;cursor:pointer;transition:background-color 160ms ease-out,color 160ms ease-out}.ds-secondary:hover{background:var(--soft,#eaf3ed);color:var(--deep,#005b30)}.ds-secondary:focus-visible{outline:3px solid #bd8e1a;outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Native field with green focus border and gold keyboard outline.",
+      "html": "<label class=\"ds-label\" for=\"ds-subject\">Subject</label><input class=\"ds-input\" id=\"ds-subject\" placeholder=\"Enter a subject\">",
+      "css": ".ds-label{display:block;font:600 12px 'Plus Jakarta Sans',sans-serif;margin-bottom:8px;color:var(--ink,#1e3029)}.ds-input{width:100%;min-width:0;background:white;border:1px solid var(--line,#dce3de);border-radius:4px;padding:11px 12px;color:var(--ink,#1e3029);font:12px/1.5 'Plus Jakarta Sans',sans-serif;caret-color:var(--green,#008447)}.ds-input::placeholder{color:#728279}.ds-input:focus{border-color:var(--green,#008447)}.ds-input:focus-visible{outline:3px solid #bd8e1a;outline-offset:3px}.ds-input:disabled{background:#f8faf8;color:#728279}"
+    },
+    {
+      "name": "Admin Navigation",
+      "kind": "nav",
+      "description": "Selected sidebar edge and inactive hover treatment; icon omitted in this text-only preview.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-active\" href=\"#dashboard\" aria-current=\"page\">Dashboard</a><a href=\"#requests\">Service Requests</a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:5px;font:500 12px 'Plus Jakarta Sans',sans-serif}.ds-nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;min-height:46px;border-left:3px solid transparent;border-radius:4px;text-decoration:none;color:var(--ink,#1e3029);transition:background-color 160ms ease-out,color 160ms ease-out}.ds-nav .ds-active{background:var(--green,#008447);color:white;border-left-color:var(--gold,#f2b600);font-weight:700}.ds-nav a:hover:not(.ds-active){background:var(--soft,#eaf3ed)}.ds-nav a:focus-visible{outline:3px solid #bd8e1a;outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
+    },
+    {
+      "name": "Completed Badge",
+      "kind": "chip",
+      "description": "Noninteractive status with color, dot, and explicit label.",
+      "html": "<span class=\"ds-badge\"><i></i>Completed</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;gap:5px;font:10px/1.5 'Plus Jakarta Sans',sans-serif;padding:4px 7px;border-radius:4px;border:1px solid #8cddb0;background:#d5f8e1;color:#00672f;white-space:nowrap}.ds-badge i{width:4px;height:4px;background:currentColor;border-radius:50%;flex-shrink:0}"
+    },
+    {
+      "name": "Requester Dashboard Panel",
+      "kind": "card",
+      "refersTo": "requester-dashboard-panel",
+      "description": "Scoped source-Figma panel with subtle shadow and undivided heading; original icons are omitted in this preview.",
+      "html": "<section class=\"ds-dashboard-panel\"><div class=\"ds-dashboard-heading\"><h2>Recent requests</h2><a href=\"#requests\">View all requests</a></div><div class=\"ds-dashboard-content\">No requests yet.</div></section>",
+      "css": ".ds-dashboard-panel{background:white;border:1px solid #dee5df;border-radius:12px;overflow:hidden;box-shadow:0 3px 6px #123e2a08;color:var(--ink,#1e3029);font:12px 'Plus Jakarta Sans',sans-serif}.ds-dashboard-heading{padding:24px 24px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px}.ds-dashboard-heading h2{font-size:18px;line-height:1.3;font-weight:600;letter-spacing:-.01em;margin:0}.ds-dashboard-heading a{font-size:12px;color:var(--portal,#12553d);text-decoration:none}.ds-dashboard-heading a:hover{color:var(--green,#008447)}.ds-dashboard-heading a:focus-visible{outline:3px solid #bd8e1a;outline-offset:3px}.ds-dashboard-content{padding:0 24px 24px}"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat divided container with optional heading.",
+      "html": "<section class=\"ds-panel\"><div class=\"ds-panel-heading\"><h2>Request details</h2></div><div class=\"ds-panel-body\">No records yet.</div></section>",
+      "css": ".ds-panel{background:white;border:1px solid var(--line,#dce3de);border-radius:var(--radius,6px);overflow:hidden;margin-bottom:20px;color:var(--ink,#1e3029);font:12px 'Plus Jakarta Sans',sans-serif}.ds-panel-heading{padding:20px 21px 16px;display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #edf0ed;min-height:70px}.ds-panel-heading h2{font-size:15px;line-height:1.5;font-weight:700;letter-spacing:-.01em;margin:0}.ds-panel-body{padding:21px}"
+    }
+  ],
+  "narrative": {
+    "overview": "Preserve the supplied CLSU Figma file. The inherited system has a flat green and gold administrative workspace, a forest-green service portal, white panels, and compact operational tables. No new visual identity or named metaphor is introduced.",
+    "keyCharacteristics": [
+      "Original exported CLSU seal, campus architecture, sun, and icons.",
+      "Self-hosted Plus Jakarta Sans, green navigation, restrained gold separators.",
+      "Compact admin density and more spacious requester panels.",
+      "Real record counts and states replace illustrative Figma content; demo records remain identified as demo data."
+    ],
+    "rules": [],
+    "dos": [
+      "Do preserve the supplied Figma composition and original local identity and illustration assets.",
+      "Do use the existing CSS layers, shared components, green roles, and self-hosted font weights.",
+      "Do preserve responsive navigation, keyboard focus, reduced motion, and scrollable tables.",
+      "Do distinguish live records, empty states, and clearly labeled demo content."
+    ],
+    "donts": [
+      "Don't invent a new visual world, metaphor, brand claim, illustration, icon family, or font pairing.",
+      "Don't add floating shadow cards, gradients, or pill badges to the inherited flat workspace; retain the supplied subtle shadow only in the scoped requester dashboard panels.",
+      "Don't present disabled MCP capabilities or illustrative Figma values as operational facts."
+    ]
+  }
+}

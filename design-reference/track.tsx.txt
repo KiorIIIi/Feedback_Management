@@ -1,0 +1,495 @@
+const imgClsuLogo = "https://www.figma.com/api/mcp/asset/99b32175-cc79-45ef-b389-bd5340448605.png";
+const imgLayoutDashboard = "https://www.figma.com/api/mcp/asset/4ac7fcac-2c0c-4414-9f8c-5369fc114784.svg";
+const imgFiles = "https://www.figma.com/api/mcp/asset/7f7132c5-b3c2-4a3f-a0bd-877cd3936e6a.svg";
+const imgMessageSquare = "https://www.figma.com/api/mcp/asset/d04e684d-e1ea-4827-a847-d81099c0b05f.svg";
+const imgBell = "https://www.figma.com/api/mcp/asset/00844c4d-142a-46bf-8f67-05b3c935101b.svg";
+const imgLogOut = "https://www.figma.com/api/mcp/asset/17345872-a108-49f8-b372-89ddc5c93da5.svg";
+const imgGraduationCap = "https://www.figma.com/api/mcp/asset/bddaeb5a-72e2-4abd-90ba-d8e139b49fb9.svg";
+const imgBell1 = "https://www.figma.com/api/mcp/asset/aea7bfda-651d-4688-b77c-a0cd490578e2.svg";
+const imgUnreadIndicator = "https://www.figma.com/api/mcp/asset/b0b2a9ef-d36a-4cea-b8f1-93ceb52eecd8.svg";
+const imgArrowLeft = "https://www.figma.com/api/mcp/asset/a1dafb9c-8f73-4310-be51-a0a701a030f9.svg";
+const imgLoaderCircle = "https://www.figma.com/api/mcp/asset/77dbc6b0-486d-4d35-b5b3-1b5c4c34395d.svg";
+const imgMessageSquareText = "https://www.figma.com/api/mcp/asset/a44ca15f-4f12-4ced-8abf-e743b0aef139.svg";
+const imgCheck = "https://www.figma.com/api/mcp/asset/09efff44-2fbf-41d2-9c57-98cabcbe83f5.svg";
+const imgLoaderCircle1 = "https://www.figma.com/api/mcp/asset/63f8875e-9aaf-4dba-9616-88cebe579f48.svg";
+const imgCircle = "https://www.figma.com/api/mcp/asset/9594ac76-dc7a-4629-883d-4224db5eb8b7.svg";
+const imgLockKeyhole = "https://www.figma.com/api/mcp/asset/be3ac1be-47ca-40e4-93ed-697c3e7bd9e9.svg";
+const imgCircleHelp = "https://www.figma.com/api/mcp/asset/bb02bdbf-cbec-4409-8836-734e2d525f6b.svg";
+const imgArrowUpRight = "https://www.figma.com/api/mcp/asset/d22ba5a7-1477-45b2-a4d8-2370c11c7761.svg";
+
+export default function TrackWiFiServiceRequest() {
+  return (
+    <div className="bg-[#f5f8f6] content-stretch flex flex-col items-start relative size-full" data-node-id="26:23117" data-name="Track Wi-Fi service request">
+      <div className="bg-white border-[#dce5df] border-b border-solid content-stretch flex h-[100px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="27:870" data-name="Requester navigation">
+        <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-node-id="27:871" data-name="University identity">
+          <div className="content-stretch flex h-[46px] items-center justify-center relative rounded-[8px] shrink-0 w-[44px]" data-node-id="27:872" data-name="CLSU university seal">
+            <div className="relative shrink-0 size-[44px]" data-node-id="61:71" data-name="CLSU logo">
+              <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgClsuLogo} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Plus_Jakarta_Sans:Bold'] font-bold gap-[5px] items-start leading-[normal] relative shrink-0 whitespace-nowrap" data-node-id="27:874" data-name="Portal identity">
+            <p className="relative shrink-0 text-[#008447] text-[10px]" data-node-id="27:875">
+              CENTRAL LUZON STATE UNIVERSITY
+            </p>
+            <p className="relative shrink-0 text-[#005b30] text-[18px]" data-node-id="27:876">
+              MISO Service Portal
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex items-center justify-between relative shrink-0 w-[588px]" data-node-id="27:877" data-name="Portal links">
+          <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-[44px] items-center px-[12px] relative rounded-[8px] shrink-0" data-node-id="27:898" data-name="Navigation item">
+            <div className="relative shrink-0 size-[18px]" data-node-id="27:899" data-name="layout-dashboard">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLayoutDashboard} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:901">
+              Dashboard
+            </p>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:902">
+            <div className="bg-[#12553d] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:903" data-name="files">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFiles} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[13px] text-white whitespace-nowrap" data-node-id="27:905">
+                My requests
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:906">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:907" data-name="message-square">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquare} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:909">
+                Feedback history
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:910">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:911" data-name="bell">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBell} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:913">
+                Notifications
+              </p>
+              <div className="bg-[#eaf3ed] content-stretch flex items-center justify-center relative rounded-[5px] shrink-0 size-[20px]" data-node-id="27:914" data-name="Unread count">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="27:915">
+                  4
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[10px] h-[40px] items-center relative shrink-0 w-[201px]" data-node-id="27:916" data-name="Requester account">
+          <div className="bg-[#faf4e4] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[34px]" data-node-id="27:917" data-name="Avatar">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#795b16] text-[12px] whitespace-nowrap" data-node-id="27:918">
+              AS
+            </p>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[3px] items-start leading-[normal] relative shrink-0 text-[12px] w-[131px] whitespace-nowrap" data-node-id="27:919" data-name="Profile">
+            <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029]" data-node-id="27:920">
+              Andrea Santos
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169]" data-node-id="27:921">
+              Faculty · Engineering
+            </p>
+          </div>
+          <div className="relative shrink-0 size-[16px]" data-node-id="27:922" data-name="log-out">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLogOut} />
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex h-[48px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="26:23157" data-name="Utility header">
+        <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="26:23158" data-name="Portal context">
+          <div className="relative shrink-0 size-[20px]" data-node-id="26:24188" data-name="graduation-cap">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGraduationCap} />
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23160">
+            Requester portal
+          </p>
+          <div className="bg-[#dee5df] h-[18px] relative shrink-0 w-px" data-node-id="26:23161" data-name="Divider" />
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23162">
+            Your records, in one place
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[20px] items-center relative shrink-0 w-[199px]" data-node-id="26:23163" data-name="Header actions">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23164">
+            Friday, 16 October 2026
+          </p>
+          <div className="relative shrink-0 size-[18px]" data-node-id="26:24191" data-name="bell">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBell1} />
+          </div>
+          <div className="relative shrink-0 size-[6px]" data-node-id="26:23166" data-name="Unread indicator">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgUnreadIndicator} />
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex flex-col gap-[24px] items-start pb-[40px] pt-[32px] px-[64px] relative shrink-0 w-[1440px]" data-node-id="26:23167" data-name="Main content">
+        <div className="content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-[1312px]" data-node-id="26:23168" data-name="Page introduction">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23169">
+            My requests / FMS 2026 000125
+          </p>
+          <div className="content-stretch flex gap-[24px] items-center relative shrink-0 w-[1312px]" data-node-id="26:23170" data-name="Title and action">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[40px] relative shrink-0 text-[#1e3029] text-[32px] w-[1095px]" data-node-id="26:23171">
+              Wi-Fi connectivity issue
+            </p>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[8px] h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[193px]" data-node-id="26:23172" data-name="Action">
+              <div className="relative shrink-0 size-[16px]" data-node-id="26:24194" data-name="arrow-left">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowLeft} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] whitespace-nowrap" data-node-id="26:23174">
+                Back to my requests
+              </p>
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[14px] w-[1312px]" data-node-id="26:23175">
+            FMS 2026 000125 · Submitted by you on 15 October 2026 at 9:10 AM
+          </p>
+        </div>
+        <div className="bg-[#edf3fa] border border-[#d9e4ef] border-solid content-stretch flex items-center justify-between px-[24px] py-[20px] relative rounded-[12px] shrink-0 w-[1312px]" data-node-id="26:23176" data-name="Current service state">
+          <div className="content-stretch flex gap-[14px] items-center relative shrink-0" data-node-id="26:23177" data-name="Progress summary">
+            <div className="bg-[#edf3fa] content-stretch flex gap-[5px] items-center px-[9px] py-[6px] relative rounded-[6px] shrink-0" data-node-id="26:23178" data-name="Service status">
+              <div className="relative shrink-0 size-[13px]" data-node-id="26:24197" data-name="loader-circle">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLoaderCircle} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#295e8f] text-[12px] whitespace-nowrap" data-node-id="26:23180">
+                In Progress
+              </p>
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#295e8f] text-[14px] whitespace-nowrap" data-node-id="26:23181">
+              Your service team is troubleshooting the connection.
+            </p>
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#295e8f] text-[12px] whitespace-nowrap" data-node-id="26:23182">
+            Updated today, 10:15 AM
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-full" data-node-id="26:23183" data-name="Service record and timeline">
+          <div className="content-stretch flex flex-[1_0_0] flex-col gap-[20px] items-start min-w-px relative" data-node-id="26:23184" data-name="Service record">
+            <div className="bg-white content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-full" data-node-id="26:23185" data-name="Panel">
+              <div className="absolute border border-[#dee5df] border-solid inset-0 rounded-[12px]" data-node-id="65:50" data-name="Card outline · full bounds" />
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="26:23186" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-full" data-node-id="26:23187">
+                  Request information
+                </p>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex gap-[24px] items-start relative shrink-0 w-full" data-node-id="26:23188" data-name="Service metadata">
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23189" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23190">
+                    Service type
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23191">
+                    Wi-Fi/IDF troubleshooting
+                  </p>
+                </div>
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23192" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23193">
+                    Requesting office
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23194">
+                    College of Engineering
+                  </p>
+                </div>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex gap-[24px] items-start relative shrink-0 w-full" data-node-id="26:23195" data-name="Dates">
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23196" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23197">
+                    Date requested
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23198">
+                    15 Oct 2026 · 9:10 AM
+                  </p>
+                </div>
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23199" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23200">
+                    Date completed
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23201">
+                    —
+                  </p>
+                </div>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex gap-[24px] items-start relative shrink-0 w-full" data-node-id="26:23202" data-name="Personnel and priority">
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23203" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23204">
+                    Assigned personnel
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23205">
+                    Miguel Reyes · ICT Services
+                  </p>
+                </div>
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23206" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23207">
+                    Official priority · set by MISO
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23208">
+                    High
+                  </p>
+                </div>
+              </div>
+              <div className="bg-[#dee5df] h-px relative shrink-0 w-full" data-node-id="26:23209" data-name="Divider" />
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-full" data-node-id="26:23210" data-name="Record property">
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23211">
+                  Location
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23212">
+                  College of Engineering · Faculty room, 2nd floor
+                </p>
+              </div>
+            </div>
+            <div className="bg-white content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-full" data-node-id="26:23213" data-name="Panel">
+              <div className="absolute border border-[#dee5df] border-solid inset-0 rounded-[12px]" data-node-id="65:51" data-name="Card outline · full bounds" />
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="26:23214" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-full" data-node-id="26:23215">
+                  Submitted concern
+                </p>
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] min-w-full relative shrink-0 text-[#1e3029] text-[14px] w-[min-content]" data-node-id="26:23216">
+                The Wi-Fi connection in the College of Engineering faculty room keeps disconnecting. Several faculty members cannot reliably access online teaching materials. The issue began this morning and affects the office.
+              </p>
+              <div className="[word-break:break-word] content-stretch flex gap-[24px] items-start relative shrink-0 w-full" data-node-id="26:23217" data-name="Requester assessment">
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23218" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23219">
+                    Reported urgency
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23220">
+                    Medium
+                  </p>
+                </div>
+                <div className="content-stretch flex flex-[1_0_0] flex-col gap-[5px] items-start min-w-px relative" data-node-id="26:23221" data-name="Record property">
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="26:23222">
+                    Reported impact
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.4] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="26:23223">
+                    Entire office
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-full" data-node-id="26:23224" data-name="Panel">
+              <div className="absolute border border-[#dee5df] border-solid inset-0 rounded-[12px]" data-node-id="65:52" data-name="Card outline · full bounds" />
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="26:23225" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-full" data-node-id="26:23226">{`Actions taken & remarks`}</p>
+              </div>
+              <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-node-id="26:23227" data-name="Personnel action log">
+                <div className="[word-break:break-word] content-stretch flex gap-[20px] items-start relative shrink-0 w-full" data-node-id="26:23228" data-name="Action entry">
+                  <div className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[0] relative shrink-0 text-[#617169] text-[12px] w-[110px]" data-node-id="26:23229">
+                    <p className="leading-[1.6] mb-0">16 Oct 2026</p>
+                    <p className="leading-[1.6]">10:15 AM</p>
+                  </div>
+                  <div className="content-stretch flex flex-[1_0_0] flex-col gap-[6px] items-start min-w-px relative text-[13px]" data-node-id="26:23230" data-name="Action and remark">
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] w-full" data-node-id="26:23231">
+                      Inspected access point and IDF connection
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] w-full" data-node-id="26:23232">
+                      Intermittent uplink detected. Cable and port testing are ongoing; service is not yet restored.
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-[#dee5df] h-px relative shrink-0 w-full" data-node-id="26:23233" data-name="Divider" />
+                <div className="[word-break:break-word] content-stretch flex gap-[20px] items-start relative shrink-0 w-full" data-node-id="26:23234" data-name="Action entry">
+                  <div className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[0] relative shrink-0 text-[#617169] text-[12px] w-[110px]" data-node-id="26:23235">
+                    <p className="leading-[1.6] mb-0">15 Oct 2026</p>
+                    <p className="leading-[1.6]">10:20 AM</p>
+                  </div>
+                  <div className="content-stretch flex flex-[1_0_0] flex-col gap-[6px] items-start min-w-px relative text-[13px]" data-node-id="26:23236" data-name="Action and remark">
+                    <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] w-full" data-node-id="26:23237">
+                      Initial connectivity checks started
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] w-full" data-node-id="26:23238">
+                      Confirmed disconnections with the requesting office and began checking the affected network segment.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-[#eaf3ed] content-stretch flex flex-col gap-[12px] items-start px-[24px] py-[20px] relative rounded-[12px] shrink-0 w-full" data-node-id="26:23239" data-name="Latest personnel response">
+              <div className="content-stretch flex gap-[10px] items-center relative shrink-0 w-full" data-node-id="26:23240" data-name="Response header">
+                <div className="relative shrink-0 size-[18px]" data-node-id="26:24200" data-name="message-square-text">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquareText} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] w-[768px]" data-node-id="26:23242">
+                  Latest personnel response
+                </p>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[10px] whitespace-nowrap" data-node-id="26:23243">
+                  SERVICE UPDATE
+                </p>
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] min-w-full relative shrink-0 text-[#1e3029] text-[14px] w-[min-content]" data-node-id="26:23244">
+                “We found an intermittent connection at the faculty-room uplink. We are testing the cable and port. A brief interruption may occur during checks; we’ll post the next update here.”
+              </p>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23245">
+                Miguel Reyes · 16 Oct 2026, 10:15 AM
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-[352px]" data-node-id="26:23246" data-name="Tracking sidebar">
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:23247" data-name="Panel">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-[304px]" data-node-id="26:23248" data-name="Panel heading">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[304px]" data-node-id="26:23249">
+                  Status timeline
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[304px]" data-node-id="26:23250">
+                  The history of this service request
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[304px]" data-node-id="26:23251" data-name="Status history">
+                <div className="content-stretch flex gap-[14px] items-start relative shrink-0 w-[304px]" data-node-id="26:23252" data-name="Timeline event">
+                  <div className="content-stretch flex flex-col gap-[5px] items-center relative self-stretch shrink-0 w-[26px]" data-node-id="26:23253" data-name="Timeline rail">
+                    <div className="bg-[#eaf3ed] border border-[#eaf3ed] border-solid content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[26px]" data-node-id="26:23254" data-name="Milestone">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:24203" data-name="check">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCheck} />
+                      </div>
+                    </div>
+                    <div className="bg-[#dee5df] flex-[1_0_0] min-h-[34px] relative w-px" data-node-id="26:23256" data-name="Connector" />
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[6px] items-start pb-[22px] relative shrink-0 w-[264px]" data-node-id="26:23257" data-name="Event details">
+                    <div className="content-stretch flex items-center justify-between relative shrink-0 w-[264px]" data-node-id="26:23258" data-name="Event heading">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[14px] whitespace-nowrap" data-node-id="26:23259">
+                        Pending
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[264px]" data-node-id="26:23260">
+                      15 Oct 2026 · 9:10 AM
+                    </p>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[264px]" data-node-id="26:23261">
+                      Your request was received and recorded for MISO review.
+                    </p>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[14px] items-start relative shrink-0 w-[304px]" data-node-id="26:23262" data-name="Timeline event">
+                  <div className="content-stretch flex flex-col gap-[5px] items-center relative self-stretch shrink-0 w-[26px]" data-node-id="26:23263" data-name="Timeline rail">
+                    <div className="bg-[#eaf3ed] border border-[#eaf3ed] border-solid content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[26px]" data-node-id="26:23264" data-name="Milestone">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:24206" data-name="check">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCheck} />
+                      </div>
+                    </div>
+                    <div className="bg-[#dee5df] flex-[1_0_0] min-h-[34px] relative w-px" data-node-id="26:23266" data-name="Connector" />
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[6px] items-start pb-[22px] relative shrink-0 w-[264px]" data-node-id="26:23267" data-name="Event details">
+                    <div className="content-stretch flex items-center justify-between relative shrink-0 w-[264px]" data-node-id="26:23268" data-name="Event heading">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[14px] whitespace-nowrap" data-node-id="26:23269">
+                        Assigned
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[264px]" data-node-id="26:23270">
+                      15 Oct 2026 · 9:35 AM
+                    </p>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[264px]" data-node-id="26:23271">
+                      MISO reviewed the concern and assigned Miguel Reyes.
+                    </p>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[14px] items-start relative shrink-0 w-[304px]" data-node-id="26:23272" data-name="Timeline event">
+                  <div className="content-stretch flex flex-col gap-[5px] items-center relative self-stretch shrink-0 w-[26px]" data-node-id="26:23273" data-name="Timeline rail">
+                    <div className="bg-[#12553d] border border-[#eaf3ed] border-solid content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[26px]" data-node-id="26:23274" data-name="Milestone">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:24209" data-name="loader-circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLoaderCircle1} />
+                      </div>
+                    </div>
+                    <div className="bg-[#dee5df] flex-[1_0_0] min-h-[34px] relative w-px" data-node-id="26:23276" data-name="Connector" />
+                  </div>
+                  <div className="[word-break:break-word] content-stretch flex flex-col gap-[6px] items-start pb-[22px] relative shrink-0 w-[264px]" data-node-id="26:23277" data-name="Event details">
+                    <div className="content-stretch flex font-['Plus_Jakarta_Sans:SemiBold'] font-semibold items-center justify-between leading-[normal] relative shrink-0 w-[264px] whitespace-nowrap" data-node-id="26:23278" data-name="Event heading">
+                      <p className="relative shrink-0 text-[#1e3029] text-[14px]" data-node-id="26:23279">
+                        In Progress
+                      </p>
+                      <p className="relative shrink-0 text-[#12553d] text-[10px]" data-node-id="26:23280">
+                        CURRENT
+                      </p>
+                    </div>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[264px]" data-node-id="26:23281">
+                      Started 15 Oct · 10:20 AM
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[264px]" data-node-id="26:23282">
+                      Latest: 16 Oct, 10:15 AM. Uplink issue identified; cable and port testing are ongoing.
+                    </p>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[14px] items-start relative shrink-0 w-[304px]" data-node-id="26:23283" data-name="Timeline event">
+                  <div className="content-stretch flex flex-col items-center relative self-stretch shrink-0 w-[26px]" data-node-id="26:23284" data-name="Timeline rail">
+                    <div className="bg-white border border-[#dee5df] border-solid content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[26px]" data-node-id="26:23285" data-name="Milestone">
+                      <div className="relative shrink-0 size-[13px]" data-node-id="26:24212" data-name="circle">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircle} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="content-stretch flex flex-col gap-[6px] items-start pb-[22px] relative shrink-0 w-[264px]" data-node-id="26:23287" data-name="Event details">
+                    <div className="content-stretch flex items-center justify-between relative shrink-0 w-[264px]" data-node-id="26:23288" data-name="Event heading">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#617169] text-[14px] whitespace-nowrap" data-node-id="26:23289">
+                        Completed
+                      </p>
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[264px]" data-node-id="26:23290">
+                      Not yet completed
+                    </p>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[264px]" data-node-id="26:23291">
+                      The completion date and service outcome will appear here once recorded.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:23292" data-name="Panel">
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[304px]" data-node-id="26:23293" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[304px]" data-node-id="26:23294">
+                  Response guidance
+                </p>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[304px]" data-node-id="26:23295" data-name="Response target">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[28px] whitespace-nowrap" data-node-id="26:23296">
+                  1 day
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[304px]" data-node-id="26:23297">
+                  Target response for High priority
+                </p>
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[304px]" data-node-id="26:23298">
+                Medium urgency + office-wide impact results in High priority, subject to MISO review.
+              </p>
+              <div className="bg-[#dee5df] h-px relative shrink-0 w-full" data-node-id="26:23299" data-name="Divider" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[304px]" data-node-id="26:23300">
+                This is a target response time, not a guaranteed completion deadline. Priority rules are subject to MISO finalization.
+              </p>
+            </div>
+            <div className="bg-[#f8faf8] content-stretch flex gap-[12px] items-start p-[18px] relative rounded-[8px] shrink-0 w-[352px]" data-node-id="26:23301" data-name="Guidance">
+              <div className="relative shrink-0 size-[19px]" data-node-id="26:24215" data-name="lock-keyhole">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLockKeyhole} />
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[285px]" data-node-id="26:23303" data-name="Message">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] w-[285px]" data-node-id="26:23304">
+                  Updates stay with your record
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[285px]" data-node-id="26:23305">
+                  Personnel actions and remarks are read-only. Any clarification needed will appear as a request you can respond to.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[#eaf3ed] content-stretch flex flex-col gap-[12px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[1312px]" data-node-id="26:23141" data-name="Help card">
+          <div className="relative shrink-0 size-[18px]" data-node-id="26:24179" data-name="circle-help">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircleHelp} />
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[13px] whitespace-nowrap" data-node-id="26:23143">
+            A little guidance?
+          </p>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[1264px]" data-node-id="26:23144">
+            Get help with requests, access, or understanding an update.
+          </p>
+          <div className="bg-[rgba(255,255,255,0)] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[36px] items-center justify-center relative rounded-[8px] shrink-0 w-[112px]" data-node-id="26:23145" data-name="Action">
+            <div className="relative shrink-0 size-[16px]" data-node-id="26:24182" data-name="arrow-up-right">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowUpRight} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:23147">{`Help & support`}</p>
+          </div>
+        </div>
+      </div>
+      <div className="[word-break:break-word] border-[#dee5df] border-solid border-t content-stretch flex font-['Plus_Jakarta_Sans:Regular'] font-normal h-[53px] items-start justify-between leading-[normal] px-[64px] py-[20px] relative shrink-0 text-[#617169] w-[1440px]" data-node-id="26:23306" data-name="Portal footer">
+        <p className="relative shrink-0 text-[12px] whitespace-pre" data-node-id="26:23307">{`Only your submissions are shown.  ·  Privacy & data use`}</p>
+        <p className="relative shrink-0 text-[10px] whitespace-nowrap" data-node-id="26:23308">{`Illustrative people & records`}</p>
+      </div>
+    </div>
+  );
+}

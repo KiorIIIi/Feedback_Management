@@ -1,0 +1,202 @@
+const imgArrowRight = "https://www.figma.com/api/mcp/asset/3f5326b7-d2c7-4d87-9a15-99a4ba997921.svg";
+const imgChevronDown = "https://www.figma.com/api/mcp/asset/109e7c52-3f68-4f4f-bc1b-bffb1ea3b085.svg";
+const imgClsuLogo = "https://www.figma.com/api/mcp/asset/8add1b7f-c760-4281-b5aa-3d2d58acfefd.png";
+const imgStar = "https://www.figma.com/api/mcp/asset/9e5e8db7-6d92-48e8-bee7-032c4a789964.svg";
+const imgStar1 = "https://www.figma.com/api/mcp/asset/2c429d75-37b7-41ff-8741-bdce80e78312.svg";
+
+type MobileButtonProps = {
+  className?: string;
+  label?: string;
+};
+
+function MobileButton({ className, label = "Sign in" }: MobileButtonProps) {
+  return (
+    <div className={className || "bg-[#21714f] content-stretch flex gap-[10px] h-[52px] items-center justify-center px-[16px] relative rounded-[8px] w-[342px]"} data-node-id="58:359" data-name="Mobile / button">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[14px] text-white whitespace-nowrap" data-node-id="58:356">
+        {label}
+      </p>
+      <div className="relative shrink-0 size-[17px]" data-node-id="58:357" data-name="arrow-right">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+      </div>
+    </div>
+  );
+}
+
+type MobileFieldProps = {
+  className?: string;
+  label?: string;
+  value?: string;
+};
+
+function MobileField({ className, label = "Short subject *", value = "Ceiling fan not working in Room 204" }: MobileFieldProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[7px] items-start relative w-[318px]"} data-node-id="58:327" data-name="Mobile / field">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-full" data-node-id="58:324">
+        {label}
+      </p>
+      <div className="bg-white border border-[#dee5df] border-solid content-stretch flex items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-full" data-node-id="58:325" data-name="Input">
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] min-w-px relative text-[#1e3029] text-[14px]" data-node-id="58:326">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+type MobileAreaProps = {
+  className?: string;
+  label?: string;
+  value?: string;
+};
+
+function MobileArea({ className, label = "Detailed concern *", value = "The ceiling fan nearest the door no longer turns on. The other fans are working. Please inspect the unit; classes are continuing in the room." }: MobileAreaProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[7px] items-start relative w-[318px]"} data-node-id="58:333" data-name="Mobile / area">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-full" data-node-id="58:329">
+        {label}
+      </p>
+      <div className="bg-white border border-[#dee5df] border-solid content-stretch flex items-start min-h-[112px] p-[12px] relative rounded-[8px] shrink-0 w-full" data-node-id="58:330" data-name="Input">
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] min-w-px relative text-[#1e3029] text-[14px]" data-node-id="58:331">
+          {value}
+        </p>
+      </div>
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-full" data-node-id="58:332">
+        Describe what happened, when it started, and any steps already taken.
+      </p>
+    </div>
+  );
+}
+
+type MobileSelectProps = {
+  className?: string;
+  label?: string;
+  value?: string;
+};
+
+function MobileSelect({ className, label = "Service type *", value = "Equipment maintenance" }: MobileSelectProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[7px] items-start relative w-[318px]"} data-node-id="58:340" data-name="Mobile / select">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-full" data-node-id="58:335">
+        {label}
+      </p>
+      <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-full" data-node-id="58:336" data-name="Input">
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] min-w-px relative text-[#1e3029] text-[14px]" data-node-id="58:337">
+          {value}
+        </p>
+        <div className="relative shrink-0 size-[15px]" data-node-id="58:338" data-name="chevron-down">
+          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgChevronDown} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Mobile02FeedbackForm() {
+  return (
+    <div className="bg-[var(--portal-bg,#f5f8f6)] content-stretch flex flex-col items-center relative size-full" data-node-id="58:397" data-name="Mobile · 02 Feedback form">
+      <div className="bg-[var(--portal-white,white)] content-stretch flex flex-col h-[85px] items-start overflow-clip px-[39.5px] py-[20px] relative shrink-0 w-[429px]" data-node-id="58:398" data-name="Mobile masthead">
+        <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-node-id="58:399" data-name="University identity">
+          <div className="content-stretch flex h-[46px] items-center justify-center relative rounded-[8px] shrink-0 w-[44px]" data-node-id="58:400" data-name="CLSU university seal">
+            <div className="relative shrink-0 size-[44px]" data-node-id="61:92" data-name="CLSU logo">
+              <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgClsuLogo} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Plus_Jakarta_Sans:Bold'] font-bold gap-[5px] items-start leading-[normal] relative shrink-0" data-node-id="58:402" data-name="Portal identity">
+            <p className="relative shrink-0 text-[#008447] text-[10px] w-[173px]" data-node-id="58:403">
+              CENTRAL LUZON STATE UNIVERSITY
+            </p>
+            <p className="relative shrink-0 text-[#005b30] text-[18px] w-[174px]" data-node-id="58:404">
+              MISO Service Portal
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex flex-col gap-[20px] h-[1464px] items-start overflow-clip pb-[28px] pt-[24px] px-[16px] relative shrink-0 w-[390px]" data-node-id="58:405" data-name="Page content">
+        <a className="[word-break:break-word] block cursor-pointer font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[13px] text-[color:var(--portal-green,#12553d)] w-[358px]" data-node-id="58:406">
+          <p className="leading-[1.5] whitespace-pre-wrap">{`‹  Back to options`}</p>
+        </a>
+        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[11px] text-[color:var(--portal-green,#12553d)] w-[358px]" data-node-id="58:407">
+          FEEDBACK
+        </p>
+        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[28px] text-[color:var(--portal-ink,#243b32)] w-[358px]" data-node-id="58:408">
+          Send Us Your Feedback!
+        </p>
+        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[14px] text-[color:var(--portal-muted,#6f8078)] w-[358px]" data-node-id="58:409">
+          Tell us about your experience with a CLSU service. Fields marked * are required.
+        </p>
+        <div className="bg-[var(--portal-white,white)] border border-[var(--portal-border,#dee5df)] border-solid content-stretch flex flex-col gap-[16px] items-start overflow-clip p-[20px] relative rounded-[12px] shrink-0 w-[358px]" data-node-id="58:410" data-name="Feedback details">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[18px] text-[color:var(--portal-ink,#243b32)] w-[318px]" data-node-id="58:411">
+            Feedback details
+          </p>
+          <MobileSelect className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[318px]" value="Select a university service" />
+          <MobileSelect className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[318px]" label="Feedback category *" value="Select a category" />
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[11px] text-[color:var(--portal-muted,#6f8078)] w-[318px]" data-node-id="58:424">
+            Complaint · Suggestion · Compliment · Other
+          </p>
+          <MobileField className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[318px]" label="Related job number (optional)" value="e.g. FMS 2026 000119" />
+          <MobileArea className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[318px]" label="Your feedback *" value="Tell us what happened or what we can improve." />
+        </div>
+        <div className="bg-[var(--portal-white,white)] border border-[var(--portal-border,#dee5df)] border-solid content-stretch flex flex-col gap-[8px] items-start overflow-clip px-[20px] py-[16px] relative rounded-[12px] shrink-0 w-[358px]" data-node-id="58:434" data-name="Overall experience">
+          <div className="[word-break:break-word] content-stretch flex items-center justify-between leading-[1.5] overflow-clip relative shrink-0 w-[318px] whitespace-nowrap" data-node-id="59:50" data-name="Rating heading">
+            <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[16px] text-[color:var(--portal-ink,#243b32)]" data-node-id="58:435">
+              Overall experience
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[12px] text-[color:var(--portal-muted,#6f8078)]" data-node-id="58:436">
+              Optional
+            </p>
+          </div>
+          <div className="content-stretch flex gap-[8px] h-[44px] items-center justify-center relative shrink-0 w-[318px]" data-node-id="58:437" data-name="Rating scale">
+            <div className="content-stretch flex flex-col items-center justify-center relative rounded-[8px] shrink-0 size-[44px]" data-node-id="58:438" data-name="Rate 1 of 5">
+              <div className="relative shrink-0 size-[24px]" data-node-id="58:439" data-name="star">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar} />
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-center justify-center relative rounded-[8px] shrink-0 size-[44px]" data-node-id="58:443" data-name="Rate 2 of 5">
+              <div className="relative shrink-0 size-[24px]" data-node-id="58:444" data-name="star">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar} />
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-center justify-center relative rounded-[8px] shrink-0 size-[44px]" data-node-id="58:448" data-name="Rate 3 of 5">
+              <div className="relative shrink-0 size-[24px]" data-node-id="58:449" data-name="star">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar} />
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-center justify-center relative rounded-[8px] shrink-0 size-[44px]" data-node-id="58:453" data-name="Rate 4 of 5">
+              <div className="relative shrink-0 size-[24px]" data-node-id="58:454" data-name="star">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar} />
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-center justify-center relative rounded-[8px] shrink-0 size-[44px]" data-node-id="58:458" data-name="Rate 5 of 5">
+              <div className="relative shrink-0 size-[24px]" data-node-id="58:459" data-name="star">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgStar1} />
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] text-center w-[318px]" data-node-id="59:51">
+            4 of 5 · Very good
+          </p>
+        </div>
+        <div className="bg-[var(--portal-white,white)] border border-[var(--portal-border,#dee5df)] border-solid content-stretch flex flex-col gap-[16px] items-start overflow-clip p-[20px] relative rounded-[12px] shrink-0 w-[358px]" data-node-id="58:463" data-name="Contact details (optional)">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[18px] text-[color:var(--portal-ink,#243b32)] w-[318px]" data-node-id="58:464">
+            Contact details (optional)
+          </p>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[13px] text-[color:var(--portal-muted,#6f8078)] w-[318px]" data-node-id="58:465">
+            Leave your details if you would like us to follow up.
+          </p>
+          <MobileField className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[318px]" label="Name" value="Your name" />
+          <MobileField className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[318px]" label="Email address" value="you@clsu.edu.ph" />
+        </div>
+        <div className="bg-[var(--portal-soft,#eaf3ed)] content-stretch flex flex-col items-start overflow-clip p-[16px] relative rounded-[12px] shrink-0 w-[358px]" data-node-id="58:474" data-name="Guidance">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[12px] text-[color:var(--portal-green,#12553d)] w-[326px]" data-node-id="58:475">
+            Your feedback stays private and is reviewed by authorized CLSU staff. Please avoid sharing sensitive personal information.
+          </p>
+        </div>
+        <MobileButton className="bg-[#21714f] content-stretch flex gap-[10px] h-[52px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[358px]" label="Submit feedback" />
+        <div className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[0] relative shrink-0 text-[11px] text-[color:var(--portal-muted,#6f8078)] w-[358px]" data-node-id="58:480">
+          <p className="leading-[1.5] mb-0">Central Luzon State University</p>
+          <p className="leading-[1.5]">MISO Service Portal · Privacy notice</p>
+        </div>
+      </div>
+    </div>
+  );
+}

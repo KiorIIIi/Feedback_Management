@@ -1,0 +1,13 @@
+{
+  "name": "clsu-feedback-management",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend run build",
+    "test:browser": "npm --prefix frontend run test:e2e",
+    "format": "prettier --write frontend/src frontend/tests",
+    "start": "powershell -ExecutionPolicy Bypass -File scripts/start.ps1"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

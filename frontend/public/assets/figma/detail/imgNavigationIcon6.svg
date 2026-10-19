@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Navigation icon">
+<mask id="stroke0_0_25" fill="white">
+<path d="M7.5 2.5L6.66667 5L4.16667 5.83333L2.5 10L4.16667 14.1667L6.66667 15L7.5 17.5H12.5L13.3333 15L15.8333 14.1667L17.5 10L15.8333 5.83333L13.3333 5L12.5 2.5H7.5Z"/>
+</mask>
+<path id="Glyph" d="M7.5 2.5L6.66667 5L4.16667 5.83333L2.5 10L4.16667 14.1667L6.66667 15L7.5 17.5H12.5L13.3333 15L15.8333 14.1667L17.5 10L15.8333 5.83333L13.3333 5L12.5 2.5H7.5Z" stroke-width="2.76" stroke-linecap="round" stroke="#43584C" mask="url(#stroke0_0_25)"/>
+<mask id="stroke1_0_25" fill="white">
+<path d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z"/>
+</mask>
+<path id="Glyph_2" d="M12.5 10C12.5 11.3807 11.3807 12.5 10 12.5C8.61929 12.5 7.5 11.3807 7.5 10C7.5 8.61929 8.61929 7.5 10 7.5C11.3807 7.5 12.5 8.61929 12.5 10Z" stroke-width="2.76" stroke-linecap="round" stroke="#43584C" mask="url(#stroke1_0_25)"/>
+</g>
+</svg>

@@ -1,0 +1,210 @@
+const imgArrowRight = "https://www.figma.com/api/mcp/asset/e4159279-9ba4-4b68-98c6-6b12683a0641.svg";
+const imgEye = "https://www.figma.com/api/mcp/asset/b5a7ba1a-981e-40b0-9360-236a236e76d8.svg";
+const imgMail = "https://www.figma.com/api/mcp/asset/a44dae15-5764-4962-83a3-509abeef79bc.svg";
+const imgClsuLogo = "https://www.figma.com/api/mcp/asset/8b19298d-d6cc-4c0b-b4c2-68fbb8f27c94.png";
+const imgSun = "https://www.figma.com/api/mcp/asset/f276888c-50a4-487d-b5f7-56fe4aae55da.svg";
+const imgCampusArchitecture = "https://www.figma.com/api/mcp/asset/5b7638a8-cd45-4e1d-a67b-3beff239cc95.svg";
+
+type MobileButtonProps = {
+  className?: string;
+  label?: string;
+};
+
+function MobileButton({ className, label = "Sign in" }: MobileButtonProps) {
+  return (
+    <div className={className || "bg-[#21714f] content-stretch flex gap-[10px] h-[52px] items-center justify-center px-[16px] relative rounded-[8px] w-[342px]"} data-node-id="58:359" data-name="Mobile / button">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[14px] text-white whitespace-nowrap" data-node-id="58:356">
+        {label}
+      </p>
+      <div className="relative shrink-0 size-[17px]" data-node-id="58:357" data-name="arrow-right">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+      </div>
+    </div>
+  );
+}
+
+type MobilePasswordProps = {
+  className?: string;
+  label?: string;
+  placeholder?: string;
+};
+
+function MobilePassword({ className, label = "Password", placeholder = "Enter your password" }: MobilePasswordProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[9px] items-start relative w-[342px]"} data-node-id="58:354" data-name="Mobile / password">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="58:349">
+        {label}
+      </p>
+      <div className="border border-[#dee5df] border-solid content-stretch flex h-[52px] items-center justify-between p-[14px] relative rounded-[8px] shrink-0 w-full" data-node-id="58:350" data-name="Password input">
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] min-w-px relative text-[#617169] text-[14px]" data-node-id="58:351">
+          {placeholder}
+        </p>
+        <div className="relative shrink-0 size-[18px]" data-node-id="58:352" data-name="eye">
+          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgEye} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type MobileEmailProps = {
+  className?: string;
+  label?: string;
+  placeholder?: string;
+};
+
+function MobileEmail({ className, label = "Email address", placeholder = "you@clsu.edu.ph" }: MobileEmailProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[9px] items-start relative w-[342px]"} data-node-id="58:347" data-name="Mobile / email">
+      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[14px] w-full" data-node-id="58:342">
+        {label}
+      </p>
+      <div className="border border-[#dee5df] border-solid content-stretch flex gap-[12px] h-[52px] items-center p-[14px] relative rounded-[8px] shrink-0 w-full" data-node-id="58:343" data-name="Email input">
+        <div className="relative shrink-0 size-[18px]" data-node-id="58:344" data-name="mail">
+          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMail} />
+        </div>
+        <p className="[word-break:break-word] flex-[1_0_0] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] min-w-px relative text-[#617169] text-[14px]" data-node-id="58:346">
+          {placeholder}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function DesktopAdminSignIn() {
+  return (
+    <div className="bg-white content-stretch flex flex-col items-start relative size-full" data-node-id="78:126" data-name="Desktop · Admin sign in">
+      <div className="bg-white border-[#dce5df] border-b border-solid content-stretch flex h-[100px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="78:127" data-name="Requester navigation">
+        <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-node-id="78:128" data-name="University identity">
+          <div className="content-stretch flex h-[46px] items-center justify-center relative rounded-[8px] shrink-0 w-[44px]" data-node-id="78:129" data-name="CLSU university seal">
+            <div className="relative shrink-0 size-[44px]" data-node-id="78:130" data-name="CLSU logo">
+              <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgClsuLogo} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Plus_Jakarta_Sans:Bold'] font-bold gap-[5px] items-start leading-[normal] relative shrink-0 whitespace-nowrap" data-node-id="78:131" data-name="Portal identity">
+            <p className="relative shrink-0 text-[#008447] text-[10px]" data-node-id="78:132">
+              CENTRAL LUZON STATE UNIVERSITY
+            </p>
+            <p className="relative shrink-0 text-[#005b30] text-[18px]" data-node-id="78:133">
+              MISO Service Portal
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex h-[1024px] items-start overflow-clip relative shrink-0 w-[1440px]" data-node-id="78:134" data-name="Campus artwork and desktop login">
+        <div className="bg-[#103d2e] content-stretch flex flex-col gap-[56px] h-full items-start px-[60px] py-[52px] relative shrink-0 w-[648px]" data-node-id="78:135" data-name="Campus welcome">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[6px] items-start leading-[normal] relative shrink-0 w-[528px]" data-node-id="78:136" data-name="University identity">
+            <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#c0d6c9] text-[10px] w-[528px]" data-node-id="78:137">
+              CENTRAL LUZON STATE UNIVERSITY
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[24px] text-white w-[528px]" data-node-id="78:138">
+              MISO Service Portal
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#c0d6c9] text-[12px] w-[528px]" data-node-id="78:139">{`Service requests & feedback`}</p>
+          </div>
+          <div className="content-stretch flex flex-col gap-[24px] items-start relative shrink-0 w-[528px]" data-node-id="78:140" data-name="Welcome message">
+            <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="78:141" data-name="Welcome label">
+              <div className="bg-[#b08b39] h-[2px] relative shrink-0 w-[25px]" data-node-id="78:142" data-name="Accent" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#c0d6c9] text-[12px] whitespace-nowrap" data-node-id="78:143">
+                CONNECTED CAMPUS. BETTER SERVICE.
+              </p>
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.14] relative shrink-0 text-[49px] text-white w-[528px]" data-node-id="78:144">
+              A simpler way to keep campus moving.
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.7] relative shrink-0 text-[#c0d6c9] text-[16px] w-[440px]" data-node-id="78:145">
+              Request support, follow every update, and share feedback that helps improve CLSU services.
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col h-[250px] items-start relative shrink-0 w-[528px]" data-node-id="78:146" data-name="Campus illustration">
+            <div className="absolute left-[394px] size-[66px] top-[12px]" data-node-id="78:147" data-name="Sun">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSun} />
+            </div>
+            <div className="h-[235px] relative shrink-0 w-[528px]" data-node-id="78:148" data-name="Campus architecture">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCampusArchitecture} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] left-0 text-[#c0d6c9] text-[10px] top-[239px] whitespace-nowrap" data-node-id="78:149">
+              ROOTED IN SERVICE. BUILT FOR OUR COMMUNITY.
+            </p>
+          </div>
+          <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-[528px]" data-node-id="78:150" data-name="Service promises">
+            <div className="content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-[160px]" data-node-id="78:151" data-name="Service promise">
+              <div className="bg-[#406653] h-px relative shrink-0 w-full" data-node-id="78:152" data-name="Accent rule" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#c0d6c9] text-[12px] w-[160px]" data-node-id="78:153">
+                One place to request
+              </p>
+            </div>
+            <div className="content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-[160px]" data-node-id="78:154" data-name="Service promise">
+              <div className="bg-[#406653] h-px relative shrink-0 w-full" data-node-id="78:155" data-name="Accent rule" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#c0d6c9] text-[12px] w-[160px]" data-node-id="78:156">
+                Clear progress updates
+              </p>
+            </div>
+            <div className="content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-[160px]" data-node-id="78:157" data-name="Service promise">
+              <div className="bg-[#406653] h-px relative shrink-0 w-full" data-node-id="78:158" data-name="Accent rule" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#c0d6c9] text-[12px] w-[160px]" data-node-id="78:159">
+                Your voice matters
+              </p>
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#c0d6c9] text-[12px] whitespace-nowrap" data-node-id="78:160">
+            Science City of Muñoz, Nueva Ecija, Philippines
+          </p>
+        </div>
+        <div className="bg-[var(--portal-bg,#f5f8f6)] content-stretch flex flex-col h-[1024px] items-start justify-center overflow-clip px-[104px] py-[56px] relative shrink-0 w-[792px]" data-node-id="78:161" data-name="Desktop sign in area">
+          <div className="content-stretch flex flex-col gap-[20px] items-start overflow-clip relative shrink-0 w-[584px]" data-node-id="78:162" data-name="Page content">
+            <a className="[word-break:break-word] block cursor-pointer font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[13px] text-[color:var(--portal-green,#12553d)] w-full" data-node-id="78:163">
+              <p className="leading-[1.5] whitespace-pre-wrap">{`‹  Back to options`}</p>
+            </a>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[11px] text-[color:var(--portal-green,#12553d)] w-full" data-node-id="78:164">
+              ADMIN ACCESS
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[32px] text-[color:var(--portal-ink,#243b32)] w-full" data-node-id="78:165">
+              Admin sign in
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[14px] text-[color:var(--portal-muted,#6f8078)] w-full" data-node-id="78:166">
+              Sign in with your administrator account to manage campus services.
+            </p>
+            <div className="bg-[var(--portal-soft,#eaf3ed)] content-stretch flex flex-col items-start overflow-clip p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="78:167" data-name="Guidance">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[12px] text-[color:var(--portal-green,#12553d)] w-full" data-node-id="78:168">
+                Authorized administrators only. Use your assigned admin account.
+              </p>
+            </div>
+            <div className="bg-[var(--portal-white,white)] border border-[var(--portal-border,#dee5df)] border-solid content-stretch flex flex-col gap-[16px] items-start overflow-clip p-[20px] relative rounded-[12px] shrink-0 w-full" data-node-id="78:169" data-name="Welcome back">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[18px] text-[color:var(--portal-ink,#243b32)] w-full" data-node-id="78:170">
+                Welcome back
+              </p>
+              <MobileEmail className="content-stretch flex flex-col gap-[9px] items-start relative shrink-0 w-full" />
+              <MobilePassword className="content-stretch flex flex-col gap-[9px] items-start relative shrink-0 w-full" />
+              <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-node-id="78:173" data-name="Session options">
+                <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="78:174" data-name="Remember me">
+                  <div className="bg-white border border-[#b2bfb6] border-solid relative rounded-[3px] shrink-0 size-[16px]" data-node-id="78:175" data-name="Checkbox" />
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="78:176">
+                    Remember me
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[13px] whitespace-nowrap" data-node-id="78:177">
+                  Forgot password?
+                </p>
+              </div>
+              <MobileButton className="bg-[#21714f] content-stretch cursor-pointer flex gap-[10px] h-[52px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-full" label="Admin login" />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[13px] text-[color:var(--portal-ink,#243b32)] w-full" data-node-id="78:179">
+              Need help with admin access?
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[12px] text-[color:var(--portal-muted,#6f8078)] w-full" data-node-id="78:180">
+              Contact MISO if you need an administrator account or help signing in.
+            </p>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.5] relative shrink-0 text-[13px] text-[color:var(--portal-green,#12553d)] w-full" data-node-id="78:181">
+              Contact MISO for assistance ↗
+            </p>
+            <div className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[0] relative shrink-0 text-[11px] text-[color:var(--portal-muted,#6f8078)] w-full" data-node-id="78:182">
+              <p className="leading-[1.5] mb-0">Central Luzon State University</p>
+              <p className="leading-[1.5]">MISO Service Portal · Privacy notice</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,1196 @@
+const imgClsuLogo = "https://www.figma.com/api/mcp/asset/80a399b2-1861-41e1-a1a1-a9cf5329eace.png";
+const imgIcon = "https://www.figma.com/api/mcp/asset/258e127d-6a07-4bed-bc65-0bc8246a2bad.svg";
+const imgIcon1 = "https://www.figma.com/api/mcp/asset/0f5e2a85-c0d2-4d9b-9e9e-83f87294b56f.svg";
+const imgIcon2 = "https://www.figma.com/api/mcp/asset/fb5017d0-6162-4bda-a45a-f59b8a449d90.svg";
+const imgIcon3 = "https://www.figma.com/api/mcp/asset/cfbf68da-02d3-4baa-b72c-67b2e9729858.svg";
+const imgIcon4 = "https://www.figma.com/api/mcp/asset/57596ea0-5328-4d0d-ae63-8ab775266da7.svg";
+const imgIcon5 = "https://www.figma.com/api/mcp/asset/fb5946e0-bbfe-486b-8dcd-6ac1318d0acc.svg";
+const imgIcon6 = "https://www.figma.com/api/mcp/asset/6fe5c0c0-4b3a-410d-806b-81fbf51c2aed.svg";
+const imgIcon7 = "https://www.figma.com/api/mcp/asset/1d45f587-892b-4699-a477-262e98f1f7f3.svg";
+const imgIcon8 = "https://www.figma.com/api/mcp/asset/2185fc94-2095-4476-a89a-27c6cf22b343.svg";
+const imgIcon9 = "https://www.figma.com/api/mcp/asset/45053612-3b94-4551-a261-9500e57c0d30.svg";
+const imgIcon10 = "https://www.figma.com/api/mcp/asset/e0e97d04-4c65-4644-a499-cf78febcd504.svg";
+const imgIcon11 = "https://www.figma.com/api/mcp/asset/4a2c01cb-c5ac-47cc-af95-3df85c768ddc.svg";
+const imgIcon12 = "https://www.figma.com/api/mcp/asset/0776b5e9-dacf-44fd-9279-a16142b9457f.svg";
+const imgIcon13 = "https://www.figma.com/api/mcp/asset/f814a8d1-f0aa-4b01-a124-0aaef89dddd2.svg";
+const imgIcon14 = "https://www.figma.com/api/mcp/asset/5249e4f8-df2e-478f-ae2f-90426ac9c910.svg";
+const imgIcon15 = "https://www.figma.com/api/mcp/asset/4cd7a326-4b96-45b6-8be8-212099e887ae.svg";
+const imgApp = "https://www.figma.com/api/mcp/asset/8b15d796-810e-43ea-864e-de929559c044.svg";
+const imgVector = "https://www.figma.com/api/mcp/asset/ed39d9b1-914b-4065-b081-803daab77ad3.svg";
+const imgVector1 = "https://www.figma.com/api/mcp/asset/a70a477f-8b50-4017-bb34-38482fdbfa1c.svg";
+const imgIcon16 = "https://www.figma.com/api/mcp/asset/025d47ac-ece9-439b-8b89-2092b561a278.svg";
+const imgIcon17 = "https://www.figma.com/api/mcp/asset/da232b2c-305b-4791-b52c-310334107377.svg";
+const imgIcon18 = "https://www.figma.com/api/mcp/asset/345117ea-0721-4ea5-845a-dae8249235cb.svg";
+const imgIcon19 = "https://www.figma.com/api/mcp/asset/f29e5334-fa72-40b2-93a4-7a99dd494af1.svg";
+const imgIcon20 = "https://www.figma.com/api/mcp/asset/1bec8999-5998-4fb3-b5b9-396572b2e433.svg";
+const imgIcon21 = "https://www.figma.com/api/mcp/asset/ba8f2d4d-bdec-4f43-9a8b-a3bccd0ea8c8.svg";
+const imgIcon22 = "https://www.figma.com/api/mcp/asset/573fcc68-c1b9-43ad-8970-f8b585dd9384.svg";
+const imgIcon23 = "https://www.figma.com/api/mcp/asset/7ddcdc68-c293-4734-a9a1-e0b0384efcf5.svg";
+const imgIcon24 = "https://www.figma.com/api/mcp/asset/e7f975e9-002e-4a76-bd93-389fc027e11c.svg";
+const imgIcon25 = "https://www.figma.com/api/mcp/asset/07ab18e6-7e07-4482-91f4-674375ad0c1b.svg";
+const imgIcon26 = "https://www.figma.com/api/mcp/asset/de9c4eff-7165-4c7c-8c01-ab9b92db30d0.svg";
+const imgIcon27 = "https://www.figma.com/api/mcp/asset/f4ab4c03-8fcf-4f65-8a0e-86a6d9da2ed9.svg";
+const imgIcon28 = "https://www.figma.com/api/mcp/asset/18a7b85a-e921-4e8f-9921-55e6dec01bae.svg";
+const imgIcon29 = "https://www.figma.com/api/mcp/asset/cd7e7837-856e-4fff-b655-eefbc5d3dc97.svg";
+
+export default function Dashbpard() {
+  return (
+    <div className="bg-[#f7f8fa] content-stretch flex flex-col items-start relative size-full" data-node-id="3:2" data-name="DASHBPARD">
+      <div className="bg-[#f5f8f6] content-stretch flex flex-col h-[1683.641px] items-start pl-[247px] relative shrink-0 w-full" data-node-id="3:3" data-name="App">
+        <div className="bg-white border-[#f2b600] border-b border-solid content-stretch flex h-[76px] items-center justify-between px-[35px] relative shrink-0 w-full" data-node-id="3:7" data-name="Header">
+          <div className="content-stretch flex gap-[16px] items-center relative shrink-0" data-node-id="3:8" data-name="Container">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[16.5px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:9">
+              Workspace
+            </p>
+            <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:11" data-name="Text">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[16.5px] relative shrink-0 text-[#bdc4be] text-[11px] whitespace-nowrap" data-node-id="3:12">
+                /
+              </p>
+            </div>
+            <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:13" data-name="Bold Text">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#008447] text-[11px] whitespace-nowrap" data-node-id="3:14">
+                Dashboard
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="3:16" data-name="Container">
+            <div className="content-stretch flex gap-[7px] items-center relative shrink-0" data-node-id="3:17" data-name="Text">
+              <div className="bg-[#00a653] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:18" data-name="Text" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[16.5px] relative shrink-0 text-[#386245] text-[11px] whitespace-nowrap" data-node-id="3:19">
+                MCP connected
+              </p>
+            </div>
+            <div className="content-stretch flex items-start px-[10px] relative shrink-0" data-node-id="3:40" data-name="Text:margin">
+              <div className="bg-[#eceeec] h-[24px] relative shrink-0 w-px" data-node-id="3:20" data-name="Text" />
+            </div>
+            <div className="grid grid-cols-[_32px] grid-rows-[_32px] relative rounded-[6px] shrink-0 size-[32px]" data-node-id="3:21" data-name="Button - Notifications">
+              <div className="col-1 justify-self-center relative row-1 self-center shrink-0 size-[20px]" data-node-id="3:22" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon} />
+              </div>
+              <div className="absolute bg-[#b59655] border border-solid border-white left-[21px] rounded-[2.5px] size-[5px] top-[5px]" data-node-id="3:24" data-name="Italic Text" />
+            </div>
+            <div className="content-stretch flex items-start px-[10px] relative shrink-0" data-node-id="3:41" data-name="Text:margin">
+              <div className="bg-[#eceeec] h-[24px] relative shrink-0 w-px" data-node-id="3:25" data-name="Text" />
+            </div>
+            <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="3:26" data-name="Button">
+              <div className="bg-[#dcfce7] border-3 border-[#f4f7f4] border-solid grid grid-cols-[_28px] grid-rows-[_28px] relative rounded-[17px] shrink-0 size-[34px]" data-node-id="3:27" data-name="Text">
+                <p className="[word-break:break-word] col-1 font-['Plus_Jakarta_Sans:SemiBold'] font-semibold justify-self-center leading-[15px] relative row-1 self-center shrink-0 text-[#008447] text-[10px] whitespace-nowrap" data-node-id="3:28">
+                  AD
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[85.969px]" data-node-id="3:30" data-name="Text">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] min-w-full relative shrink-0 text-[#415046] text-[11px] w-[min-content]" data-node-id="3:31">
+                  Admin Dela Cruz
+                </p>
+                <div className="content-stretch flex flex-col h-[19px] items-start pt-[5px] relative shrink-0 w-[85.969px]" data-node-id="3:32" data-name="Small">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[13.5px] relative shrink-0 text-[#4b6053] text-[9px] whitespace-nowrap" data-node-id="3:33">
+                    MISO Administrator
+                  </p>
+                </div>
+              </div>
+              <div className="content-stretch flex items-start pl-[9px] relative shrink-0" data-node-id="3:39" data-name="Icon:margin">
+                <div className="relative shrink-0 size-[16px]" data-node-id="3:37" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon1} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-col items-start max-w-[1700px] pt-[33px] px-[35px] relative shrink-0 w-full" data-node-id="3:42" data-name="Main Content">
+          <div className="border-[#dce3de] border-b border-solid content-stretch flex items-center justify-between pb-[24px] relative shrink-0 w-full" data-node-id="3:43" data-name="Container">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[365.438px]" data-node-id="3:44" data-name="Container">
+              <div className="content-stretch flex gap-[6px] h-[15.297px] items-center relative shrink-0 w-full" data-node-id="3:45" data-name="Container">
+                <div className="bg-[#f2b600] relative rounded-[2.5px] shrink-0 size-[5px]" data-node-id="3:46" data-name="Text" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15.3px] relative shrink-0 text-[#008447] text-[9px] tracking-[0.9px] whitespace-nowrap" data-node-id="3:47">
+                  CENTRAL LUZON STATE UNIVERSITY · MISO
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col h-[48px] items-start pt-[12px] relative shrink-0 w-[365.438px]" data-node-id="3:49" data-name="Heading 1">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[35.09px] relative shrink-0 text-[#005b30] text-[28.072px] tracking-[-1.1229px] whitespace-nowrap" data-node-id="3:50">
+                  Dashboard
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col h-[27px] items-start pt-[10px] relative shrink-0 w-[365.438px]" data-node-id="3:52" data-name="Paragraph">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[16.5px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:53">
+                  Monitor service requests, personnel assignments, and client feedback.
+                </p>
+              </div>
+            </div>
+            <div className="bg-[#008447] border border-[#008447] border-solid content-stretch flex gap-[8px] items-center justify-center min-h-[42px] px-[15px] py-[11px] relative rounded-[6px] shrink-0" data-node-id="3:56" data-name="Button">
+              <div className="relative shrink-0 size-[18px]" data-node-id="3:57" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon2} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[12px] text-center text-white whitespace-nowrap" data-node-id="3:59">
+                New request
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center pt-[24px] relative shrink-0 w-full" data-node-id="3:548" data-name="Section:margin">
+            <div className="bg-white border-[#f2b600] border-b border-l-4 border-r border-solid border-t content-stretch flex gap-[20px] items-center p-[22px] relative rounded-[6px] shrink-0 w-[959px]" data-node-id="3:61" data-name="Section">
+              <div className="content-stretch flex flex-[599.625_0_0] gap-[14px] items-center min-w-px relative" data-node-id="3:62" data-name="Container">
+                <div className="bg-[#dcfce7] border border-[#dce3de] border-solid grid grid-cols-[_35px] grid-rows-[_35px] relative rounded-[4px] shrink-0 size-[37px]" data-node-id="3:63" data-name="Text">
+                  <div className="col-1 justify-self-center relative row-1 self-center shrink-0 size-[22px]" data-node-id="3:64" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon3} />
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col items-start relative shrink-0 w-[262.578px]" data-node-id="3:67" data-name="Container">
+                  <div className="content-stretch flex h-[13.594px] items-center relative shrink-0 w-full" data-node-id="3:68" data-name="Container">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[13.6px] relative shrink-0 text-[#008447] text-[8px] tracking-[0.8px] whitespace-nowrap" data-node-id="3:69">
+                      MOST RECENT REQUEST OR FEEDBACK
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col h-[29px] items-start pt-[8px] relative shrink-0 w-[262.578px]" data-node-id="3:71" data-name="Heading 2">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-[650] leading-[21px] relative shrink-0 text-[#005b30] text-[14px] tracking-[-0.15px] whitespace-nowrap" data-node-id="3:72">
+                      Internet connectivity issue in laboratory
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col h-[24px] items-start pt-[6px] relative shrink-0 w-[262.578px]" data-node-id="3:74" data-name="Paragraph">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:75">
+                      FMS-2026-0128 · College of Engineering · May 21, 2026
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="3:79" data-name="Container">
+                <div className="bg-[#ffe1e1] border border-[#ffa7a7] border-solid content-stretch flex items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:80" data-name="Text">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#ae1616] text-[11px] whitespace-nowrap" data-node-id="3:81">
+                    Critical priority
+                  </p>
+                </div>
+                <div className="bg-[#dff1ff] border border-[#9bd0f5] border-solid content-stretch flex items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:82" data-name="Text">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#00599b] text-[11px] whitespace-nowrap" data-node-id="3:83">
+                    In Progress
+                  </p>
+                </div>
+                <div className="content-stretch flex gap-[9px] h-[18px] items-center pl-[8px] relative shrink-0 w-[101px]" data-node-id="3:84" data-name="Button">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#43584c] text-[12px] text-center whitespace-nowrap" data-node-id="3:85">
+                    View details
+                  </p>
+                  <div className="relative shrink-0 size-[16px]" data-node-id="3:87" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon4} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex h-[60px] items-center justify-between pt-[24px] relative shrink-0 w-[959px]" data-node-id="3:90" data-name="Container">
+            <div className="content-stretch flex gap-[7px] items-center relative shrink-0" data-node-id="3:91" data-name="Container">
+              <div className="bg-[#73866c] relative rounded-[2.5px] shrink-0 size-[5px]" data-node-id="3:92" data-name="Text" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#4f5d53] text-[11px] whitespace-nowrap" data-node-id="3:93">
+                Campus service overview
+              </p>
+              <div className="content-stretch flex items-start pl-[4px] relative shrink-0" data-node-id="3:96" data-name="Text:margin">
+                <div className="bg-[#fff0b3] border border-[#f0c347] border-solid content-stretch flex flex-col items-start px-[5px] py-[3px] relative rounded-[4px] shrink-0" data-node-id="3:94" data-name="Text">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#805100] text-[11px] whitespace-nowrap" data-node-id="3:95">
+                    Demo data
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[10px] items-start relative shrink-0" data-node-id="3:97" data-name="Container">
+              <div className="bg-white border border-[#dce3de] border-solid content-stretch flex gap-[8px] items-center justify-center px-[11px] py-[8px] relative rounded-[4px] self-stretch shrink-0" data-node-id="3:98" data-name="Label">
+                <div className="relative shrink-0 size-[16px]" data-node-id="3:99" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon5} />
+                </div>
+                <div className="h-[17px] relative shrink-0 w-[83px]" data-node-id="3:102" data-name="Dropdown - Reporting period">
+                  <div className="absolute content-stretch flex h-[17px] items-center left-[4px] overflow-clip top-0 w-[63px]" data-node-id="3:103" data-name="Container">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:104">
+                      This month
+                    </p>
+                  </div>
+                  <div className="absolute content-stretch flex h-[17px] items-center justify-center left-[64px] top-0 w-[20px]" data-node-id="3:106" data-name="Container">
+                    <div className="h-[6px] relative shrink-0 w-[10px]" data-node-id="3:107" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon6} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white border border-[#dce3de] border-solid content-stretch flex gap-[8px] items-center justify-center px-[11px] py-[8px] relative rounded-[4px] self-stretch shrink-0" data-node-id="3:109" data-name="Button">
+                <div className="relative shrink-0 size-[16px]" data-node-id="3:110" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon7} />
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#43584c] text-[12px] text-center whitespace-nowrap" data-node-id="3:112">
+                  Export report
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-start pt-[18px] relative shrink-0 w-full" data-node-id="3:550" data-name="Container:margin">
+            <div className="gap-x-[16px] gap-y-[16px] grid grid-cols-[____227.75px_227.75px_227.75px_227.75px] grid-rows-[_154.28px] relative shrink-0 w-full" data-node-id="3:113" data-name="Container">
+              <div className="bg-white border-[#dce3de] border-b border-l border-r border-solid border-t-3 col-1 content-stretch flex flex-col items-start justify-self-stretch p-[18px] relative rounded-[6px] row-1 self-stretch shrink-0" data-node-id="3:114" data-name="Section">
+                <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-node-id="3:115" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:116">
+                    Total requests
+                  </p>
+                  <div className="bg-[#dcfce7] grid grid-cols-[_30px] grid-rows-[_30px] relative rounded-[4px] shrink-0 size-[30px]" data-node-id="3:118" data-name="Text">
+                    <div className="col-1 justify-self-center relative row-1 self-center shrink-0 size-[18px]" data-node-id="3:119" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon8} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col h-[58px] items-start pt-[10px] relative shrink-0 w-[189.75px]" data-node-id="3:122" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[47.6px] relative shrink-0 text-[#005b30] text-[34px] tracking-[-1px] whitespace-nowrap" data-node-id="3:123">
+                    128
+                  </p>
+                  <div className="absolute h-[40px] left-[102.75px] top-[17.59px] w-[87px]" data-node-id="3:125" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon9} />
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[6px] h-[27px] items-center pt-[8px] relative shrink-0 w-[189.75px]" data-node-id="3:127" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:128" data-name="Text">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#00783d] text-[11px] whitespace-nowrap" data-node-id="3:129">
+                      ↗ 12.3%
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:131">
+                    vs. previous period
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white border-[#dce3de] border-b border-l border-r border-solid border-t-3 col-2 content-stretch flex flex-col items-start justify-self-stretch p-[18px] relative rounded-[6px] row-1 self-stretch shrink-0" data-node-id="3:134" data-name="Section">
+                <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-node-id="3:135" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:136">
+                    Awaiting action
+                  </p>
+                  <div className="bg-[#fff0b3] grid grid-cols-[_30px] grid-rows-[_30px] relative rounded-[4px] shrink-0 size-[30px]" data-node-id="3:137" data-name="Text">
+                    <div className="col-1 justify-self-center relative row-1 self-center shrink-0 size-[18px]" data-node-id="3:138" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon10} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col h-[58px] items-start pt-[10px] relative shrink-0 w-[189.75px]" data-node-id="3:141" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[47.6px] relative shrink-0 text-[#005b30] text-[34px] tracking-[-1px] whitespace-nowrap" data-node-id="3:142">
+                    24
+                  </p>
+                  <div className="absolute h-[40px] left-[102.75px] top-[17.59px] w-[87px]" data-node-id="3:143" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon11} />
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[6px] h-[27px] items-center pt-[8px] relative shrink-0 w-[189.75px]" data-node-id="3:145" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:146" data-name="Text">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#986000] text-[11px] whitespace-nowrap" data-node-id="3:147">
+                      8 critical
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:148">
+                    need your attention
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white border-[#dce3de] border-b border-l border-r border-solid border-t-3 col-3 content-stretch flex flex-col items-start justify-self-stretch p-[18px] relative rounded-[6px] row-1 self-stretch shrink-0" data-node-id="3:151" data-name="Section">
+                <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-node-id="3:152" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:153">
+                    Completed requests
+                  </p>
+                  <div className="bg-[#dcfce7] grid grid-cols-[_30px] grid-rows-[_30px] relative rounded-[4px] shrink-0 size-[30px]" data-node-id="3:154" data-name="Text">
+                    <div className="col-1 justify-self-center relative row-1 self-center shrink-0 size-[18px]" data-node-id="3:155" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon12} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col h-[58px] items-start pt-[10px] relative shrink-0 w-[189.75px]" data-node-id="3:158" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[47.6px] relative shrink-0 text-[#005b30] text-[34px] tracking-[-1px] whitespace-nowrap" data-node-id="3:159">
+                    96
+                  </p>
+                  <div className="absolute h-[40px] left-[102.75px] top-[17.59px] w-[87px]" data-node-id="3:160" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon13} />
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[6px] h-[27px] items-center pt-[8px] relative shrink-0 w-[189.75px]" data-node-id="3:162" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:163" data-name="Text">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#00783d] text-[11px] whitespace-nowrap" data-node-id="3:164">
+                      ↗ 75.0%
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:165">
+                    completion rate
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white border-[#dce3de] border-b border-l border-r border-solid border-t-3 col-4 content-stretch flex flex-col items-start justify-self-stretch p-[18px] relative rounded-[6px] row-1 self-stretch shrink-0" data-node-id="3:168" data-name="Section">
+                <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-node-id="3:169" data-name="Container">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:170">
+                    Client satisfaction
+                  </p>
+                  <div className="bg-[#fff0b3] grid grid-cols-[_30px] grid-rows-[_30px] relative rounded-[4px] shrink-0 size-[30px]" data-node-id="3:171" data-name="Text">
+                    <div className="col-1 justify-self-center relative row-1 self-center shrink-0 size-[18px]" data-node-id="3:172" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon14} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col items-start pt-[10px] relative shrink-0 w-full" data-node-id="3:185" data-name="Container:margin">
+                  <div className="h-[47.594px] relative shrink-0 w-full" data-node-id="3:174" data-name="Container">
+                    <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[47.6px] left-0 text-[#005b30] text-[34px] top-[-1px] tracking-[-1px] whitespace-nowrap" data-node-id="3:175">
+                      4.8
+                    </p>
+                    <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[21px] left-[54.66px] text-[#a9afa8] text-[15px] top-[20px] tracking-[-1px] whitespace-nowrap" data-node-id="3:177">
+                      / 5
+                    </p>
+                    <div className="absolute h-[40px] left-[102.75px] top-[7.59px] w-[87px]" data-node-id="3:179" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon15} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[6px] h-[27px] items-center pt-[8px] relative shrink-0 w-[189.75px]" data-node-id="3:181" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:182" data-name="Text">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#00783d] text-[11px] whitespace-nowrap" data-node-id="3:183">
+                      ↗ +0.3
+                    </p>
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:184">
+                    vs. previous period
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-start pt-[23px] relative shrink-0 w-full" data-node-id="3:551" data-name="Container:margin">
+            <div className="gap-x-[20px] gap-y-[20px] grid grid-cols-[__577.84px_361.16px] grid-rows-[_347.88px] relative shrink-0 w-full" data-node-id="3:187" data-name="Container">
+              <div className="bg-white border border-[#dce3de] border-solid col-1 content-stretch flex flex-col items-start justify-self-stretch relative rounded-[6px] row-1 self-stretch shrink-0" data-node-id="3:188" data-name="Section">
+                <div className="border-[#edf0ed] border-b border-solid content-stretch flex items-center justify-between pb-[16px] pt-[20px] px-[21px] relative shrink-0 w-full" data-node-id="3:189" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0 w-[288.875px]" data-node-id="3:190" data-name="Container">
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:191" data-name="Heading 2">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[22.5px] relative shrink-0 text-[#14271d] text-[15px] tracking-[-0.15px] whitespace-nowrap" data-node-id="3:192">
+                        Requests over time
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col h-[25px] items-start pt-[6px] relative shrink-0 w-[288.875px]" data-node-id="3:194" data-name="Paragraph">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:195">
+                        Submitted and completed requests by reporting period
+                      </p>
+                    </div>
+                  </div>
+                  <div className="content-stretch flex gap-[15px] items-start relative shrink-0" data-node-id="3:197" data-name="Container">
+                    <div className="content-stretch flex gap-[5px] items-center relative self-stretch shrink-0" data-node-id="3:198" data-name="Text">
+                      <div className="bg-[#00994f] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:199" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:200">
+                        Submitted
+                      </p>
+                    </div>
+                    <div className="content-stretch flex gap-[5px] items-center relative self-stretch shrink-0" data-node-id="3:201" data-name="Text">
+                      <div className="bg-[#e5a400] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:202" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:203">
+                        Completed
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[15px] h-[205px] items-start pl-[20px] pr-[23px] pt-[25px] relative shrink-0 w-[575.844px]" data-node-id="3:204" data-name="Container">
+                  <div className="content-stretch flex flex-col h-full items-start justify-between pb-[26px] relative shrink-0 w-[14px]" data-node-id="3:205" data-name="Container">
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:206" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:207">
+                        40
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:209" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:210">
+                        30
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:211" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:212">
+                        20
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:213" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:214">
+                        10
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:215" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:216">
+                        0
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex-[503.844_0_0] h-full min-w-px relative" data-node-id="3:217" data-name="Container">
+                    <div className="absolute content-stretch flex flex-col h-[154px] items-start justify-between left-0 top-0 w-[503.844px]" data-node-id="3:218" data-name="Container">
+                      <div className="border-[#e8ece7] border-dashed border-t h-px relative shrink-0 w-full" data-node-id="3:219" data-name="Italic Text" />
+                      <div className="border-[#e8ece7] border-dashed border-t h-px relative shrink-0 w-full" data-node-id="3:220" data-name="Italic Text" />
+                      <div className="border-[#e8ece7] border-dashed border-t h-px relative shrink-0 w-full" data-node-id="3:221" data-name="Italic Text" />
+                      <div className="border-[#e8ece7] border-dashed border-t h-px relative shrink-0 w-full" data-node-id="3:222" data-name="Italic Text" />
+                      <div className="border-[#e8ece7] border-dashed border-t h-px relative shrink-0 w-full" data-node-id="3:223" data-name="Italic Text" />
+                    </div>
+                    <div className="absolute inset-[3.76%_0_14.44%_0]" data-node-id="3:225" data-name="App">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgApp} />
+                    </div>
+                    <div className="absolute inset-[3.76%_0_31.56%_0]" data-node-id="3:226" data-name="Vector">
+                      <div className="absolute inset-[-0.88%_0]">
+                        <img alt="" className="block max-w-none size-full" src={imgVector} />
+                      </div>
+                    </div>
+                    <div className="absolute inset-[21.44%_0_23.26%_0]" data-node-id="3:227" data-name="Vector">
+                      <div className="absolute inset-[-0.97%_0_-1.02%_0]">
+                        <img alt="" className="block max-w-none size-full" src={imgVector1} />
+                      </div>
+                    </div>
+                    <div className="absolute content-stretch flex h-[15px] items-start justify-between left-0 top-[164px] w-[503.844px]" data-node-id="3:228" data-name="Container">
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:229" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:230">
+                          May 01
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:231" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:232">
+                          May 05
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:233" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:234">
+                          May 10
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:235" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:236">
+                          May 15
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:237" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:238">
+                          May 20
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:239" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:240">
+                          May 25
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:241" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:242">
+                          May 31
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col items-start pt-[13px] relative shrink-0 w-full" data-node-id="3:248" data-name="Container:margin">
+                  <div className="border-[#f0f2ee] border-solid border-t content-stretch flex h-[43.688px] items-start justify-between px-[21px] py-[12px] relative shrink-0 w-full" data-node-id="3:243" data-name="Container">
+                    <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:244" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[0] relative shrink-0 text-[#326c48] text-[0px] whitespace-nowrap" data-node-id="3:245">
+                        <span className="leading-[18.7px] text-[11px]">↗ 12.3% more requests</span>
+                        <span className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] text-[#5b6b62] text-[11px]">{` than last period`}</span>
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col h-full items-start relative shrink-0" data-node-id="3:246" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:247">
+                        Sample activity · May 2026
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white border border-[#dce3de] border-solid col-2 content-stretch flex flex-col items-start justify-self-stretch relative rounded-[6px] row-1 self-stretch shrink-0" data-node-id="3:249" data-name="Section">
+                <div className="border-[#edf0ed] border-b border-solid content-stretch flex items-center justify-between pb-[16px] pt-[20px] px-[21px] relative shrink-0 w-full" data-node-id="3:250" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0 w-[230.422px]" data-node-id="3:251" data-name="Container">
+                    <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:252" data-name="Heading 2">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[22.5px] relative shrink-0 text-[#14271d] text-[15px] tracking-[-0.15px] whitespace-nowrap" data-node-id="3:253">
+                        Requests by priority
+                      </p>
+                    </div>
+                    <div className="content-stretch flex flex-col h-[25px] items-start pt-[6px] relative shrink-0 w-[230.422px]" data-node-id="3:254" data-name="Paragraph">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:255">
+                        Classification by urgency and service impact
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border border-[#b2b9ae] border-solid content-stretch flex flex-col items-center relative rounded-[6.5px] shrink-0 size-[13px]" data-node-id="3:257" data-name="Text">
+                    <p className="[word-break:break-word] font-['Georgia:Regular'] leading-[13.5px] not-italic relative shrink-0 text-[#9aa592] text-[9px] text-center whitespace-nowrap" data-node-id="3:258">
+                      i
+                    </p>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[27px] h-[206px] items-center justify-center min-h-[206px] pb-[24px] pt-[28px] px-[20px] relative shrink-0 w-[359.156px]" data-node-id="3:260" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0 size-[151px]" data-node-id="3:310" data-name="Container:transform">
+                    <div className="absolute flex items-center justify-center left-0 size-[151px] top-0" data-node-id="3:261">
+                      <div className="-rotate-90 flex-none">
+                        <div className="relative rounded-[75.5px] size-[151px]" data-name="Container">
+                          <div className="absolute border border-[rgba(255,255,255,0.25)] border-solid left-[7px] rounded-[68.5px] size-[137px] top-[7px]" data-node-id="3:262" data-name="Text" />
+                          <div className="absolute flex items-center justify-center left-[17px] size-[117px] top-[17px]" data-node-id="3:263">
+                            <div className="flex-none rotate-90">
+                              <div className="bg-white content-stretch flex flex-col items-center justify-center relative rounded-[58.5px] size-[117px]" data-name="Container">
+                                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-[550] leading-[43.5px] relative shrink-0 text-[#14271d] text-[29px] tracking-[-1px] whitespace-nowrap" data-node-id="3:265">
+                                  128
+                                </p>
+                                <div className="content-stretch flex flex-col items-start pt-[3px] relative shrink-0" data-node-id="3:270" data-name="Text:margin">
+                                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[12px] relative shrink-0 text-[#4b6053] text-[8px] whitespace-nowrap" data-node-id="3:268">
+                                    Total requests
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-[141.156_0_0] gap-x-[16px] gap-y-[16px] grid grid-cols-[_141.16px] grid-rows-[____16.50px_16.50px_16.50px_16.50px] max-w-[160px] min-w-px relative" data-node-id="3:271" data-name="Container">
+                    <div className="col-1 content-stretch flex gap-[8px] items-center justify-self-stretch relative row-1 self-stretch shrink-0" data-node-id="3:272" data-name="Container">
+                      <div className="bg-[#e53935] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:273" data-name="Italic Text" />
+                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:274" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#7c877b] text-[10px] whitespace-nowrap" data-node-id="3:275">
+                          Critical
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:282" data-name="Bold Text:align">
+                        <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:276" data-name="Bold Text">
+                          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[16.5px] relative shrink-0 text-[#14271d] text-[11px] whitespace-nowrap" data-node-id="3:277">
+                            8
+                          </p>
+                        </div>
+                      </div>
+                      <div className="content-stretch flex flex-col items-end relative shrink-0 w-[22px]" data-node-id="3:279" data-name="Small">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[12px] relative shrink-0 text-[#4b6053] text-[8px] text-right whitespace-nowrap" data-node-id="3:280">
+                          6%
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-1 content-stretch flex gap-[8px] items-center justify-self-stretch relative row-2 self-stretch shrink-0" data-node-id="3:283" data-name="Container">
+                      <div className="bg-[#ffb800] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:284" data-name="Italic Text" />
+                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:285" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#7c877b] text-[10px] whitespace-nowrap" data-node-id="3:286">
+                          High
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:291" data-name="Bold Text:align">
+                        <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:287" data-name="Bold Text">
+                          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[16.5px] relative shrink-0 text-[#14271d] text-[11px] whitespace-nowrap" data-node-id="3:288">
+                            28
+                          </p>
+                        </div>
+                      </div>
+                      <div className="content-stretch flex flex-col items-end relative shrink-0 w-[22px]" data-node-id="3:289" data-name="Small">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[12px] relative shrink-0 text-[#4b6053] text-[8px] text-right whitespace-nowrap" data-node-id="3:290">
+                          22%
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-1 content-stretch flex gap-[8px] items-center justify-self-stretch relative row-3 self-stretch shrink-0" data-node-id="3:292" data-name="Container">
+                      <div className="bg-[#00994f] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:293" data-name="Italic Text" />
+                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:294" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#7c877b] text-[10px] whitespace-nowrap" data-node-id="3:295">
+                          Medium
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:300" data-name="Bold Text:align">
+                        <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:296" data-name="Bold Text">
+                          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[16.5px] relative shrink-0 text-[#14271d] text-[11px] whitespace-nowrap" data-node-id="3:297">
+                            56
+                          </p>
+                        </div>
+                      </div>
+                      <div className="content-stretch flex flex-col items-end relative shrink-0 w-[22px]" data-node-id="3:298" data-name="Small">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[12px] relative shrink-0 text-[#4b6053] text-[8px] text-right whitespace-nowrap" data-node-id="3:299">
+                          44%
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-1 content-stretch flex gap-[8px] items-center justify-self-stretch relative row-4 self-stretch shrink-0" data-node-id="3:301" data-name="Container">
+                      <div className="bg-[#16a6c9] relative rounded-[3px] shrink-0 size-[6px]" data-node-id="3:302" data-name="Italic Text" />
+                      <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:303" data-name="Text">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#7c877b] text-[10px] whitespace-nowrap" data-node-id="3:304">
+                          Low
+                        </p>
+                      </div>
+                      <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:309" data-name="Bold Text:align">
+                        <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:305" data-name="Bold Text">
+                          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[16.5px] relative shrink-0 text-[#14271d] text-[11px] whitespace-nowrap" data-node-id="3:306">
+                            36
+                          </p>
+                        </div>
+                      </div>
+                      <div className="content-stretch flex flex-col items-end relative shrink-0 w-[22px]" data-node-id="3:307" data-name="Small">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[12px] relative shrink-0 text-[#4b6053] text-[8px] text-right whitespace-nowrap" data-node-id="3:308">
+                          28%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[#f0f2ee] border-solid border-t content-stretch flex gap-[7px] items-center px-[20px] py-[11px] relative shrink-0 w-full" data-node-id="3:311" data-name="Container">
+                  <div className="relative shrink-0 size-[15px]" data-node-id="3:312" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon16} />
+                  </div>
+                  <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:315" data-name="Text">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:316">{`Priority is based on urgency & impact`}</p>
+                  </div>
+                  <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:320" data-name="Button - View priority matrix:align">
+                    <div className="content-stretch flex items-start relative shrink-0" data-node-id="3:317" data-name="Button - View priority matrix">
+                      <div className="relative shrink-0 size-[16px]" data-node-id="3:318" data-name="Icon">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon17} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-start pt-[23px] relative shrink-0 w-full" data-node-id="3:552" data-name="Section:margin">
+            <div className="bg-white border border-[#dce3de] border-solid content-stretch flex flex-col items-start relative rounded-[6px] shrink-0 w-full" data-node-id="3:321" data-name="Section">
+              <div className="border-[#edf0ed] border-b border-solid content-stretch flex items-center justify-between pb-[16px] pt-[20px] px-[21px] relative shrink-0 w-full" data-node-id="3:322" data-name="Container">
+                <div className="content-stretch flex flex-col items-start relative shrink-0 w-[291.094px]" data-node-id="3:323" data-name="Container">
+                  <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:324" data-name="Heading 2">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[22.5px] relative shrink-0 text-[#14271d] text-[15px] tracking-[-0.15px] whitespace-nowrap" data-node-id="3:325">
+                      Recent service requests
+                    </p>
+                  </div>
+                  <div className="content-stretch flex flex-col h-[25px] items-start pt-[6px] relative shrink-0 w-[291.094px]" data-node-id="3:326" data-name="Paragraph">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:327">
+                      Review submissions, assignments, and resolution status.
+                    </p>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="3:329" data-name="Button">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#43584c] text-[12px] text-center whitespace-nowrap" data-node-id="3:330">
+                    View all requests
+                  </p>
+                  <div className="relative shrink-0 size-[16px]" data-node-id="3:331" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon4} />
+                  </div>
+                </div>
+              </div>
+              <div className="border-[#f3f4f1] border-b border-solid border-t content-stretch flex h-[54px] items-center justify-between min-h-[54px] px-[20px] relative shrink-0 w-full" data-node-id="3:333" data-name="Container">
+                <div className="content-stretch flex gap-[20px] h-full items-start relative shrink-0" data-node-id="3:334" data-name="Container">
+                  <div className="content-stretch flex gap-[7px] h-full items-center relative shrink-0" data-node-id="3:335" data-name="Button">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#245e3d] text-[12px] text-center whitespace-nowrap" data-node-id="3:336">
+                      All requests
+                    </p>
+                    <div className="bg-[#eef3eb] content-stretch flex flex-col items-center px-[5px] py-[2px] relative rounded-[4px] shrink-0" data-node-id="3:338" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[12px] relative shrink-0 text-[#65845f] text-[8px] text-center whitespace-nowrap" data-node-id="3:339">
+                        5
+                      </p>
+                    </div>
+                    <div className="absolute bg-[#008447] h-[3px] left-0 top-[49px] w-[88.719px]" data-node-id="3:341" data-name="Text" />
+                  </div>
+                  <div className="content-stretch flex h-full items-center relative shrink-0" data-node-id="3:342" data-name="Button">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] text-center whitespace-nowrap" data-node-id="3:343">
+                      Pending
+                    </p>
+                  </div>
+                  <div className="content-stretch flex h-full items-center relative shrink-0" data-node-id="3:344" data-name="Button">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] text-center whitespace-nowrap" data-node-id="3:345">
+                      In Progress
+                    </p>
+                  </div>
+                  <div className="content-stretch flex h-full items-center relative shrink-0" data-node-id="3:346" data-name="Button">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] text-center whitespace-nowrap" data-node-id="3:347">
+                      Completed
+                    </p>
+                  </div>
+                </div>
+                <div className="content-stretch flex gap-[8px] items-start relative shrink-0" data-node-id="3:348" data-name="Container">
+                  <div className="border border-[#dce3de] border-solid content-stretch flex gap-[6px] items-center px-[9px] py-[7px] relative rounded-[4px] self-stretch shrink-0" data-node-id="3:349" data-name="Container">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:350" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon18} />
+                    </div>
+                    <div className="content-stretch flex flex-col h-[18px] items-start justify-center overflow-clip relative shrink-0 w-[125px]" data-node-id="3:353" data-name="Text Input - Search requests">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#4b6053] text-[12px] w-full" data-node-id="3:354">
+                        Search requests...
+                      </p>
+                    </div>
+                  </div>
+                  <div className="bg-white border border-[#dce3de] border-solid content-stretch flex gap-[8px] items-center justify-center px-[9px] py-[6px] relative rounded-[4px] self-stretch shrink-0" data-node-id="3:355" data-name="Label">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:356" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon19} />
+                    </div>
+                    <div className="h-[17px] relative shrink-0 w-[86px]" data-node-id="3:360" data-name="Dropdown - Filter by priority">
+                      <div className="absolute content-stretch flex h-[17px] items-center left-[4px] overflow-clip top-0 w-[66px]" data-node-id="3:361" data-name="Container">
+                        <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:362">
+                          All priorities
+                        </p>
+                      </div>
+                      <div className="absolute content-stretch flex h-[17px] items-center justify-center left-[67px] top-0 w-[20px]" data-node-id="3:364" data-name="Container">
+                        <div className="h-[6px] relative shrink-0 w-[10px]" data-node-id="3:365" data-name="Icon">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon6} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="content-stretch flex flex-col h-[426.438px] items-start overflow-clip relative shrink-0 w-full" data-node-id="3:367" data-name="Container">
+                <div className="grid grid-cols-[_______133.27px_286.09px_100.73px_119.25px_145.16px_125.16px_47.34px] grid-rows-[______43.50px_76.69px_76.69px_76.69px_76.69px_76.19px] h-[426.438px] relative shrink-0 w-full" data-node-id="3:368" data-name="Table">
+                  <div className="bg-[#e4f5eb] col-1 content-stretch flex flex-col h-[43.5px] items-start justify-center pl-[21px] pr-[15px] py-[14px] relative row-1 shrink-0 w-[133.266px]" data-node-id="3:371" data-name="Header Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[0.6px] whitespace-nowrap" data-node-id="3:372">
+                      CONTROL NO.
+                    </p>
+                  </div>
+                  <div className="bg-[#e4f5eb] col-2 content-stretch flex flex-col h-[43.5px] items-start justify-center px-[15px] py-[14px] relative row-1 shrink-0 w-[286.094px]" data-node-id="3:374" data-name="Header Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[0.6px] whitespace-nowrap" data-node-id="3:375">
+                      REQUEST DETAILS
+                    </p>
+                  </div>
+                  <div className="bg-[#e4f5eb] col-3 content-stretch flex flex-col h-[43.5px] items-start justify-center px-[15px] py-[14px] relative row-1 shrink-0 w-[100.734px]" data-node-id="3:376" data-name="Header Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[0.6px] whitespace-nowrap" data-node-id="3:377">
+                      PRIORITY
+                    </p>
+                  </div>
+                  <div className="bg-[#e4f5eb] col-4 content-stretch flex flex-col h-[43.5px] items-start justify-center px-[15px] py-[14px] relative row-1 shrink-0 w-[119.25px]" data-node-id="3:378" data-name="Header Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[0.6px] whitespace-nowrap" data-node-id="3:379">
+                      STATUS
+                    </p>
+                  </div>
+                  <div className="bg-[#e4f5eb] col-5 content-stretch flex flex-col h-[43.5px] items-start justify-center px-[15px] py-[14px] relative row-1 shrink-0 w-[145.156px]" data-node-id="3:380" data-name="Header Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[0.6px] whitespace-nowrap" data-node-id="3:381">
+                      ASSIGNED TO
+                    </p>
+                  </div>
+                  <div className="bg-[#e4f5eb] col-6 content-stretch flex flex-col h-[43.5px] items-start justify-center px-[15px] py-[14px] relative row-1 shrink-0 w-[125.156px]" data-node-id="3:382" data-name="Header Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[0.6px] whitespace-nowrap" data-node-id="3:383">
+                      DATE SUBMITTED
+                    </p>
+                  </div>
+                  <div className="bg-[#e4f5eb] col-7 content-stretch flex flex-col h-[43.5px] items-start justify-center px-[15px] py-[14px] relative row-1 shrink-0 w-[47.344px]" data-node-id="3:384" data-name="Header Cell" />
+                  <div className="border-[#e7ece8] border-solid border-t col-1 content-stretch flex flex-col h-[76.688px] items-start justify-center pl-[21px] pr-[15px] py-[16px] relative row-2 shrink-0 w-[133.266px]" data-node-id="3:387" data-name="Table Cell">
+                    <div className="h-[18px] relative shrink-0 w-[93.625px]" data-node-id="3:388" data-name="Button">
+                      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['JetBrains_Mono:Medium'] font-medium leading-[18px] left-[47px] text-[#43584c] text-[12px] text-center top-0 whitespace-nowrap" data-node-id="3:389">
+                        FMS-2026-0128
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-2 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-2 shrink-0 w-[286.094px]" data-node-id="3:391" data-name="Table Cell">
+                    <div className="content-stretch flex flex-col h-[18px] items-start max-w-[270px] overflow-clip relative shrink-0 w-[256.094px]" data-node-id="3:392" data-name="Bold Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:393">
+                        Internet connectivity issue in laboratory
+                      </p>
+                    </div>
+                    <div className="content-stretch flex gap-[5px] h-[25.688px] items-center pt-[7px] relative shrink-0 w-[256.094px]" data-node-id="3:394" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:395">
+                        College of Engineering
+                      </p>
+                      <div className="bg-[#b9c0b1] relative rounded-[1px] shrink-0 size-[2px]" data-node-id="3:396" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:397">{`IT & Technical`}</p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-3 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-2 shrink-0 w-[100.734px]" data-node-id="3:399" data-name="Table Cell">
+                    <div className="bg-[#ffe1e1] border border-[#ffa7a7] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:400" data-name="Text">
+                      <div className="bg-[#ae1616] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:401" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#ae1616] text-[11px] whitespace-nowrap" data-node-id="3:402">
+                        Critical
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-4 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-2 shrink-0 w-[119.25px]" data-node-id="3:403" data-name="Table Cell">
+                    <div className="bg-[#dff1ff] border border-[#9bd0f5] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:404" data-name="Text">
+                      <div className="bg-[#00599b] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:405" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#00599b] text-[11px] whitespace-nowrap" data-node-id="3:406">
+                        In Progress
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-5 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-2 shrink-0 w-[145.156px]" data-node-id="3:407" data-name="Table Cell">
+                    <div className="content-stretch flex gap-[6px] items-center relative shrink-0 w-[115.156px]" data-node-id="3:408" data-name="Text">
+                      <div className="bg-[#eceee2] border-2 border-[#f5f6ef] border-solid grid grid-cols-[_18px] grid-rows-[_18px] relative rounded-[11px] shrink-0 size-[22px]" data-node-id="3:409" data-name="Text">
+                        <p className="[word-break:break-word] col-1 font-['Plus_Jakarta_Sans:Regular'] font-normal justify-self-center leading-[10.5px] relative row-1 self-center shrink-0 text-[#9b9f7a] text-[7px] whitespace-nowrap" data-node-id="3:410">
+                          MD
+                        </p>
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:412">
+                        Mark Dela Cruz
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-6 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-2 shrink-0 w-[125.156px]" data-node-id="3:414" data-name="Table Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:415">
+                      May 21, 2026
+                    </p>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-7 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-2 shrink-0 w-[47.344px]" data-node-id="3:416" data-name="Table Cell">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:417" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon20} />
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-1 content-stretch flex flex-col h-[76.688px] items-start justify-center pl-[21px] pr-[15px] py-[16px] relative row-3 shrink-0 w-[133.266px]" data-node-id="3:420" data-name="Table Cell">
+                    <div className="h-[18px] relative shrink-0 w-[93.625px]" data-node-id="3:421" data-name="Button">
+                      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['JetBrains_Mono:Medium'] font-medium leading-[18px] left-[47px] text-[#43584c] text-[12px] text-center top-0 whitespace-nowrap" data-node-id="3:422">
+                        FMS-2026-0127
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-2 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-3 shrink-0 w-[286.094px]" data-node-id="3:423" data-name="Table Cell">
+                    <div className="content-stretch flex flex-col h-[18px] items-start max-w-[270px] overflow-clip relative shrink-0 w-[256.094px]" data-node-id="3:424" data-name="Bold Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:425">
+                        Air conditioning unit not cooling
+                      </p>
+                    </div>
+                    <div className="content-stretch flex gap-[5px] h-[25.688px] items-center pt-[7px] relative shrink-0 w-[256.094px]" data-node-id="3:426" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:427">
+                        University Library
+                      </p>
+                      <div className="bg-[#b9c0b1] relative rounded-[1px] shrink-0 size-[2px]" data-node-id="3:428" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:429">
+                        Maintenance
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-3 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-3 shrink-0 w-[100.734px]" data-node-id="3:431" data-name="Table Cell">
+                    <div className="bg-[#fff0b3] border border-[#f0c347] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:432" data-name="Text">
+                      <div className="bg-[#805100] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:433" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#805100] text-[11px] whitespace-nowrap" data-node-id="3:434">
+                        High
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-4 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-3 shrink-0 w-[119.25px]" data-node-id="3:435" data-name="Table Cell">
+                    <div className="bg-[#ece1ff] border border-[#c6a4f0] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:436" data-name="Text">
+                      <div className="bg-[#6625b0] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:437" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#6625b0] text-[11px] whitespace-nowrap" data-node-id="3:438">
+                        Assigned
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-5 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-3 shrink-0 w-[145.156px]" data-node-id="3:439" data-name="Table Cell">
+                    <div className="content-stretch flex gap-[6px] items-center relative shrink-0 w-[115.156px]" data-node-id="3:440" data-name="Text">
+                      <div className="bg-[#eceee2] border-2 border-[#f5f6ef] border-solid grid grid-cols-[_18px] grid-rows-[_18px] relative rounded-[11px] shrink-0 size-[22px]" data-node-id="3:441" data-name="Text">
+                        <p className="[word-break:break-word] col-1 font-['Plus_Jakarta_Sans:Regular'] font-normal justify-self-center leading-[10.5px] relative row-1 self-center shrink-0 text-[#9b9f7a] text-[7px] whitespace-nowrap" data-node-id="3:442">
+                          JS
+                        </p>
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:443">
+                        John Santos
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-6 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-3 shrink-0 w-[125.156px]" data-node-id="3:444" data-name="Table Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:445">
+                      May 21, 2026
+                    </p>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-7 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-3 shrink-0 w-[47.344px]" data-node-id="3:446" data-name="Table Cell">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:447" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon20} />
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-1 content-stretch flex flex-col h-[76.688px] items-start justify-center pl-[21px] pr-[15px] py-[16px] relative row-4 shrink-0 w-[133.266px]" data-node-id="3:450" data-name="Table Cell">
+                    <div className="h-[18px] relative shrink-0 w-[93.625px]" data-node-id="3:451" data-name="Button">
+                      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['JetBrains_Mono:Medium'] font-medium leading-[18px] left-[47px] text-[#43584c] text-[12px] text-center top-0 whitespace-nowrap" data-node-id="3:452">
+                        FMS-2026-0126
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-2 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-4 shrink-0 w-[286.094px]" data-node-id="3:453" data-name="Table Cell">
+                    <div className="content-stretch flex flex-col h-[18px] items-start max-w-[270px] overflow-clip relative shrink-0 w-[256.094px]" data-node-id="3:454" data-name="Bold Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:455">
+                        Request for software installation
+                      </p>
+                    </div>
+                    <div className="content-stretch flex gap-[5px] h-[25.688px] items-center pt-[7px] relative shrink-0 w-[256.094px]" data-node-id="3:456" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:457">
+                        College of Science
+                      </p>
+                      <div className="bg-[#b9c0b1] relative rounded-[1px] shrink-0 size-[2px]" data-node-id="3:458" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:459">{`IT & Technical`}</p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-3 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-4 shrink-0 w-[100.734px]" data-node-id="3:461" data-name="Table Cell">
+                    <div className="bg-[#d5f8e1] border border-[#8cddb0] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:462" data-name="Text">
+                      <div className="bg-[#00672f] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:463" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#00672f] text-[11px] whitespace-nowrap" data-node-id="3:464">
+                        Medium
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-4 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-4 shrink-0 w-[119.25px]" data-node-id="3:465" data-name="Table Cell">
+                    <div className="bg-[#fff0b3] border border-[#f0c347] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:466" data-name="Text">
+                      <div className="bg-[#805100] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:467" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#805100] text-[11px] whitespace-nowrap" data-node-id="3:468">
+                        Pending
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-5 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-4 shrink-0 w-[145.156px]" data-node-id="3:469" data-name="Table Cell">
+                    <div className="content-stretch flex h-[18px] items-center relative shrink-0 w-[115.156px]" data-node-id="3:470" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Italic'] font-normal italic leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:471">
+                        Unassigned
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-6 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-4 shrink-0 w-[125.156px]" data-node-id="3:473" data-name="Table Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:474">
+                      May 21, 2026
+                    </p>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-7 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-4 shrink-0 w-[47.344px]" data-node-id="3:475" data-name="Table Cell">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:476" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon20} />
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-1 content-stretch flex flex-col h-[76.688px] items-start justify-center pl-[21px] pr-[15px] py-[16px] relative row-5 shrink-0 w-[133.266px]" data-node-id="3:479" data-name="Table Cell">
+                    <div className="h-[18px] relative shrink-0 w-[93.625px]" data-node-id="3:480" data-name="Button">
+                      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['JetBrains_Mono:Medium'] font-medium leading-[18px] left-[47px] text-[#43584c] text-[12px] text-center top-0 whitespace-nowrap" data-node-id="3:481">
+                        FMS-2026-0125
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-2 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-5 shrink-0 w-[286.094px]" data-node-id="3:482" data-name="Table Cell">
+                    <div className="content-stretch flex flex-col h-[18px] items-start max-w-[270px] overflow-clip relative shrink-0 w-[256.094px]" data-node-id="3:483" data-name="Bold Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:484">
+                        Leaking faucet in faculty restroom
+                      </p>
+                    </div>
+                    <div className="content-stretch flex gap-[5px] h-[25.688px] items-center pt-[7px] relative shrink-0 w-[256.094px]" data-node-id="3:485" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:486">
+                        College of Education
+                      </p>
+                      <div className="bg-[#b9c0b1] relative rounded-[1px] shrink-0 size-[2px]" data-node-id="3:487" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:488">
+                        Maintenance
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-3 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-5 shrink-0 w-[100.734px]" data-node-id="3:490" data-name="Table Cell">
+                    <div className="bg-[#fff0b3] border border-[#f0c347] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:491" data-name="Text">
+                      <div className="bg-[#805100] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:492" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#805100] text-[11px] whitespace-nowrap" data-node-id="3:493">
+                        High
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-4 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-5 shrink-0 w-[119.25px]" data-node-id="3:494" data-name="Table Cell">
+                    <div className="bg-[#dff1ff] border border-[#9bd0f5] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:495" data-name="Text">
+                      <div className="bg-[#00599b] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:496" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#00599b] text-[11px] whitespace-nowrap" data-node-id="3:497">
+                        In Progress
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-5 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-5 shrink-0 w-[145.156px]" data-node-id="3:498" data-name="Table Cell">
+                    <div className="content-stretch flex gap-[6px] items-center relative shrink-0 w-[115.156px]" data-node-id="3:499" data-name="Text">
+                      <div className="bg-[#eceee2] border-2 border-[#f5f6ef] border-solid grid grid-cols-[_18px] grid-rows-[_18px] relative rounded-[11px] shrink-0 size-[22px]" data-node-id="3:500" data-name="Text">
+                        <p className="[word-break:break-word] col-1 font-['Plus_Jakarta_Sans:Regular'] font-normal justify-self-center leading-[10.5px] relative row-1 self-center shrink-0 text-[#9b9f7a] text-[7px] whitespace-nowrap" data-node-id="3:501">
+                          PG
+                        </p>
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:502">
+                        Paul Garcia
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-6 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-5 shrink-0 w-[125.156px]" data-node-id="3:503" data-name="Table Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:504">
+                      May 20, 2026
+                    </p>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-7 content-stretch flex flex-col h-[76.688px] items-start justify-center px-[15px] py-[16px] relative row-5 shrink-0 w-[47.344px]" data-node-id="3:505" data-name="Table Cell">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:506" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon20} />
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-1 content-stretch flex flex-col h-[76.188px] items-start justify-center pl-[21px] pr-[15px] py-[16px] relative row-6 shrink-0 w-[133.266px]" data-node-id="3:509" data-name="Table Cell">
+                    <div className="h-[18px] relative shrink-0 w-[93.625px]" data-node-id="3:510" data-name="Button">
+                      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['JetBrains_Mono:Medium'] font-medium leading-[18px] left-[47px] text-[#43584c] text-[12px] text-center top-0 whitespace-nowrap" data-node-id="3:511">
+                        FMS-2026-0124
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-2 content-stretch flex flex-col h-[76.188px] items-start justify-center px-[15px] py-[16px] relative row-6 shrink-0 w-[286.094px]" data-node-id="3:512" data-name="Table Cell">
+                    <div className="content-stretch flex flex-col h-[18px] items-start max-w-[270px] overflow-clip relative shrink-0 w-[256.094px]" data-node-id="3:513" data-name="Bold Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:514">
+                        Excellent assistance with account recovery
+                      </p>
+                    </div>
+                    <div className="content-stretch flex gap-[5px] h-[25.688px] items-center pt-[7px] relative shrink-0 w-[256.094px]" data-node-id="3:515" data-name="Text">
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:516">
+                        Office of the Registrar
+                      </p>
+                      <div className="bg-[#b9c0b1] relative rounded-[1px] shrink-0 size-[2px]" data-node-id="3:517" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:518">
+                        Compliment
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-3 content-stretch flex flex-col h-[76.188px] items-start justify-center px-[15px] py-[16px] relative row-6 shrink-0 w-[100.734px]" data-node-id="3:520" data-name="Table Cell">
+                    <div className="bg-[#dff1ff] border border-[#9bd0f5] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:521" data-name="Text">
+                      <div className="bg-[#00599b] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:522" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#00599b] text-[11px] whitespace-nowrap" data-node-id="3:523">
+                        Low
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-4 content-stretch flex flex-col h-[76.188px] items-start justify-center px-[15px] py-[16px] relative row-6 shrink-0 w-[119.25px]" data-node-id="3:524" data-name="Table Cell">
+                    <div className="bg-[#d5f8e1] border border-[#8cddb0] border-solid content-stretch flex gap-[5px] h-[26.5px] items-center px-[7px] py-[4px] relative rounded-[4px] shrink-0" data-node-id="3:525" data-name="Text">
+                      <div className="bg-[#00672f] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:526" data-name="Italic Text" />
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[16.5px] relative shrink-0 text-[#00672f] text-[11px] whitespace-nowrap" data-node-id="3:527">
+                        Completed
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-5 content-stretch flex flex-col h-[76.188px] items-start justify-center px-[15px] py-[16px] relative row-6 shrink-0 w-[145.156px]" data-node-id="3:528" data-name="Table Cell">
+                    <div className="content-stretch flex gap-[6px] items-center relative shrink-0 w-[115.156px]" data-node-id="3:529" data-name="Text">
+                      <div className="bg-[#eceee2] border-2 border-[#f5f6ef] border-solid grid grid-cols-[_18px] grid-rows-[_18px] relative rounded-[11px] shrink-0 size-[22px]" data-node-id="3:530" data-name="Text">
+                        <p className="[word-break:break-word] col-1 font-['Plus_Jakarta_Sans:Regular'] font-normal justify-self-center leading-[10.5px] relative row-1 self-center shrink-0 text-[#9b9f7a] text-[7px] whitespace-nowrap" data-node-id="3:531">
+                          MT
+                        </p>
+                      </div>
+                      <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:532">
+                        Maria Torres
+                      </p>
+                    </div>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-6 content-stretch flex flex-col h-[76.188px] items-start justify-center px-[15px] py-[16px] relative row-6 shrink-0 w-[125.156px]" data-node-id="3:533" data-name="Table Cell">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18px] relative shrink-0 text-[#4b6053] text-[12px] whitespace-nowrap" data-node-id="3:534">
+                      May 20, 2026
+                    </p>
+                  </div>
+                  <div className="border-[#e7ece8] border-solid border-t col-7 content-stretch flex flex-col h-[76.188px] items-start justify-center px-[15px] py-[16px] relative row-6 shrink-0 w-[47.344px]" data-node-id="3:535" data-name="Table Cell">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="3:536" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon20} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="border-[#edf0e9] border-solid border-t content-stretch flex h-[45.688px] items-start justify-between px-[21px] py-[13px] relative shrink-0 w-full" data-node-id="3:538" data-name="Container">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:539">
+                  Showing 5 of 5 sample requests
+                </p>
+                <div className="content-stretch flex gap-[5px] h-full items-center relative shrink-0" data-node-id="3:540" data-name="Text">
+                  <div className="bg-[#00a653] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="3:541" data-name="Italic Text" />
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[18.7px] relative shrink-0 text-[#4b6053] text-[11px] whitespace-nowrap" data-node-id="3:542">
+                    Updated just now
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center pt-[28px] relative shrink-0 w-full" data-node-id="3:553" data-name="Footer:margin">
+            <div className="border-[#dce3de] border-solid border-t content-stretch flex h-[58px] items-center justify-between pb-[20px] pt-[18px] relative shrink-0 w-full" data-node-id="3:543" data-name="Footer" />
+          </div>
+        </div>
+      </div>
+      <div className="absolute bg-white border-[#008447] border-r border-solid content-stretch flex flex-col h-[949px] items-start left-0 overflow-clip pb-[18px] pt-[30px] px-[18px] top-0 w-[247px]" data-node-id="3:555" data-name="App">
+        <div className="border-[#dce3de] border-b border-solid content-stretch flex items-center pb-[20px] px-[10px] relative shrink-0 w-full" data-node-id="3:556" data-name="Link">
+          <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="3:557" data-name="Text">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[26.1px] relative shrink-0 text-[#008447] text-[18px] tracking-[-0.45px] w-[190px]" data-node-id="3:558">
+              Feedback Management
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-col items-start pb-[29px] pt-[24px] px-[5px] relative shrink-0 w-full" data-node-id="3:647" data-name="Container:margin">
+          <div className="bg-[#f7f9f7] border border-[#dce3de] border-solid content-stretch flex gap-[10px] items-center px-[10px] py-[11px] relative rounded-[6px] shrink-0 w-full" data-node-id="3:560" data-name="Container">
+            <div className="content-stretch flex h-[31px] items-center justify-center relative rounded-[4px] shrink-0 w-[30px]" data-node-id="3:561" data-name="CLSU university seal">
+              <div className="relative shrink-0 size-[30px]" data-node-id="61:85" data-name="CLSU logo">
+                <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgClsuLogo} />
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[100.563px]" data-node-id="3:564" data-name="Text">
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[18px] min-w-full relative shrink-0 text-[#14271d] text-[12px] w-[min-content]" data-node-id="3:565">
+                MISO Workspace
+              </p>
+              <div className="content-stretch flex flex-col h-[19px] items-start pt-[4px] relative shrink-0 w-[100.563px]" data-node-id="3:566" data-name="Small">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] whitespace-nowrap" data-node-id="3:567">
+                  Administration
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:572" data-name="Icon:align">
+              <div className="relative shrink-0 size-[17px]" data-node-id="3:570" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon21} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-col h-[28px] items-start pb-[13px] px-[13px] relative shrink-0 w-[210px]" data-node-id="3:573" data-name="Container">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[1.2px] whitespace-nowrap" data-node-id="3:574">
+            WORKSPACE
+          </p>
+        </div>
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="3:576" data-name="Navigation">
+          <div className="bg-[#008447] border-[#f2b600] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:577" data-name="Button">
+            <div className="relative shrink-0 size-[20px]" data-node-id="3:578" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon22} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[18px] relative shrink-0 text-[12px] text-white whitespace-nowrap" data-node-id="3:583">
+              Dashboard
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col items-center pt-[5px] relative shrink-0 w-full" data-node-id="3:612" data-name="Button:margin">
+            <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:585" data-name="Button">
+              <div className="relative shrink-0 size-[20px]" data-node-id="3:586" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon23} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:589">
+                Service requests
+              </p>
+              <div className="content-stretch flex flex-[1_0_0] items-start justify-end min-w-px relative" data-node-id="3:594" data-name="Text:align">
+                <div className="bg-white border border-[#e5e9e5] border-solid content-stretch flex flex-col items-start px-[6px] py-[2px] relative rounded-[4px] shrink-0" data-node-id="3:591" data-name="Text">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[15px] relative shrink-0 text-[#6c786e] text-[10px] whitespace-nowrap" data-node-id="3:592">
+                    5
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center pt-[5px] relative shrink-0 w-full" data-node-id="3:613" data-name="Button:margin">
+            <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:595" data-name="Button">
+              <div className="relative shrink-0 size-[20px]" data-node-id="3:596" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon24} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:599">
+                Personnel
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center pt-[5px] relative shrink-0 w-full" data-node-id="3:614" data-name="Button:margin">
+            <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:600" data-name="Button">
+              <div className="relative shrink-0 size-[20px]" data-node-id="3:601" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon25} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:603">{`Feedback & ratings`}</p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center pt-[5px] relative shrink-0 w-full" data-node-id="3:615" data-name="Button:margin">
+            <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:604" data-name="Button">
+              <div className="relative shrink-0 size-[20px]" data-node-id="3:605" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon26} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:607">{`Reports & analytics`}</p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center py-[5px] relative shrink-0 w-full" data-node-id="3:616" data-name="Button:margin">
+            <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:608" data-name="Button">
+              <div className="relative shrink-0 size-[20px]" data-node-id="3:609" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon27} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:611">
+                MCP Assistant
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-col h-[59px] items-start pb-[13px] pt-[31px] px-[13px] relative shrink-0 w-[210px]" data-node-id="3:617" data-name="Container">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[15px] relative shrink-0 text-[#4b6053] text-[10px] tracking-[1.2px] whitespace-nowrap" data-node-id="3:618">
+            MANAGEMENT
+          </p>
+        </div>
+        <div className="content-stretch flex flex-col items-start pb-[5px] relative shrink-0" data-node-id="3:650" data-name="Button:margin">
+          <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:619" data-name="Button">
+            <div className="relative shrink-0 size-[20px]" data-node-id="3:620" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon28} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:623">
+              Service settings
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-col items-start pb-[5px] relative shrink-0" data-node-id="3:651" data-name="Button:margin">
+          <div className="border-[rgba(0,0,0,0)] border-l-3 border-solid content-stretch flex gap-[12px] items-center min-h-[44px] px-[13px] py-[12px] relative rounded-[4px] shrink-0 w-[210px]" data-node-id="3:624" data-name="Button">
+            <div className="relative shrink-0 size-[20px]" data-node-id="3:625" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon29} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[18px] relative shrink-0 text-[#43584c] text-[12px] whitespace-nowrap" data-node-id="3:628">
+              System evaluation
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-[1_0_0] flex-col items-start justify-end min-h-px relative w-full" data-node-id="3:652" data-name="Container:align">
+          <div className="content-stretch flex flex-col items-start pt-[35px] relative shrink-0 w-full" data-node-id="3:629" data-name="Container">
+            <div className="content-stretch flex flex-col items-start pt-[13px] relative shrink-0 w-full" data-node-id="3:646" data-name="Container:margin">
+              <div className="border-[#ecefec] border-solid border-t content-stretch flex flex-col items-start pt-[21px] px-[8px] relative shrink-0 w-full" data-node-id="3:638" data-name="Container">
+                <div className="content-stretch flex flex-col h-[21px] items-start pt-[7px] relative shrink-0 w-[194px]" data-node-id="3:641" data-name="Small" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

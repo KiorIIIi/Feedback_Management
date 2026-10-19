@@ -1,0 +1,541 @@
+const imgClsuLogo = "https://www.figma.com/api/mcp/asset/bba35c9e-44a1-461b-8619-6183a91b6666.png";
+const imgLayoutDashboard = "https://www.figma.com/api/mcp/asset/d22b96ff-93c1-4082-b519-e406c2ae2262.svg";
+const imgFiles = "https://www.figma.com/api/mcp/asset/94ac93b0-8cbc-41d7-b376-0957c7543f9d.svg";
+const imgMessageSquare = "https://www.figma.com/api/mcp/asset/8fc20f70-611e-4737-ac8c-269d3edc8e3b.svg";
+const imgBell = "https://www.figma.com/api/mcp/asset/45b7d9ef-0434-47f2-b410-f6657ae11368.svg";
+const imgLogOut = "https://www.figma.com/api/mcp/asset/413d2328-a31c-4d4f-8756-6dbfe8b5d209.svg";
+const imgGraduationCap = "https://www.figma.com/api/mcp/asset/1a63cfc4-674c-4d05-b1c3-dc2fae3ac83d.svg";
+const imgBell1 = "https://www.figma.com/api/mcp/asset/dccccd98-821c-4560-9d65-f83a11466040.svg";
+const imgUnreadIndicator = "https://www.figma.com/api/mcp/asset/e2d0d905-7936-42a2-8c80-dcb0cea78f29.svg";
+const imgClipboardPlus = "https://www.figma.com/api/mcp/asset/e8f1f758-9e5e-44e0-ab04-78fe5697ecdc.svg";
+const imgLockKeyhole = "https://www.figma.com/api/mcp/asset/288510a5-df88-41ad-8f90-f68df8bba10d.svg";
+const imgChevronDown = "https://www.figma.com/api/mcp/asset/f12c9c5d-4693-4410-9d58-dfdc37982052.svg";
+const imgCircle = "https://www.figma.com/api/mcp/asset/1b8fa1f8-f485-4c0a-a8b5-617a7a9364ab.svg";
+const imgCircleDot = "https://www.figma.com/api/mcp/asset/afd4679e-c6b3-40bb-b567-e9c86ae8554f.svg";
+const imgShieldCheck = "https://www.figma.com/api/mcp/asset/9126283c-34f8-4476-bd92-69abb706ad9d.svg";
+const imgLockKeyhole1 = "https://www.figma.com/api/mcp/asset/572bce9b-0946-4992-86e7-81ca5027b3dc.svg";
+const imgArrowRight = "https://www.figma.com/api/mcp/asset/792ee36e-dba6-40dc-a69e-f8b03947e9af.svg";
+const imgMessageSquareHeart = "https://www.figma.com/api/mcp/asset/401534b8-2b23-4093-a5da-fbd10893b7b7.svg";
+const imgGraduationCap1 = "https://www.figma.com/api/mcp/asset/30e7f15c-9835-4b86-8696-3c1d7499c4d5.svg";
+const imgCircleHelp = "https://www.figma.com/api/mcp/asset/3157bac2-0932-418b-8dc9-321685c419b3.svg";
+const imgArrowUpRight = "https://www.figma.com/api/mcp/asset/81604f9c-71df-42f4-961d-84e6a9da50fc.svg";
+
+export default function SubmitARequestOrFeedback() {
+  return (
+    <div className="bg-[#f5f8f6] content-stretch flex flex-col items-start relative size-full" data-node-id="26:22903" data-name="Submit a request or feedback">
+      <div className="bg-white border-[#dce5df] border-b border-solid content-stretch flex h-[100px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="27:927" data-name="Requester navigation">
+        <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-node-id="27:928" data-name="University identity">
+          <div className="content-stretch flex h-[46px] items-center justify-center relative rounded-[8px] shrink-0 w-[44px]" data-node-id="27:929" data-name="CLSU university seal">
+            <div className="relative shrink-0 size-[44px]" data-node-id="61:72" data-name="CLSU logo">
+              <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgClsuLogo} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Plus_Jakarta_Sans:Bold'] font-bold gap-[5px] items-start leading-[normal] relative shrink-0 whitespace-nowrap" data-node-id="27:931" data-name="Portal identity">
+            <p className="relative shrink-0 text-[#008447] text-[10px]" data-node-id="27:932">
+              CENTRAL LUZON STATE UNIVERSITY
+            </p>
+            <p className="relative shrink-0 text-[#005b30] text-[18px]" data-node-id="27:933">
+              MISO Service Portal
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex items-center justify-between relative shrink-0 w-[588px]" data-node-id="27:934" data-name="Portal links">
+          <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-[44px] items-center px-[12px] relative rounded-[8px] shrink-0" data-node-id="27:955" data-name="Navigation item">
+            <div className="relative shrink-0 size-[18px]" data-node-id="27:956" data-name="layout-dashboard">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLayoutDashboard} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:958">
+              Dashboard
+            </p>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:959">
+            <div className="bg-[#12553d] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:960" data-name="files">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFiles} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[13px] text-white whitespace-nowrap" data-node-id="27:962">
+                My requests
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:963">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:964" data-name="message-square">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquare} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:966">
+                Feedback history
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="27:967">
+            <div className="bg-[rgba(255,255,255,0)] content-stretch flex gap-[10px] h-full items-center px-[12px] relative rounded-[8px] shrink-0" data-name="Navigation item">
+              <div className="relative shrink-0 size-[18px]" data-node-id="27:968" data-name="bell">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBell} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[13px] whitespace-nowrap" data-node-id="27:970">
+                Notifications
+              </p>
+              <div className="bg-[#eaf3ed] content-stretch flex items-center justify-center relative rounded-[5px] shrink-0 size-[20px]" data-node-id="27:971" data-name="Unread count">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[10px] whitespace-nowrap" data-node-id="27:972">
+                  4
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[10px] h-[40px] items-center relative shrink-0 w-[201px]" data-node-id="27:973" data-name="Requester account">
+          <div className="bg-[#faf4e4] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[34px]" data-node-id="27:974" data-name="Avatar">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#795b16] text-[12px] whitespace-nowrap" data-node-id="27:975">
+              AS
+            </p>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[3px] items-start leading-[normal] relative shrink-0 text-[12px] w-[131px] whitespace-nowrap" data-node-id="27:976" data-name="Profile">
+            <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold relative shrink-0 text-[#1e3029]" data-node-id="27:977">
+              Andrea Santos
+            </p>
+            <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal relative shrink-0 text-[#617169]" data-node-id="27:978">
+              Faculty · Engineering
+            </p>
+          </div>
+          <div className="relative shrink-0 size-[16px]" data-node-id="27:979" data-name="log-out">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLogOut} />
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex h-[48px] items-center justify-between px-[64px] relative shrink-0 w-[1440px]" data-node-id="26:22943" data-name="Utility header">
+        <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="26:22944" data-name="Portal context">
+          <div className="relative shrink-0 size-[20px]" data-node-id="26:24113" data-name="graduation-cap">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGraduationCap} />
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:22946">
+            Requester portal
+          </p>
+          <div className="bg-[#dee5df] h-[18px] relative shrink-0 w-px" data-node-id="26:22947" data-name="Divider" />
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22948">
+            Your records, in one place
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[20px] items-center relative shrink-0 w-[199px]" data-node-id="26:22949" data-name="Header actions">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22950">
+            Friday, 16 October 2026
+          </p>
+          <div className="relative shrink-0 size-[18px]" data-node-id="26:24116" data-name="bell">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBell1} />
+          </div>
+          <div className="relative shrink-0 size-[6px]" data-node-id="26:22952" data-name="Unread indicator">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgUnreadIndicator} />
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex flex-col gap-[24px] items-start pb-[40px] pt-[32px] px-[64px] relative shrink-0 w-[1440px]" data-node-id="26:22953" data-name="Main content">
+        <div className="content-stretch flex flex-col gap-[12px] items-start relative shrink-0 w-[1312px]" data-node-id="26:22954" data-name="Page introduction">
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:22955">
+            My requests / New submission
+          </p>
+          <div className="content-stretch flex items-center relative shrink-0 w-[1312px]" data-node-id="26:22956" data-name="Title and action">
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[40px] relative shrink-0 text-[#1e3029] text-[32px] w-[1312px]" data-node-id="26:22957">
+              How can we help?
+            </p>
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[14px] w-[1312px]" data-node-id="26:22958">
+            Tell us what you need. Your submission goes to MISO for review and routing.
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-[1312px]" data-node-id="26:22959" data-name="Intake layout">
+          <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-[936px]" data-node-id="26:22960" data-name="Request form">
+            <div className="content-stretch flex flex-col gap-[10px] items-start relative shrink-0 w-[936px]" data-node-id="26:22961" data-name="Intake type">
+              <div className="bg-[#e9eee9] content-stretch flex gap-[5px] items-start p-[5px] relative rounded-[12px] shrink-0 w-[936px]" data-node-id="26:22962" data-name="Type switch">
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[10px] h-[49px] items-center justify-center relative rounded-[8px] shrink-0 w-[461.5px]" data-node-id="26:22963" data-name="Selected service request">
+                  <div className="relative shrink-0 size-[18px]" data-node-id="26:24119" data-name="clipboard-plus">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgClipboardPlus} />
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] whitespace-nowrap" data-node-id="26:22965">
+                    Service request
+                  </p>
+                </div>
+                <div className="content-stretch flex gap-[10px] h-[49px] items-center justify-center relative shrink-0 w-[459.5px]" data-node-id="26:22966" data-name="Feedback option">
+                  <div className="relative shrink-0 size-[18px]" data-node-id="26:24122" data-name="message-square">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquare} />
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[normal] relative shrink-0 text-[#617169] text-[14px] whitespace-nowrap" data-node-id="26:22968">
+                    Feedback
+                  </p>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[936px]" data-node-id="26:22969">
+                Request assistance with a university service. Fields marked * are required.
+              </p>
+            </div>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[936px]" data-node-id="26:22970" data-name="Panel">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-[888px]" data-node-id="26:22971" data-name="Panel heading">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[888px]" data-node-id="26:22972">
+                  Your information
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[888px]" data-node-id="26:22973">
+                  We use your account details to identify and follow up on this request.
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[18px] items-start relative shrink-0 w-[888px]" data-node-id="26:22974" data-name="Requester details">
+                <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[435px]" data-node-id="26:22975" data-name="Form field">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[435px]" data-node-id="26:22976">
+                    Requester
+                  </p>
+                  <div className="bg-[#f8faf8] border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[435px]" data-node-id="26:22977" data-name="Input">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[14px] w-[386px]" data-node-id="26:22978">
+                      Andrea Santos
+                    </p>
+                    <div className="relative shrink-0 size-[15px]" data-node-id="26:24125" data-name="lock-keyhole">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLockKeyhole} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[435px]" data-node-id="26:22980" data-name="Form field">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[435px]" data-node-id="26:22981">
+                    Email address
+                  </p>
+                  <div className="bg-[#f8faf8] border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[435px]" data-node-id="26:22982" data-name="Input">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[14px] w-[386px]" data-node-id="26:22983">
+                      andrea.santos@clsu.edu.ph
+                    </p>
+                    <div className="relative shrink-0 size-[15px]" data-node-id="26:24128" data-name="lock-keyhole">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLockKeyhole} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="content-stretch flex gap-[18px] items-start relative shrink-0 w-[888px]" data-node-id="26:22985" data-name="Affiliation details">
+                <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[435px]" data-node-id="26:22986" data-name="Form field">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[435px]" data-node-id="26:22987">
+                    Requesting office / affiliation *
+                  </p>
+                  <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[435px]" data-node-id="26:22988" data-name="Input">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#1e3029] text-[14px] w-[386px]" data-node-id="26:22989">
+                      College of Engineering
+                    </p>
+                    <div className="relative shrink-0 size-[15px]" data-node-id="26:24131" data-name="chevron-down">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgChevronDown} />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[435px]" data-node-id="26:22991" data-name="Form field">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[435px]" data-node-id="26:22992">
+                    Role
+                  </p>
+                  <div className="bg-[#f8faf8] border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[435px]" data-node-id="26:22993" data-name="Input">
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[14px] w-[386px]" data-node-id="26:22994">
+                      Faculty
+                    </p>
+                    <div className="relative shrink-0 size-[15px]" data-node-id="26:24134" data-name="lock-keyhole">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLockKeyhole} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[936px]" data-node-id="26:22996" data-name="Panel">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-[888px]" data-node-id="26:22997" data-name="Panel heading">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[888px]" data-node-id="26:22998">
+                  Service details
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[888px]" data-node-id="26:22999">
+                  Be specific so the right service team can understand your concern.
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[888px]" data-node-id="26:23000" data-name="Form field">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[888px]" data-node-id="26:23001">
+                  Service type *
+                </p>
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[888px]" data-node-id="26:23002" data-name="Input">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#1e3029] text-[14px] w-[839px]" data-node-id="26:23003">
+                    Equipment maintenance
+                  </p>
+                  <div className="relative shrink-0 size-[15px]" data-node-id="26:24137" data-name="chevron-down">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgChevronDown} />
+                  </div>
+                </div>
+              </div>
+              <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[888px]" data-node-id="26:23005" data-name="Form field">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[888px]" data-node-id="26:23006">
+                  Short subject *
+                </p>
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[888px]" data-node-id="26:23007" data-name="Input">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#1e3029] text-[14px] w-[864px]" data-node-id="26:23008">
+                    Ceiling fan not working in Room 204
+                  </p>
+                </div>
+              </div>
+              <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[888px]" data-node-id="26:23009" data-name="Form field">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[888px]" data-node-id="26:23010">
+                  Location *
+                </p>
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[888px]" data-node-id="26:23011" data-name="Input">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#1e3029] text-[14px] w-[864px]" data-node-id="26:23012">
+                    College of Engineering, 2nd floor, Room 204
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[888px]" data-node-id="26:23013">
+                  Include the building, floor, and room or a clear campus location.
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[888px]" data-node-id="26:23014" data-name="Form field">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[888px]" data-node-id="26:23015">
+                  Detailed concern *
+                </p>
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex items-start min-h-[112px] p-[12px] relative rounded-[8px] shrink-0 w-[888px]" data-node-id="26:23016" data-name="Input">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#1e3029] text-[14px] w-[864px]" data-node-id="26:23017">
+                    The ceiling fan nearest the door no longer turns on. The other fans are working. Please inspect the unit; classes are continuing in the room.
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[888px]" data-node-id="26:23018">
+                  Describe what happened, when it started, and any steps already taken.
+                </p>
+              </div>
+            </div>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[936px]" data-node-id="26:23019" data-name="Panel">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-[888px]" data-node-id="26:23020" data-name="Panel heading">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[888px]" data-node-id="26:23021">{`Urgency & impact`}</p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[888px]" data-node-id="26:23022">
+                  Describe the situation. You are not setting the official priority.
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col gap-[9px] items-start relative shrink-0 w-[888px]" data-node-id="26:23023" data-name="Urgency field">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23024">
+                  How urgent is the concern? *
+                </p>
+                <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-[888px]" data-node-id="26:23025" data-name="Urgency choices">
+                  <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[8px] h-[44px] items-center p-[12px] relative rounded-[8px] shrink-0 w-[288px]" data-node-id="26:23026" data-name="Urgency option">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="26:24140" data-name="circle">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircle} />
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23028">
+                      Low
+                    </p>
+                  </div>
+                  <div className="bg-[#eaf3ed] border border-[#12553d] border-solid content-stretch flex gap-[8px] h-[44px] items-center p-[12px] relative rounded-[8px] shrink-0 w-[288px]" data-node-id="26:23029" data-name="Urgency option">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="26:24143" data-name="circle-dot">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircleDot} />
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23031">
+                      Medium
+                    </p>
+                  </div>
+                  <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[8px] h-[44px] items-center p-[12px] relative rounded-[8px] shrink-0 w-[288px]" data-node-id="26:23032" data-name="Urgency option">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="26:24146" data-name="circle">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircle} />
+                    </div>
+                    <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23034">
+                      High
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-[888px]" data-node-id="26:23035" data-name="Form field">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] w-[888px]" data-node-id="26:23036">
+                  Who or what is affected? *
+                </p>
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex gap-[10px] items-center min-h-[46px] p-[12px] relative rounded-[8px] shrink-0 w-[888px]" data-node-id="26:23037" data-name="Input">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#1e3029] text-[14px] w-[839px]" data-node-id="26:23038">
+                    A small group / one room
+                  </p>
+                  <div className="relative shrink-0 size-[15px]" data-node-id="26:24149" data-name="chevron-down">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgChevronDown} />
+                  </div>
+                </div>
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[888px]" data-node-id="26:23040">
+                  Other options: an individual; an entire office; campus-wide.
+                </p>
+              </div>
+              <div className="bg-[#eaf3ed] content-stretch flex gap-[12px] items-start p-[18px] relative rounded-[8px] shrink-0 w-[888px]" data-node-id="26:23041" data-name="Guidance">
+                <div className="relative shrink-0 size-[19px]" data-node-id="26:24152" data-name="shield-check">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgShieldCheck} />
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[821px]" data-node-id="26:23043" data-name="Message">
+                  <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] w-[821px]" data-node-id="26:23044">
+                    MISO determines the official priority
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[821px]" data-node-id="26:23045">
+                    MISO reviews validity, confirms the service category, and sets priority using urgency and impact. Your input helps with that review.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[9px] items-start relative shrink-0 w-[936px]" data-node-id="26:23046" data-name="Data minimization note">
+              <div className="relative shrink-0 size-[16px]" data-node-id="26:24155" data-name="lock-keyhole">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLockKeyhole1} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[911px]" data-node-id="26:23048">
+                Share only information needed to address your concern. Do not include passwords, sensitive personal information, or details about other people unless necessary.
+              </p>
+            </div>
+            <div className="content-stretch flex items-center justify-between relative shrink-0 w-[936px]" data-node-id="26:23049" data-name="Form actions">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start relative shrink-0 text-[12px] w-[684px]" data-node-id="26:23050" data-name="Submission result guidance">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] whitespace-nowrap" data-node-id="26:23051">
+                  You’ll get a job number after submission.
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] w-[684px]" data-node-id="26:23052">
+                  Use it to track updates in My requests.
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[12px] items-start relative shrink-0" data-node-id="26:23053" data-name="Submission buttons">
+                <div className="bg-white border border-[#dee5df] border-solid content-stretch flex h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[80px]" data-node-id="26:23054" data-name="Action">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] whitespace-nowrap" data-node-id="26:23055">
+                    Cancel
+                  </p>
+                </div>
+                <div className="bg-[#12553d] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[44px] items-center justify-center px-[16px] relative rounded-[8px] shrink-0 w-[160px]" data-node-id="26:23056" data-name="Action">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="26:24158" data-name="arrow-right">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowRight} />
+                  </div>
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[14px] text-white whitespace-nowrap" data-node-id="26:23058">
+                    Submit request
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-[352px]" data-node-id="26:23059" data-name="Intake guidance">
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:23060" data-name="Panel">
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[304px]" data-node-id="26:23061" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[304px]" data-node-id="26:23062">
+                  What happens next?
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-[304px]" data-node-id="26:23063" data-name="Review step">
+                <div className="bg-[#eaf3ed] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="26:23064" data-name="Step marker">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:23065">
+                    1
+                  </p>
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[268px]" data-node-id="26:23066" data-name="Step content">
+                  <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23067">{`Received & recorded`}</p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[268px]" data-node-id="26:23068">
+                    A unique job number keeps your request in one service record.
+                  </p>
+                </div>
+              </div>
+              <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-[304px]" data-node-id="26:23069" data-name="Review step">
+                <div className="bg-[#eaf3ed] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="26:23070" data-name="Step marker">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:23071">
+                    2
+                  </p>
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[268px]" data-node-id="26:23072" data-name="Step content">
+                  <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23073">
+                    Reviewed by MISO
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[268px]" data-node-id="26:23074">
+                    We confirm the details and route the request to the right team.
+                  </p>
+                </div>
+              </div>
+              <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-[304px]" data-node-id="26:23075" data-name="Review step">
+                <div className="bg-[#eaf3ed] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="26:23076" data-name="Step marker">
+                  <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:23077">
+                    3
+                  </p>
+                </div>
+                <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[268px]" data-node-id="26:23078" data-name="Step content">
+                  <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#1e3029] text-[13px] whitespace-nowrap" data-node-id="26:23079">
+                    Follow the progress
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[268px]" data-node-id="26:23080">
+                    See status updates, actions, and any request for clarification.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white border border-[#dee5df] border-solid content-stretch drop-shadow-[0px_3px_6px_rgba(18,62,42,0.03)] flex flex-col gap-[20px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:23081" data-name="Panel">
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-[304px]" data-node-id="26:23082" data-name="Panel heading">
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[304px]" data-node-id="26:23083">
+                  University service types
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="26:23084" data-name="Supported service">
+                <div className="bg-[#b08b39] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="26:23085" data-name="Service marker" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23086">
+                  Wi-Fi/IDF troubleshooting
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="26:23087" data-name="Supported service">
+                <div className="bg-[#b08b39] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="26:23088" data-name="Service marker" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23089">
+                  Equipment maintenance
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="26:23090" data-name="Supported service">
+                <div className="bg-[#b08b39] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="26:23091" data-name="Service marker" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23092">
+                  Technical/event support
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="26:23093" data-name="Supported service">
+                <div className="bg-[#b08b39] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="26:23094" data-name="Service marker" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23095">
+                  Electrical
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="26:23096" data-name="Supported service">
+                <div className="bg-[#b08b39] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="26:23097" data-name="Service marker" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23098">
+                  Plumbing
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="26:23099" data-name="Supported service">
+                <div className="bg-[#b08b39] relative rounded-[2px] shrink-0 size-[4px]" data-node-id="26:23100" data-name="Service marker" />
+                <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[normal] relative shrink-0 text-[#617169] text-[12px] whitespace-nowrap" data-node-id="26:23101">
+                  Other university services
+                </p>
+              </div>
+            </div>
+            <div className="bg-[#faf4e4] content-stretch flex flex-col gap-[15px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[352px]" data-node-id="26:23102" data-name="Feedback mode guidance">
+              <div className="relative shrink-0 size-[18px]" data-node-id="26:24161" data-name="message-square-heart">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMessageSquareHeart} />
+              </div>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[#1e3029] text-[18px] w-[304px]" data-node-id="26:23104">
+                Want to share feedback?
+              </p>
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[304px]" data-node-id="26:23105">
+                Choose Feedback above for a complaint, suggestion, compliment, or other feedback.
+              </p>
+              <div className="bg-[#dee5df] h-px relative shrink-0 w-full" data-node-id="26:23106" data-name="Divider" />
+              <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[304px]" data-node-id="26:23107">
+                You can optionally include a related job number. Feedback stays private and is reviewed by authorized CLSU staff.
+              </p>
+            </div>
+            <div className="bg-[#f8faf8] content-stretch flex gap-[12px] items-start p-[18px] relative rounded-[8px] shrink-0 w-[352px]" data-node-id="26:23108" data-name="Guidance">
+              <div className="relative shrink-0 size-[19px]" data-node-id="26:24164" data-name="graduation-cap">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGraduationCap1} />
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[285px]" data-node-id="26:23110" data-name="Message">
+                <p className="font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[14px] w-[285px]" data-node-id="26:23111">
+                  CLSU community only
+                </p>
+                <p className="font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[13px] w-[285px]" data-node-id="26:23112">
+                  For students, faculty, staff, authorized visitors, and alumni with approved access.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[#eaf3ed] content-stretch flex flex-col gap-[12px] items-start p-[24px] relative rounded-[12px] shrink-0 w-[1312px]" data-node-id="26:22927" data-name="Help card">
+          <div className="relative shrink-0 size-[18px]" data-node-id="26:24104" data-name="circle-help">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCircleHelp} />
+          </div>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[13px] whitespace-nowrap" data-node-id="26:22929">
+            A little guidance?
+          </p>
+          <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.5] relative shrink-0 text-[#617169] text-[12px] w-[1264px]" data-node-id="26:22930">
+            Get help with requests, access, or understanding an update.
+          </p>
+          <div className="bg-[rgba(255,255,255,0)] border border-[rgba(255,255,255,0)] border-solid content-stretch flex gap-[8px] h-[36px] items-center justify-center relative rounded-[8px] shrink-0 w-[112px]" data-node-id="26:22931" data-name="Action">
+            <div className="relative shrink-0 size-[16px]" data-node-id="26:24107" data-name="arrow-up-right">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArrowUpRight} />
+            </div>
+            <p className="[word-break:break-word] font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[normal] relative shrink-0 text-[#12553d] text-[12px] whitespace-nowrap" data-node-id="26:22933">{`Help & support`}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
