@@ -21,8 +21,9 @@ class PortalController {
  public function catalog(Request $request){
   $user=$request->user();$personnel=[];
   if($user->role==='admin')$personnel=User::where('role','personnel')->where('office_id',$user->office_id)->where('is_active',true)->get(['id','name','office_id'])->map(function($p){$p->active_assignments=DB::table('assignments')->where('personnel_id',$p->id)->whereNull('ended_at')->count();$p->service_type_ids=DB::table('personnel_eligibilities')->where('user_id',$p->id)->pluck('service_type_id');return $p;});
-  return ['offices'=>DB::table('offices')->whereIn('id',DB::table('office_memberships')->where('user_id',$user->id)->select('office_id'))->get(),'service_types'=>DB::table('service_types')->get(),'personnel'=>$personnel,'policy_mode'=>config('workflow.policy_mode')];
+  return ['offices'=>DB::table('offices')->whereIn('id',DB::table('office_memberships')->where('user_id',$user->id)->select('office_id'))->get(),'service_types'=>DB::table('service_types')->get(),'personnel'=>$personnel,'categories'=>$user->role==='admin'?DB::table('request_categories')->where('handling_office_id',$user->office_id)->orderBy('name')->get(['id','name']):[],'policy_mode'=>config('workflow.policy_mode')];
  }
+ public function createCategory(Request $request,\App\Services\RequestCategories $categories){$data=$request->validate(['name'=>'required|string|max:80']);return response()->json($categories->create($request->user(),$data['name']),201);}
  public function index(Request $request,RequestAccess $access){
   $data=$request->validate(['search'=>'nullable|string|max:200','status'=>'nullable|string|max:40','priority'=>'nullable|string|max:20','personnel_id'=>'nullable|integer','page'=>'nullable|integer|min:1']);
   $q=$access->scope(ServiceRequest::query(),$request->user());
@@ -37,7 +38,7 @@ class PortalController {
   $r=$workflow->create($request->user(),$data);return response()->json($access->present($r,$request->user(),true),201);
  }
  public function update(Request $request,int $id,RequestWorkflow $workflow,RequestAccess $access){
-  $data=$request->validate(['expected_version'=>'required|integer|min:1','action'=>['required',Rule::in(['manage','clarify','reply'])],'message'=>'nullable|string|max:10000','status'=>['sometimes',Rule::in(['Pending','For Clarification','Assigned','In Progress','On Hold','Completed'])],'personnel_id'=>'sometimes|nullable|integer|exists:users,id','priority'=>['sometimes',Rule::in(['Low','Medium','High','Critical'])],'reason'=>'nullable|string|max:2000','visibility'=>['sometimes',Rule::in(['requester','internal'])],'outcome'=>'nullable|string|max:5000']);
+  $data=$request->validate(['expected_version'=>'required|integer|min:1','action'=>['required',Rule::in(['manage','clarify','reply'])],'message'=>'nullable|string|max:10000','status'=>['sometimes',Rule::in(['Pending','For Clarification','Assigned','In Progress','On Hold','Completed'])],'personnel_id'=>'sometimes|nullable|integer|exists:users,id','category_id'=>'sometimes|nullable|integer|exists:request_categories,id','priority'=>['sometimes',Rule::in(['Low','Medium','High','Critical'])],'reason'=>'nullable|string|max:2000','visibility'=>['sometimes',Rule::in(['requester','internal'])],'outcome'=>'nullable|string|max:5000']);
   $r=$workflow->update($request->user(),$id,$data);return $access->present($r,$request->user(),true);
  }
  public function evaluate(Request $request,int $id,RequestWorkflow $workflow){$data=$request->validate(['rating'=>'required|integer|min:1|max:5','category'=>['nullable',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'remarks'=>'nullable|string|max:5000']);$workflow->evaluate($request->user(),$id,$data);return response()->json(['message'=>'Thank you. Your service evaluation has been recorded.'],201);}
@@ -46,14 +47,12 @@ class PortalController {
   DB::transaction(function()use($data,$request){DB::table('general_feedback')->insert([...$data,'user_id'=>$request->user()?->id,'created_at'=>now()]);DB::table('audit_entries')->insert(['actor_user_id'=>$request->user()?->id,'actor_kind'=>$request->user()?'human':'anonymous','action'=>'feedback.submitted','occurred_at'=>now()]);});
   return response()->json(['message'=>'Thank you. Your feedback has been received for private review.'],201);
  }
- public function feedbackIndex(Request $request){
-  $user=$request->user();$general=DB::table('general_feedback');if($user->role!=='admin')$general->where('user_id',$user->id);
-  $verified=DB::table('service_evaluations')->join('service_requests','service_requests.id','=','service_evaluations.request_id');
-  if($user->role==='admin'){$verified->where('handling_office_id',$user->office_id);$general->whereRaw('1=0');}else $verified->where('requester_id',$user->id);
-  // Public feedback is routed to MISO only, never all offices.
-  if($user->role==='admin'&&DB::table('offices')->where('id',$user->office_id)->value('office_code')==='MISO')$general=DB::table('general_feedback');
-  if($user->role==='personnel')abort(403);
-  return ['general'=>$general->orderByDesc('id')->limit(100)->get(),'evaluations'=>$verified->select('service_evaluations.*','subject','job_number')->orderByDesc('service_evaluations.created_at')->limit(100)->get()];
+ public function feedbackIndex(Request $request,\App\Services\FeedbackReader $feedback){
+  $filters=$request->validate(['general_page'=>'sometimes|integer|min:1','evaluation_page'=>'sometimes|integer|min:1']);
+  return $feedback->index($request->user(),$filters);
+ }
+ public function feedbackShow(Request $request,string $kind,int $id,\App\Services\FeedbackReader $feedback){
+  return $feedback->detail($request->user(),$kind,$id);
  }
  public function metrics(Request $request,ReportingService $reports){$data=$request->validate(['days'=>'sometimes|integer|min:1|max:366']);return $reports->metrics($request->user(),$data['days']??30);}
  public function notifications(Request $request){return DB::table('portal_notifications')->where('user_id',$request->user()->id)->orderByDesc('id')->limit(100)->get();}

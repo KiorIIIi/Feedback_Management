@@ -279,7 +279,7 @@ test("report polling survives period changes and clears transient failures", asy
       url.pathname === "/api/reports" &&
       route.request().method() === "POST"
     ) {
-      expect(route.request().postDataJSON()).toEqual({ days: 30 });
+      expect(route.request().postDataJSON()).toEqual({ days: 30, format: "csv" });
       await json(route, { id: 12, status: "queued" }, 202);
       return true;
     }

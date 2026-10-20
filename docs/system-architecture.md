@@ -41,6 +41,12 @@ The backend follows a **modular monolithic architecture**: modules share one app
 
 Exact Laravel, PHP, MCP package, and AI runtime versions must be pinned after compatibility checks. Redis and broadcasting are optional additions based on measured needs.
 
+### Temporary device-hosted public demo (implemented launcher)
+
+The repository includes a Windows launcher for a temporary public synthetic demo, separate from the normal local instance. It builds the React app in `hosted-demo` mode, serves the built SPA and Laravel API on one loopback origin, and connects that origin to an HTTPS Cloudflare Quick Tunnel. A separate queue worker handles exports. It provisions a new MySQL demo database and scoped runtime user, replaces the seed passwords, isolates sessions/cache/private files, and enforces the existing production configuration guard. It does not publish to GitHub Pages or copy the working local database. See [public-demo startup and limits](../README.md#temporary-public-demo-hosted-on-this-pc).
+
+This path uses PHP 8.5 and cloudflared 2026.10.2, including an optional Windows DNS workaround. It is intended for low-volume demonstrations with synthetic data while the PC remains on. A successful tunnel health check is distinct from full browser/workflow verification; evidence for the latter is recorded locally only after the dedicated check succeeds. Continuous hosting, production capacity, final campus policies, and MISO approval remain outside this temporary setup.
+
 ## Architecture diagram
 
 ```mermaid
@@ -309,3 +315,7 @@ The manuscript must align its scope with third-party AI integration and distingu
 - [Laravel queues documentation](https://laravel.com/framework/docs/13.x/queues).
 
 Framework documentation reviewed 19 October 2026. Application-specific controls in this document require implementation and testing.
+
+## Implemented service evaluation reports · 20 October 2026
+
+The prototype now has office-scoped staff categories, calendar-month/rolling summaries, and queued private PDF/Excel/CSV exports. `ServiceEvaluationReport` shares aggregation rules between the authenticated report-summary endpoint and `GenerateReport`; `ReportRenderer` formats the snapshot. Category creation and category review use shared services. Report downloads reauthorize the requesting administrator and handling office and require a successfully stored file. UI polling distinguishes accepted, processing, completed, failed and unavailable results. No MCP tool, scheduled delivery or human workflow bypass is added. See [implemented definitions](implementation-notes.md#service-evaluation-reporting-implemented-on-20-october) for cohort, assignee, rating, elapsed-hour and recurring-subject rules.

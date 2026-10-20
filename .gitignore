@@ -17,5 +17,6 @@ backend/storage/framework/sessions/*
 backend/storage/framework/views/*
 backend/storage/framework/testing/
 backend/storage/app/private/**
+backend/storage/app/report-rendering/
 frontend/playwright-report/
 backend/.phpunit.cache/

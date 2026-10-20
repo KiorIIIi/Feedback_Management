@@ -100,6 +100,8 @@ class SecurityReviewTest extends TestCase {
  }
  public function test_csv_neutralizes_whitespace_prefixed_formula_content():void {
   Storage::fake('local');$admin=$this->user('admin');$r=$this->assigned();
+  // This check needs an eligible submission even when run before the seed's 09:20 timestamp.
+  $r->created_at=now()->subHour();$r->save();
   $job=DB::table('report_jobs')->insertGetId(['requested_by'=>$admin->id,'status'=>'pending','filters'=>json_encode(['days'=>30,'handling_office_id'=>$admin->office_id]),'created_at'=>now(),'updated_at'=>now()]);
   foreach(["=1+1","\n=1+1","  @SUM(1)","\t+1","|test","\u{00a0}-1","\u{FEFF}=1+1","\u{200B}+1","\u{202E}@SUM(1)"," \u{FEFF}\u{200B}-1","\u{FE0F}=1+1","Ordinary service text","\u{200B}Ordinary service text"] as $subject){
    $r->subject=$subject;$r->save();DB::table('report_jobs')->where('id',$job)->update(['status'=>'pending']);

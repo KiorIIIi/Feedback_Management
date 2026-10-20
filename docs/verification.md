@@ -1,5 +1,13 @@
 # Verification · 20 October 2026
 
+## Temporary device-hosted public synthetic demo
+
+The `hosted-demo` TypeScript/Vite build, PHP syntax checks for all four public-host PHP scripts, PowerShell syntax checks for the installer/start/stop scripts, and the 13 non-destructive local-runtime checks passed. The Cloudflare Windows client download was verified against the official release SHA-256. Public startup and stop/restart were exercised; a separate synthetic MySQL database and scoped runtime account were used. No existing local-demo data was copied or reset.
+
+The dedicated public-host browser check passed through the generated HTTPS URL using installed Chrome. It verified frontend assets and SPA headers; private-file and unauthenticated API denial; requester UI login, Secure/HttpOnly session cookies, refresh/session restoration; administrator/personnel login; cross-owner record denial and internal-note filtering; a labeled synthetic request through assignment, staff progress/completion, stale-version rejection, and one verified evaluation; queued CSV completion and private download authorization; rejection of the README's local-demo password; and authenticated routes/mobile reflow without JavaScript errors. Evidence and the current temporary URL are in `.local/public-host/verification.json`; credentials are stored separately and are not part of that evidence.
+
+The connector initially failed DNS discovery on this PC. Resolving official edge addresses using Windows and passing the explicit-edge option established the TLS tunnel; the launcher allows time for the new hostname to propagate and checks the public HTTPS health endpoint before success. These checks ran from the host PC through Cloudflare, not from a separately operated external device. They do not establish uptime, production load capacity, backup restoration, final MISO policy approval, or readiness for real campus data.
+
 ## Latest supplied security audit follow-up
 
 The findings in `security-audit.md` were reconciled in [the audit follow-up](security-audit-follow-up.md). **45 backend tests / 272 assertions passed on SQLite and on the isolated MySQL test database.** Six new regressions cover fail-closed non-development configuration, CORS, trusted/untrusted proxies with HTTPS/HSTS, account-isolated read budgets, hashed login limits/cooldown recovery, and transactional notification rollback. CSV round-trip coverage now includes BOM, zero-width space, RTL override, combining prefixes, and safe strings.

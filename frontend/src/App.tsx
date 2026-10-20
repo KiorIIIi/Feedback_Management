@@ -42,6 +42,7 @@ import {
   RateService,
   FeedbackPage,
   FeedbackHistory,
+  FeedbackDetail,
   Personnel,
   Reports,
   Notifications,
@@ -196,6 +197,7 @@ export default function App() {
             }
           />
           <Route path="feedback" element={<FeedbackHistory />} />
+          <Route path="feedback/:kind/:id" element={<FeedbackDetail />} />
           <Route path="personnel" element={<Personnel />} />
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />
@@ -447,8 +449,9 @@ function Welcome({ login = false }: { login?: boolean }) {
               </p>
               <a href="mailto:miso@clsu.edu.ph">Contact MISO for access ↗</a>
               <small className="demo-login">
-                Local demo accounts are listed in the project README. Use
-                synthetic data only.
+                {import.meta.env.MODE === "hosted-demo"
+                  ? "Contact the demo owner for sign-in access. Use synthetic data only."
+                  : "Local demo accounts are listed in the project README. Use synthetic data only."}
               </small>
             </>
           ) : (

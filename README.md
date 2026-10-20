@@ -37,7 +37,7 @@ The launcher starts the API at port 8000, Vite at 5173, and a report queue worke
 
 ## Fresh installation
 
-Requirements: PHP 8.5 with PDO MySQL/SQLite, mbstring, OpenSSL, XML, curl, fileinfo and zip; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.10, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
+Requirements: PHP 8.5 with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo and zip; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.10, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
 
 ```powershell
 $env:PATH='C:\laragon\bin\php\php-8.5.10-Win32-vs17-x64;'+$env:PATH
@@ -53,6 +53,41 @@ php backend/artisan db:seed
 ```
 
 Seeding refuses an existing populated database. On other environments, run `php artisan serve` from `backend`, `npm run dev` from `frontend`, and `php artisan queue:work` from `backend`. Both the browser and API must remain on the same origin through the Vite proxy. For deployment, route `/api` to Laravel and serve the frontend build with an SPA fallback; HTTPS and secure session cookies are required.
+
+## Temporary public demo hosted on this PC
+
+The device-hosted demo uses the complete React/Laravel/MySQL app through a temporary HTTPS Cloudflare Quick Tunnel. This is a synthetic demonstration, not an approved production campus service. The PC and its internet connection must remain on. The public URL changes when the tunnel restarts; no domain or Cloudflare account is needed. Nothing is published to GitHub Pages.
+
+```powershell
+# One-time project-local client installation; verifies the official SHA-256.
+.\scripts\install-cloudflared.ps1
+# Build and start the isolated public demo.
+.\scripts\start-public.ps1 -UseWindowsDns
+# Disconnect the public link and stop only its web process and queue worker.
+.\scripts\stop-public.ps1
+```
+
+The client is pinned to cloudflared 2026.10.2 (Windows amd64). `-UseWindowsDns` is a version-specific workaround for this machine's connector DNS failures: Windows resolves the official Cloudflare edge names, which are passed through the client's explicit-edge option. TLS verification stays enabled and system DNS/firewall settings are unchanged. Omit the switch where ordinary connector DNS works. Hostname propagation can take time; startup verifies the public HTTPS `/up` endpoint and stops the public processes if it fails.
+
+The launcher uses the project-owned MySQL server on loopback port 3307, creates a separate `clsu_public_demo_<random>` database and scoped MySQL user, and seeds only synthetic records on first use. Public runtime gets only SELECT/INSERT/UPDATE/DELETE privileges on that new database. All account passwords are replaced with random passwords. Existing local records and credentials are retained. Restarting reuses the public demo database and credentials and updates its trusted origin.
+
+The frontend build is copied into `.local/public-host/site`; a loopback-only PHP 8.5 web process on port 4180 serves that artifact and routes `/api` to Laravel. It serves the built frontend rather than the Vite development server. A separate worker processes report jobs. Runtime uses `APP_ENV=production`, debug off, a new application key, encrypted Secure/HttpOnly session cookies, explicit loopback proxy trust, trusted-origin checks, and security headers for the SPA and API. Sessions, cache, logs, and private exports are isolated under `.local/public-host`. Source files, environment files, and credentials are outside the document root.
+
+The public URL is saved in `.local/public-host/url.txt`. Sign-in credentials are in **`.local/public-host/access.json`**; keep that file private. `.local/public-host/runtime.json` contains deployment secrets and must also stay private. These files are ignored by Git. Share only the generated HTTPS URL and the demo account access intended for each tester.
+
+After starting, run `npm --prefix frontend run test:public` for browser verification through the public URL with installed Chrome. This intentionally creates a clearly labeled synthetic request, progresses it using synthetic staff accounts, evaluates it, and generates a private report in the isolated public demo. It does not target the ordinary local demo. Evidence is written to `.local/public-host/verification.json` and `verified-desktop.png`. Do not report those checks as passed unless that run succeeds.
+
+Quick Tunnels have no uptime guarantee. The PHP built-in server is used for this temporary, low-volume demo; this launcher does not establish continuous hosting, automatic boot recovery, backups, final MISO policy approval, or production readiness. See [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).
+
+## Service evaluation reports
+
+The [Iteration 1 change log](docs/iteration-1.md) records report/category additions, the full feedback reading view, changed behavior, verification and remaining boundaries.
+
+Open **Reports & analytics** as a MISO administrator. Choose a rolling period or **Calendar month**, then export PDF, Excel (`.xlsx`) or a CSV request register. The queue worker prepares private downloads. Reports group requests by staff-assigned category, official priority, current status and personnel, with verified-rating and calendar-hour resolution averages. Expand **How these figures are calculated** for denominators and exclusions.
+
+Create office categories at the bottom of that page, then assign a **Request category** in an open request's review form. Categories are separate from service types; existing records are Uncategorized. See [report definitions and boundaries](docs/implementation-notes.md#service-evaluation-reporting-implemented-on-20-october).
+
+For an existing development installation, run `php backend/artisan migrate` after updating dependencies. The isolated public demo can apply additive migrations with `php scripts/migrate-public.php`; this CLI reads local migration credentials without giving them to the public web process. Restart the report worker after backend updates and rebuild the frontend. Never rerun the demo seed on populated data.
 
 ## Checks
 

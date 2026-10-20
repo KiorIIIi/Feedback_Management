@@ -29,6 +29,8 @@ export type RequestRecord = {
   requesting_office_id: number | null;
   handling_office_id: number | null;
   service_type_id: number;
+  category_id?: number | null;
+  category?: string;
   created_at: string;
   completed_at: string | null;
   office: string;
@@ -39,6 +41,7 @@ export type RequestRecord = {
   evaluation?: { rating: number; remarks: string } | null;
 };
 export type Catalog = {
+  categories?: { id: number; name: string }[];
   offices: { id: number; name: string }[];
   service_types: { id: number; name: string }[];
   personnel: {

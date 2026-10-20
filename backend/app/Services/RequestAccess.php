@@ -24,6 +24,7 @@ class RequestAccess {
   $assignment=DB::table('assignments')->join('users','users.id','=','assignments.personnel_id')->where('service_request_id',$request->id)->when($request->status!=='Completed',fn($q)=>$q->whereNull('ended_at'))->orderByDesc('assignments.id')->select('users.id','users.name')->first();
   $data['office']=DB::table('offices')->where('id',$request->requesting_office_id)->value('name')??'No office affiliation';
   $data['service_type']=DB::table('service_types')->where('id',$request->service_type_id)->value('name');
+  $data['category']=DB::table('request_categories')->where('id',$request->category_id)->where('handling_office_id',$request->handling_office_id)->value('name')??'Uncategorized';
   $data['assignee']=$assignment?->name;$data['assignee_id']=$assignment?->id;
   $data['evaluation']=$user->role==='personnel'?null:DB::table('service_evaluations')->where('request_id',$request->id)->first();
   if($detail){

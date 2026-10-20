@@ -67,3 +67,9 @@ Before claiming the implemented schema satisfies its normalization target:
 5. Validate insert, update, and deletion behavior for unintended anomalies. Test the workflow, ownership, office scope, and concurrency rules separately from normalization.
 
 No implemented database has been certified by this assessment. The [Database Design acceptance scenarios](database-design.md#verification-scenarios-before-implementation-acceptance) describe further verification required before implementation acceptance.
+
+## Implemented category and report refinement · 20 October 2026
+
+The physical prototype now stores category names once in `request_categories`, with `id` as primary key and `(handling_office_id, name)` as a unique office-local name. Requests reference category identity; names are derived on reads. Independent service types do not determine categories. The composite office/category foreign key enforces scope and does not make the requesting office equivalent to the handling office.
+
+Report aggregates are calculated from operational rows in one transaction at generation time. Stored PDF/Excel/CSV files are intentional immutable historical documents, not operational summary tables to synchronize. A report job retains the authorizing office filter and requester for later authorization checks. Category creation audit snapshots and request before/after snapshots deliberately preserve historical evidence. This extension does not resolve all outstanding proposal dependencies or certify the full schema as 3NF; the prototype's priority-version and restricted operational access choices remain documented in [implementation notes](implementation-notes.md).

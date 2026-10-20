@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import { api, ApiError, date, type RequestRecord, type Catalog } from "./api";
 import { useAuth } from "./App";
+import { ReportControls, ReportWorkspace } from "./reports";
 import {
   Asset,
   Badge,
@@ -262,118 +263,6 @@ function Charts({ metrics }: { metrics: Metrics }) {
         </div>
       </Panel>
     </div>
-  );
-}
-function ReportControls({
-  days,
-  setDays,
-}: {
-  days: number;
-  setDays: (n: number) => void;
-}) {
-  const [report, setReport] = useState<{
-      id: number;
-      status: string;
-      download_url?: string;
-      error?: string;
-    }>(),
-    [error, setError] = useState<unknown>(),
-    [busy, setBusy] = useState(false);
-  useEffect(() => {
-    if (!report || ["completed", "failed"].includes(report.status)) return;
-    const controller = new AbortController();
-    const reportId = report.id;
-    let timer: ReturnType<typeof setTimeout>;
-    async function poll() {
-      let finished = false;
-      try {
-        const next = await api<NonNullable<typeof report>>(
-          "/reports/" + reportId,
-          { signal: controller.signal },
-        );
-        if (controller.signal.aborted) return;
-        setReport(next);
-        setError(null);
-        finished = ["completed", "failed"].includes(next.status);
-      } catch (e) {
-        if (controller.signal.aborted) return;
-        setError(e);
-      }
-      if (!finished && !controller.signal.aborted) {
-        timer = setTimeout(poll, 1500);
-      }
-    }
-    timer = setTimeout(poll, 1500);
-    return () => {
-      controller.abort();
-      clearTimeout(timer);
-    };
-  }, [report?.id, report?.status]);
-  async function exportReport() {
-    setBusy(true);
-    setError(null);
-    try {
-      setReport(
-        await api("/reports", {
-          method: "POST",
-          body: JSON.stringify({ days }),
-        }),
-      );
-    } catch (e) {
-      setError(e);
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <>
-      <div className="insights-bar">
-        <span>
-          <i />
-          Campus service overview <em>Demo data</em>
-        </span>
-        <div>
-          <label className="period">
-            <Icon name="calendar" />
-            <select
-              aria-label="Reporting period"
-              value={days}
-              onChange={(e) => setDays(Number(e.target.value))}
-            >
-              <option value={30}>Last 30 days</option>
-              <option value={7}>Last 7 days</option>
-              <option value={90}>Last 90 days</option>
-              <option value={366}>Last year</option>
-            </select>
-          </label>
-          <button
-            className="button"
-            onClick={exportReport}
-            disabled={
-              busy ||
-              (!!report && !["completed", "failed"].includes(report.status))
-            }
-          >
-            <Icon name="download" />
-            {busy ? "Requesting…" : "Export report"}
-          </button>
-        </div>
-      </div>
-      {report && (
-        <div className="notice" role="status">
-          {report.status === "completed" ? (
-            <a href={report.download_url}>
-              Download report CSV <Icon name="download" />
-            </a>
-          ) : report.status === "failed" ? (
-            report.error
-          ) : (
-            "Your report is queued. The queue worker will prepare the export."
-          )}
-        </div>
-      )}
-      <ErrorNotice error={error} />
-    </>
   );
 }
 export function Dashboard() {
@@ -1168,6 +1057,7 @@ export function RequestDetail() {
           action,
           expected_version: r!.record_version,
           ...(f.personnel_id ? { personnel_id: Number(f.personnel_id) } : {}),
+          ...("category_id" in f ? { category_id: f.category_id ? Number(f.category_id) : null } : {}),
         }),
       });
       setSuccess(
@@ -1226,7 +1116,7 @@ export function RequestDetail() {
             {r.office}
           </div>
           <div>
-            <small>Service category</small>
+            <small>Service type</small>
             {r.service_type}
           </div>
           <div>
@@ -1247,6 +1137,10 @@ export function RequestDetail() {
               <h3>Reported concern</h3>
               <p className="concern">{r.description}</p>
               <div className="info-grid">
+                <div>
+                  <small>Request category</small>
+                  {r.category || "Uncategorized"}
+                </div>
                 <div>
                   <small>Location</small>
                   {r.location}
@@ -1390,6 +1284,12 @@ export function RequestDetail() {
                   </Field>
                   {user?.role === "admin" && (
                     <>
+                      <Field label="Request category" hint="Manage office categories in Reports & analytics.">
+                        <select name="category_id" defaultValue={r.category_id || ""}>
+                          <option value="">Uncategorized</option>
+                          {(catalog?.categories || []).map(c => <option value={c.id} key={c.id}>{c.name}</option>)}
+                        </select>
+                      </Field>
                       <Field label="Assigned personnel">
                         <select
                           name="personnel_id"
@@ -1643,6 +1543,10 @@ export function RateService() {
         <Panel title="Completed service record">
           <div className="panel-body info-list">
             <div>
+              <small>Request category</small>
+              {r.category || "Uncategorized"}
+            </div>
+            <div>
               <small>Service type</small>
               {r.service_type}
             </div>
@@ -1823,10 +1727,27 @@ type FeedbackData = {
     job_number: string;
     created_at: string;
   }[];
+  pagination?: {
+    general: FeedbackPagination;
+    evaluations: FeedbackPagination;
+  };
 };
+type FeedbackPagination = { current_page: number; last_page: number; total: number };
+function FeedbackPager({ pagination, onPage }: { pagination?: FeedbackPagination; onPage: (n: number) => void }) {
+  if (!pagination || pagination.last_page <= 1) return null;
+  return <div className="feedback-pagination">
+    <span>Page {pagination.current_page} of {pagination.last_page} · {pagination.total} records</span>
+    <button className="button" disabled={pagination.current_page <= 1} onClick={() => onPage(pagination.current_page - 1)}>Previous</button>
+    <button className="button" disabled={pagination.current_page >= pagination.last_page} onClick={() => onPage(pagination.current_page + 1)}>Next</button>
+  </div>;
+}
 export function FeedbackHistory() {
   const { user } = useAuth();
-  const { data, error, loading } = useLoad<FeedbackData>("/feedback");
+  const [params, setParams] = useSearchParams();
+  const { data, error, loading, reload } = useLoad<FeedbackData>("/feedback?" + params.toString());
+  function changePage(key: string, page: number) {
+    setParams(previous => { const next = new URLSearchParams(previous); next.set(key, String(page)); return next; });
+  }
   if (user?.role === "personnel") return <Navigate to="/app" replace />;
   if (loading) return <Loading />;
   return (
@@ -1845,6 +1766,7 @@ export function FeedbackHistory() {
         }
       />
       <ErrorNotice error={error} />
+      {!!error && <button className="button" onClick={reload}>Retry loading feedback</button>}
       <Panel
         title="Service evaluations"
         subtitle="One optional verified rating per completed request"
@@ -1854,13 +1776,14 @@ export function FeedbackHistory() {
             <div className="feedback-row" key={e.request_id}>
               <span className="rating-square">{e.rating}/5</span>
               <div>
-                <Link to={"/app/requests/" + e.request_id}>
+                <Link to={"/app/feedback/evaluation/" + e.request_id}>
                   <h3>{e.subject}</h3>
                 </Link>
                 <small>
                   {e.job_number} · {date(e.created_at)}
                 </small>
-                <p>{e.remarks || "No additional remarks."}</p>
+                <p>{e.remarks ? e.remarks.slice(0,240) + (e.remarks.length > 240 ? "…" : "") : "No additional remarks."}</p>
+                <Link className="feedback-read-link" to={"/app/feedback/evaluation/" + e.request_id}>View full evaluation <Icon name="arrow" /></Link>
               </div>
             </div>
           ))
@@ -1868,6 +1791,7 @@ export function FeedbackHistory() {
           <Empty title="No service evaluations yet" />
         )}
       </Panel>
+      <FeedbackPager pagination={data?.pagination?.evaluations} onPage={n => changePage("evaluation_page", n)} />
       <Panel
         title="General feedback"
         subtitle="Independent feedback. Entered job numbers remain unverified references."
@@ -1877,12 +1801,13 @@ export function FeedbackHistory() {
             <div className="feedback-row" key={f.id}>
               <Icon name="feedback" />
               <div>
-                <h3>{f.subject}</h3>
+                <Link to={"/app/feedback/general/" + f.id}><h3>{f.subject}</h3></Link>
                 <small>
                   {f.category} · {date(f.created_at)}
                   {f.rating ? ` · ${f.rating}/5` : ""}
                 </small>
-                <p>{f.message}</p>
+                <p>{f.message.slice(0,240)}{f.message.length > 240 ? "…" : ""}</p>
+                <Link className="feedback-read-link" to={"/app/feedback/general/" + f.id}>View full feedback <Icon name="arrow" /></Link>
               </div>
             </div>
           ))
@@ -1890,8 +1815,45 @@ export function FeedbackHistory() {
           <Empty title="No general feedback yet" />
         )}
       </Panel>
+      <FeedbackPager pagination={data?.pagination?.general} onPage={n => changePage("general_page", n)} />
     </>
   );
+}
+export function FeedbackDetail() {
+  const { user } = useAuth();
+  const { kind, id } = useParams();
+  const { data, error, loading, reload } = useLoad<{
+    kind: string;
+    record: {
+      id?: number; request_id?: number; subject: string; message?: string; remarks?: string;
+      category?: string; rating: number | null; created_at: string; job_number?: string;
+      unverified_job_number?: string | null; contact_name?: string | null; contact_email?: string | null;
+    };
+  }>(`/feedback/${kind}/${id}`);
+  if (user?.role === "personnel") return <Navigate to="/app" replace />;
+  const record = data?.record;
+  return <>
+    <Link className="back" to="/app/feedback">← Back to feedback & ratings</Link>
+    <PageTitle title={kind === "evaluation" ? "Service evaluation" : "Feedback details"} description="Private submission for authorized review." />
+    <ErrorNotice error={error} />
+    {!!error && <button className="button" onClick={reload}>Retry loading feedback</button>}
+    {loading ? <Loading /> : record && <div className="feedback-detail">
+      <Panel title={record.subject} subtitle={`${record.category || "Verified service evaluation"} · ${date(record.created_at)}`}>
+        <div className="panel-body">
+          <p className="feedback-rating">{record.rating === null ? "No rating supplied" : `${record.rating} of 5`} · {data.kind === "evaluation" ? "Verified completed service" : "Independent general feedback"}</p>
+          <h3>{data.kind === "evaluation" ? "Evaluation remarks" : "Full feedback message"}</h3>
+          <p className="feedback-full-message">{record.message || record.remarks || "No additional remarks."}</p>
+        </div>
+      </Panel>
+      {data.kind === "evaluation" ? <Panel title="Related service"><div className="panel-body">
+        <Link className="feedback-read-link" to={`/app/requests/${record.request_id}`}>Open service request {record.job_number} <Icon name="arrow" /></Link>
+      </div></Panel> : <Panel title="Submission details"><div className="panel-body info-list">
+        <div><small>Related job number · unverified reference</small><span>{record.unverified_job_number || "Not supplied"}</span></div>
+        <div><small>Contact name supplied</small><span>{record.contact_name || "Not supplied"}</span></div>
+        <div><small>Contact email supplied</small><span>{record.contact_email || "Not supplied"}</span></div>
+      </div></Panel>}
+    </div>}
+  </>;
 }
 export function Personnel() {
   const { user, catalog } = useAuth();
@@ -1953,33 +1915,8 @@ export function Personnel() {
 }
 export function Reports() {
   const { user } = useAuth();
-  const [days, setDays] = useState(30);
-  const { data, error, loading } = useLoad<Metrics>("/metrics?days=" + days);
   if (user?.role !== "admin") return <Navigate to="/app" replace />;
-  return (
-    <>
-      <PageTitle
-        title="Reports & analytics"
-        description="University feedback management and service monitoring."
-      />
-      <ReportControls days={days} setDays={setDays} />
-      <ErrorNotice error={error} />
-      {loading ? (
-        <Loading />
-      ) : (
-        data && (
-          <>
-            <Stats metrics={data} />
-            <Charts metrics={data} />
-            <div className="notice">
-              {data.definition} Satisfaction includes {data.rating_count}{" "}
-              verified ratings. General feedback ratings are excluded.
-            </div>
-          </>
-        )
-      )}
-    </>
-  );
+  return <><PageTitle title="Reports & analytics" description="Service evaluation, request activity and office performance." /><ReportWorkspace /></>;
 }
 export function Notifications() {
   const { data, error, loading, reload } = useLoad<

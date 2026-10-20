@@ -9,6 +9,7 @@ import App from "./App";
 import "./styles.css";
 import "./requester-dashboard.css";
 import "./responsive.css";
+import "./reports.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>

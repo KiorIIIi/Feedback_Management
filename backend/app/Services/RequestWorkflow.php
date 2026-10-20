@@ -49,6 +49,13 @@ class RequestWorkflow {
     abort_if($actor->role==='requester',403);
     abort_if($actor->role==='personnel'&&in_array($r->status,['Pending','For Clarification'],true),403,'Wait for administrator review before updating this request.');
     if($r->status==='Completed')$this->fail('status','Completed requests cannot be edited.');
+    if(array_key_exists('category_id',$data)){
+     $this->access->admin($actor);
+     $categoryId=$data['category_id']===null?null:(int)$data['category_id'];
+     $category=$categoryId===null?null:DB::table('request_categories')->where('id',$categoryId)->where('handling_office_id',$r->handling_office_id)->first();
+     if($categoryId!==null&&!$category)$this->fail('category_id','Choose a category belonging to the handling office.');
+     if($categoryId!==$r->category_id){$r->category_id=$categoryId;$changed=true;$this->event($r,$actor,'Category reviewed','Request category: '.($category?->name??'Uncategorized'),'internal');}
+    }
     $current=DB::table('assignments')->where('service_request_id',$r->id)->whereNull('ended_at')->first();
     $personnel=array_key_exists('personnel_id',$data)?($data['personnel_id']===null?null:(int)$data['personnel_id']):($current?->personnel_id);
     if($personnel!==($current?->personnel_id)){
