@@ -15,8 +15,7 @@ th, td { padding: 7pt 6pt; border-bottom: .5pt solid #dce3de; vertical-align: to
 thead { display: table-header-group; } tr { page-break-inside: avoid; }
 .number { text-align: right; } .detail { page-break-before: always; } .detail table { font-size: 7.5pt; }
 .summary td { width: 25%; } .summary strong { font-size: 16pt; color: #12553d; }
-.section-heading { background: white; border: 0; padding: 0 0 6pt; font-weight: normal; }
-.section-heading h2 { color: #1e3029; }
+.breakdown { page-break-inside: avoid; }
 </style></head><body>
 <div class="rule"><p class="brand">CENTRAL LUZON STATE UNIVERSITY · MISO SERVICE PORTAL</p>
 <h1>Service evaluation report</h1><p>{{ $report['office'] }}</p>
@@ -34,12 +33,12 @@ thead { display: table-header-group; } tr { page-break-inside: avoid; }
 </tr></table>
 <p class="note">{{ $report['definition'] }}</p><p class="note">{{ $report['rating_definition'] }}</p><p class="note">{{ $report['resolution_definition'] }}</p>
 @foreach (['categories'=>'Requests by category','priorities'=>'Requests by priority','statuses'=>'Requests by status','personnel'=>'Requests by assigned personnel'] as $key=>$title)
-<table><thead><tr><th colspan="7" class="section-heading"><h2>{{ $title }}</h2>
+<div class="breakdown"><h2>{{ $title }}</h2>
 @if ($key==='personnel')<p class="note">One active assignee per open request; final assignee for completed requests. Each request is counted once.</p>@endif
-</th></tr><tr><th style="width:32%">Group</th><th class="number">Requests</th><th class="number">Completed</th><th class="number">Avg. rating</th><th class="number">Ratings</th><th class="number">Avg. hours</th><th class="number">Eligible completed</th></tr></thead><tbody>
+<table><thead><tr><th style="width:32%">Group</th><th class="number">Requests</th><th class="number">Completed</th><th class="number">Avg. rating</th><th class="number">Ratings</th><th class="number">Avg. hours</th><th class="number">Eligible completed</th></tr></thead><tbody>
 @forelse ($report[$key] as $group)<tr><td>{{ $group['name'] }}</td><td class="number">{{ $group['total'] }}</td><td class="number">{{ $group['completed'] }}</td><td class="number">{{ $group['average_rating'] ?? '—' }}</td><td class="number">{{ $group['rating_count'] }}</td><td class="number">{{ $group['average_resolution_hours'] ?? '—' }}</td><td class="number">{{ $group['resolution_count'] }}</td></tr>
 @empty<tr><td colspan="7">No requests in the selected period.</td></tr>@endforelse
-</tbody></table>
+</tbody></table></div>
 @endforeach
 <h2>Recurring concerns</h2><p class="note">{{ $report['concern_definition'] }}</p>
 <table><thead><tr><th style="width:40%">Repeated subject</th><th style="width:12%">Occurrences</th><th>Example job numbers (up to five)</th></tr></thead><tbody>

@@ -1,7 +1,7 @@
 # Iteration 1 — Reporting and feedback review
 
-Implementation period: 20–21 October 2026 (Asia/Manila).  
-Status: Implemented prototype; final verification results are recorded below.  
+Implementation period: 20–21 October 2026 (Asia/Manila).
+Status: Implemented and verified within prototype scope; results are recorded below.
 System: CLSU Feedback Management System and Service Tracker.
 
 This records the user's requested additions and changes for this iteration. It is an implementation log, not MISO approval, production acceptance, or a claim that all proposed architecture features exist.
@@ -70,9 +70,28 @@ Before the feedback-reading addition, the complete backend suite passed on SQLit
 
 The report/category browser flow subsequently passed, including category creation/assignment, calendar month selection, queued PDF/Excel downloads and the empty state. Four responsive browser tests also passed across the existing role workspaces. Eleven earlier workflow/UI regression tests passed; an initial new report test exposed a missing category label association, which was fixed before the successful rerun. Browser inspection also found stylesheet layer order affecting the new toolbar; stylesheet loading order was corrected.
 
-Public checks downloaded actual PDF, Excel and CSV files, checked breakdown totals against the displayed summary, rejected anonymous downloads and captured desktop/mobile report pages. The initial five-page PDF was rendered and inspected; its personnel heading could be separated from its table, so the template was adjusted to keep that heading in the repeating table header. Final template and feedback-view verification are recorded when the concluding checks finish.
+Public checks downloaded actual PDF, Excel and CSV files, checked breakdown totals against the displayed summary, rejected anonymous downloads and captured desktop/mobile report pages. The initial five-page PDF was rendered and inspected; its personnel heading could be separated from its table, so the template was adjusted to keep each short breakdown block together. The final five-page PDF was rendered and visually inspected on every page; its headings, tables, footers and complete request register were readable.
 
 An attempted browser rerun was temporarily rejected because automatic approval review reached a usage limit. The requested action did not execute during that rejection. After work resumed, the same approved browser-test command ran successfully; no approval bypass was used.
+
+### Final results · 21 October 2026
+
+| Check | Result actually obtained |
+| --- | --- |
+| TypeScript + hosted Vite build | Passed; current build published to the device-hosted demo |
+| Complete SQLite backend suite | **57 tests, 417 assertions passed**, including the new feedback access/pagination tests |
+| MySQL backend verification | Complete 53-test suite passed before the feedback addition (385 assertions); targeted final feedback and CSV checks passed afterward (**5 tests, 58 assertions**) on `clsu_feedback_test` only |
+| Browser checks across staged runs | **20 distinct tests passed**: three workflow/export/asset tests, eight UI regression tests, one category/monthly report test, four responsive tests, three role tests and one complete-feedback reading test |
+| Public HTTPS checks | All eight checks passed: monthly/four-breakdown total agreement; queued PDF/Excel/CSV completion with anonymous download rejection; desktop/mobile report fit; complete feedback reading/privacy; verified evaluation/service navigation |
+| PDF artifact | Final five-page A4 landscape report rendered and visually inspected; final layout saved privately as `report-layout.pdf` |
+| Final export regression after PDF layout adjustment | Passed: 1 test, 40 assertions |
+| Downloaded Excel artifact | Seven expected worksheets; summary totals and register row count matched the report service; no executable formula cells |
+| UI inspection | Desktop/mobile report and feedback pages inspected; no page-level horizontal overflow or browser JavaScript errors in public checks; wide tables retain internal horizontal scrolling |
+| Documentation | Relative local links checked; iteration log linked from README and implementation notes |
+
+Private evidence is in `.local/public-host/reports-qa/verification.json`, report/feedback screenshots, downloaded artifacts and final PDF page renders. It is ignored by Git because exports and feedback screenshots are private. No passwords or runtime secrets are included in this log.
+
+The date rollover exposed an existing CSV-test fixture issue: a seeded submission at 09:20 was in the future when the test ran shortly after midnight. The CSV security test now explicitly gives its subject request an eligible past submission time; the application continues excluding future submissions. The initial full-feedback browser test also led to explicit text elements for supplied contact fields, and its rerun passed.
 
 ## Remaining boundaries
 

@@ -67,3 +67,11 @@ The latest production build passed. Six Chrome tests passed for role-specific ad
 Desktop/mobile evidence is in `.impeccable/review/`. Browser tests add synthetic requests and reports to the local demo database. Backend tests use a separate database and never reset the demo data.
 
 No production deployment, real-user data, email delivery, MCP execution, load test, simultaneous-write stress test, full screen-reader audit, or backup restoration was performed. Draft configuration and deferred functionality are documented in `implementation-notes.md`.
+
+## Iteration 1 · reporting and full feedback review · 21 October 2026
+
+The [Iteration 1 change log](iteration-1.md) records additions, before/after behavior, definitions and remaining boundaries. The final hosted TypeScript/Vite build passed and was copied to the existing device-hosted demo. The complete SQLite suite passed **57 tests / 417 assertions**. The full MySQL suite passed 53 tests / 385 assertions before the feedback extension; final targeted MySQL feedback/CSV tests passed **5 tests / 58 assertions** on the allowlisted isolated test database.
+
+Twenty distinct browser tests passed across staged runs: three workflow/CSV/asset tests, eight UI regressions, the category/monthly PDF/Excel export flow, four responsive tests, three role tests and the full-feedback message/contact/refresh/mobile flow. Public verification completed eight checks across all three queued export formats, anonymous download/detail denial, report totals, desktop/mobile layout and verified evaluation navigation. See ignored `.local/public-host/reports-qa/verification.json` for timestamped public evidence.
+
+The final five-page A4 landscape PDF was rendered and inspected on every page after fixing orphaned breakdown headings. The downloaded native Excel workbook had seven expected sheets, matching report totals/register counts and no executable formula cells. No production, load, screen-reader or campus policy certification is claimed. Checks corrected a category label association, stylesheet layer order, a feedback contact-text selector and an existing CSV fixture's dependence on running after 09:20; the final relevant reruns passed.
