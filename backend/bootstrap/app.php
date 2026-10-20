@@ -7,7 +7,11 @@ return Application::configure(basePath: dirname(__DIR__))
  ->withMiddleware(function(Middleware $middleware){
   // Same-origin session API: JSON API clients receive no redirects.
   $middleware->validateCsrfTokens(except:['api/*']);
+  $middleware->prepend(\App\Http\Middleware\PortalSecurityHeaders::class);
+  $middleware->replace(\Illuminate\Http\Middleware\TrustProxies::class,\App\Http\Middleware\ConfiguredTrustProxies::class);
+  $middleware->redirectGuestsTo('/login');
   $middleware->appendToGroup('web',\App\Http\Middleware\VerifyPortalOrigin::class);
+  $middleware->appendToGroup('web',\App\Http\Middleware\EnsureActiveAccount::class);
  })
  ->withExceptions(function(Exceptions $exceptions){$exceptions->shouldRenderJsonWhen(fn($request)=>$request->is('api/*'));})
  ->create();

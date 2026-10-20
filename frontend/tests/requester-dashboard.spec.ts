@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 test("requester dashboard matches the selected Figma structure with live counts and local assets", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto("/login?role=requester");
   await page
     .getByLabel("Email address", { exact: true })
@@ -56,7 +56,7 @@ test("requester dashboard matches the selected Figma structure with live counts 
       expect(a!.x + a!.width).toBeLessThan(b!.x);
     }
     await page.screenshot({
-      path: "../.impeccable/review/requester-match-" + width + ".png",
+      path: testInfo.outputPath("requester-match-" + width + ".png"),
       fullPage: true,
       animations: "disabled",
     });

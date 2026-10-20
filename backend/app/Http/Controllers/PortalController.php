@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 class PortalController {
  public function login(Request $request){
-  $data=$request->validate(['email'=>'required|email','password'=>'required|string','remember'=>'sometimes|boolean','role'=>['sometimes',Rule::in(['admin','personnel','requester'])]]);
+  $data=$request->validate(['email'=>'required|email','password'=>'required|string','remember'=>'sometimes|boolean','role'=>['sometimes',Rule::in(['admin','personnel','requester','staff'])]]);
   $credentials=['email'=>$data['email'],'password'=>$data['password'],'is_active'=>true];
-  if(isset($data['role']))$credentials['role']=$data['role'];
+  if(isset($data['role']))$credentials['role']=$data['role']==='staff'?['admin','personnel']:$data['role'];
   if(!Auth::attempt($credentials,$data['remember']??false))return response()->json(['message'=>isset($data['role'])?'Use a valid '.$data['role'].' account and password for this sign-in.':'Email or password is incorrect.'],422);
   $request->session()->regenerate();return $request->user();
  }
@@ -57,5 +57,5 @@ class PortalController {
  }
  public function metrics(Request $request,ReportingService $reports){$data=$request->validate(['days'=>'sometimes|integer|min:1|max:366']);return $reports->metrics($request->user(),$data['days']??30);}
  public function notifications(Request $request){return DB::table('portal_notifications')->where('user_id',$request->user()->id)->orderByDesc('id')->limit(100)->get();}
- public function readNotification(Request $request,int $id){$changed=DB::table('portal_notifications')->where('id',$id)->where('user_id',$request->user()->id)->update(['read_at'=>now()]);abort_unless($changed,404);return ['message'=>'Marked as read.'];}
+ public function readNotification(Request $request,int $id){$notice=DB::table('portal_notifications')->where('id',$id)->where('user_id',$request->user()->id);abort_unless((clone $notice)->exists(),404);$notice->whereNull('read_at')->update(['read_at'=>now()]);return ['message'=>'Marked as read.'];}
 }

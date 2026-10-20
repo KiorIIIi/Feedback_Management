@@ -8,6 +8,7 @@ import "@fontsource/plus-jakarta-sans/700.css";
 import App from "./App";
 import "./styles.css";
 import "./requester-dashboard.css";
+import "./responsive.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>

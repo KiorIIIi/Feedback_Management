@@ -11,7 +11,21 @@ The system uses a React frontend, a modular Laravel backend, and a centralized M
 
 The design follows the supplied ITRM 3100 research draft and the [FEEDBACK MANAGEMENT Figma draft](https://www.figma.com/design/PeQN6nVBQbPNXWoTU32Mhm/FEEDBACK-MANAGEMENT?node-id=0-1). It describes intended behavior, rather than an already implemented system.
 
+## Login routing (implemented prototype)
+
+The landing page has one **Staff login** for administrators and service personnel, alongside requester access through **Request a service**. After successful authentication, the website redirects users according to their assigned account role (their operational position in the system):
+
+| Account role | Entry | Destination |
+| --- | --- | --- |
+| Administrator (`admin`) | Staff login | `/app/admin` — administration dashboard |
+| Service personnel (`personnel`) | Staff login | `/app/work` — assigned work |
+| Requester (`requester`) | Request a service | `/app/requester` — personal dashboard |
+
+The server verifies credentials, active-account status, and eligibility for the selected entry. Staff login accepts only administrator or personnel accounts. The role comes from the account record; a URL parameter or a faculty/student classification cannot grant permissions. The shared `/app` route also forwards an existing session to its role's home. Opening an incompatible sign-in entry offers an explicit account switch with logout confirmation. Existing role-specific sign-in URLs remain compatible.
+
 ## Technology and architectural approach
+
+For the implemented local Windows prototype, Laravel runs with PHP 8.5 supplied by **Laragon**, and **Composer** installs PHP/Laravel dependencies from `backend/composer.lock`. The React/TypeScript frontend uses Node.js and npm, with dependencies installed from `frontend/package-lock.json`. The project launcher starts Laravel, Vite, and the report queue worker; the local database runs separately on port 3307. This setup opens at `http://127.0.0.1:5173` and does not currently use a Laragon `.test` virtual host. See the README for installation and startup commands.
 
 | Area | Proposed choice | Responsibility |
 | --- | --- | --- |

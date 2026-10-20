@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./App";
-import { api, date, type RequestRecord } from "./api";
+import { api, date, parseDate, type RequestRecord } from "./api";
 import { Asset, Empty, ErrorNotice, Loading, Panel } from "./components";
 
 export function RequesterIcon({ name }: { name: string }) {
@@ -53,17 +53,28 @@ function Status({ value }: { value: string }) {
 export default function RequesterDashboard() {
   const { user } = useAuth();
   const [data, setData] = useState<DashboardData>(),
-    [error, setError] = useState<unknown>();
+    [error, setError] = useState<unknown>(),
+    [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
+    setData(undefined);
+    setError(null);
     api<DashboardData>("/requester-dashboard", { signal: controller.signal })
       .then(setData)
       .catch((e) => {
         if (!controller.signal.aborted) setError(e);
       });
     return () => controller.abort();
-  }, []);
-  if (error) return <ErrorNotice error={error} />;
+  }, [user?.id, attempt]);
+  if (error)
+    return (
+      <>
+        <ErrorNotice error={error} />
+        <button className="button" onClick={() => setAttempt((n) => n + 1)}>
+          Retry dashboard
+        </button>
+      </>
+    );
   if (!data) return <Loading />;
   const cards = [
     ["My requests", data.counts.total, "All your submissions", "imgFiles1"],
@@ -254,7 +265,7 @@ export default function RequesterDashboard() {
                       <small>{n.job_number}</small>
                       <time dateTime={n.created_at}>
                         {date(n.created_at)},{" "}
-                        {new Date(n.created_at).toLocaleTimeString("en-PH", {
+                        {parseDate(n.created_at).toLocaleTimeString("en-PH", {
                           hour: "numeric",
                           minute: "2-digit",
                           timeZone: "Asia/Manila",

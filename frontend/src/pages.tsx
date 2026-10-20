@@ -30,31 +30,39 @@ import {
 } from "./components";
 
 function useLoad<T>(path: string) {
-  const [data, setData] = useState<T>(),
-    [error, setError] = useState<unknown>(),
-    [loading, setLoading] = useState(true),
+  const [result, setResult] = useState<{
+      path: string;
+      data?: T;
+      error?: unknown;
+      loading: boolean;
+    }>({ path, loading: true }),
     [tick, setTick] = useState(0);
   useEffect(() => {
-    let alive = true;
-    setLoading(true);
-    api<T>(path)
+    const controller = new AbortController();
+    setResult((previous) => ({
+      path,
+      data: previous.path === path ? previous.data : undefined,
+      loading: true,
+    }));
+    api<T>(path, { signal: controller.signal })
       .then((d) => {
-        if (alive) {
-          setData(d);
-          setError(null);
+        if (!controller.signal.aborted) {
+          setResult({ path, data: d, loading: false });
         }
       })
       .catch((e) => {
-        if (alive) setError(e);
-      })
-      .finally(() => {
-        if (alive) setLoading(false);
+        if (!controller.signal.aborted) {
+          setResult({ path, error: e, loading: false });
+        }
       });
-    return () => {
-      alive = false;
-    };
+    return () => controller.abort();
   }, [path, tick]);
-  return { data, error, loading, reload: () => setTick((t) => t + 1) };
+  return {
+    data: result.path === path ? result.data : undefined,
+    error: result.path === path ? result.error : undefined,
+    loading: result.path !== path || result.loading,
+    reload: () => setTick((t) => t + 1),
+  };
 }
 function PageTitle({
   title,
@@ -273,12 +281,33 @@ function ReportControls({
     [busy, setBusy] = useState(false);
   useEffect(() => {
     if (!report || ["completed", "failed"].includes(report.status)) return;
-    const timer = setInterval(() => {
-      api<typeof report>("/reports/" + report.id)
-        .then(setReport)
-        .catch(setError);
-    }, 1500);
-    return () => clearInterval(timer);
+    const controller = new AbortController();
+    const reportId = report.id;
+    let timer: ReturnType<typeof setTimeout>;
+    async function poll() {
+      let finished = false;
+      try {
+        const next = await api<NonNullable<typeof report>>(
+          "/reports/" + reportId,
+          { signal: controller.signal },
+        );
+        if (controller.signal.aborted) return;
+        setReport(next);
+        setError(null);
+        finished = ["completed", "failed"].includes(next.status);
+      } catch (e) {
+        if (controller.signal.aborted) return;
+        setError(e);
+      }
+      if (!finished && !controller.signal.aborted) {
+        timer = setTimeout(poll, 1500);
+      }
+    }
+    timer = setTimeout(poll, 1500);
+    return () => {
+      controller.abort();
+      clearTimeout(timer);
+    };
   }, [report?.id, report?.status]);
   async function exportReport() {
     setBusy(true);
@@ -353,10 +382,6 @@ export function Dashboard() {
   const [days, setDays] = useState(30);
   const metrics = useLoad<Metrics>("/metrics?days=" + days),
     requests = useLoad<{ data: RequestRecord[]; total: number }>("/requests");
-  if (metrics.loading || requests.loading) return <Loading />;
-  if (metrics.error || requests.error)
-    return <ErrorNotice error={metrics.error || requests.error} />;
-  if (!metrics.data) return null;
   const rows = requests.data?.data || [];
   const needsClarification = rows.find((r) => r.status === "For Clarification");
   const unrated = rows.find((r) => r.status === "Completed" && !r.evaluation);
@@ -407,93 +432,103 @@ export function Dashboard() {
         </Link>
       )}
       {admin && <ReportControls days={days} setDays={setDays} />}
-      <Stats metrics={metrics.data} requester={!admin} />
-      {admin ? (
+      {metrics.loading || requests.loading ? (
+        <Loading />
+      ) : metrics.error || requests.error ? (
+        <ErrorNotice error={metrics.error || requests.error} />
+      ) : metrics.data ? (
         <>
-          <Charts metrics={metrics.data} />
-          <RequestTable compact />
-        </>
-      ) : (
-        <>
-          {needsClarification && (
-            <div className="clarification-banner">
-              <div>
-                <strong>A few more details will help us move forward</strong>
-                <p>
-                  {needsClarification.job_number} · MISO needs additional
-                  information.
-                </p>
-              </div>
-              <Link
-                className="button"
-                to={"/app/requests/" + needsClarification.id}
-              >
-                Provide clarification
-                <Icon name="arrow" />
-              </Link>
-            </div>
-          )}
-          <div className="requester-dashboard-grid">
-            <Panel
-              title="Recent requests"
-              action={
-                <Link to="/app/requests">
-                  View all requests <Icon name="arrow" />
-                </Link>
-              }
-            >
-              <SimpleRequests rows={rows.slice(0, 5)} />
-            </Panel>
-            <aside>
-              {unrated && (
-                <div className="rating-prompt">
-                  <small>YOUR FEEDBACK MATTERS</small>
-                  <h2>How was your service?</h2>
-                  <p>
-                    Your {unrated.subject.toLowerCase()} is complete. Tell us
-                    how we did.
-                  </p>
-                  <small>
-                    {unrated.job_number} · Completed{" "}
-                    {date(unrated.completed_at!)}
-                  </small>
+          <Stats metrics={metrics.data} requester={!admin} />
+          {admin ? (
+            <>
+              <Charts metrics={metrics.data} />
+              <RequestTable compact />
+            </>
+          ) : (
+            <>
+              {needsClarification && (
+                <div className="clarification-banner">
+                  <div>
+                    <strong>
+                      A few more details will help us move forward
+                    </strong>
+                    <p>
+                      {needsClarification.job_number} · MISO needs additional
+                      information.
+                    </p>
+                  </div>
                   <Link
                     className="button"
-                    to={`/app/requests/${unrated.id}/rate`}
+                    to={"/app/requests/" + needsClarification.id}
                   >
-                    Rate completed service <Icon name="arrow" />
+                    Provide clarification
+                    <Icon name="arrow" />
                   </Link>
                 </div>
               )}
-              <Panel title="Latest updates">
-                <div className="panel-body">
-                  {rows.slice(0, 3).map((r) => (
-                    <Link
-                      className="latest-update"
-                      key={r.id}
-                      to={"/app/requests/" + r.id}
-                    >
-                      <Icon name="requests" />
-                      <span>
-                        {r.status}
-                        <small>{r.job_number}</small>
-                        <small>{date(r.created_at)}</small>
-                      </span>
+              <div className="requester-dashboard-grid">
+                <Panel
+                  title="Recent requests"
+                  action={
+                    <Link to="/app/requests">
+                      View all requests <Icon name="arrow" />
                     </Link>
-                  ))}
-                  <Link to="/app/notifications">
-                    All notifications <Icon name="arrow" />
-                  </Link>
-                </div>
-              </Panel>
-            </aside>
-          </div>
-          <p className="privacy-caption">
-            This overview includes only records you are authorized to view.
-          </p>
-          <Help />
+                  }
+                >
+                  <SimpleRequests rows={rows.slice(0, 5)} />
+                </Panel>
+                <aside>
+                  {unrated && (
+                    <div className="rating-prompt">
+                      <small>YOUR FEEDBACK MATTERS</small>
+                      <h2>How was your service?</h2>
+                      <p>
+                        Your {unrated.subject.toLowerCase()} is complete. Tell
+                        us how we did.
+                      </p>
+                      <small>
+                        {unrated.job_number} · Completed{" "}
+                        {date(unrated.completed_at!)}
+                      </small>
+                      <Link
+                        className="button"
+                        to={`/app/requests/${unrated.id}/rate`}
+                      >
+                        Rate completed service <Icon name="arrow" />
+                      </Link>
+                    </div>
+                  )}
+                  <Panel title="Latest updates">
+                    <div className="panel-body">
+                      {rows.slice(0, 3).map((r) => (
+                        <Link
+                          className="latest-update"
+                          key={r.id}
+                          to={"/app/requests/" + r.id}
+                        >
+                          <Icon name="requests" />
+                          <span>
+                            {r.status}
+                            <small>{r.job_number}</small>
+                            <small>{date(r.created_at)}</small>
+                          </span>
+                        </Link>
+                      ))}
+                      <Link to="/app/notifications">
+                        All notifications <Icon name="arrow" />
+                      </Link>
+                    </div>
+                  </Panel>
+                </aside>
+              </div>
+              <p className="privacy-caption">
+                This overview includes only records you are authorized to view.
+              </p>
+              <Help />
+            </>
+          )}
         </>
-      )}
+      ) : null}
     </>
   );
 }
@@ -716,7 +751,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
       <ErrorNotice error={error} />
       {loading ? (
         <Loading />
-      ) : data?.data.length ? (
+      ) : error ? null : data?.data.length ? (
         <div className="table-scroll">
           <table className="requests-table">
             <thead>
@@ -1098,8 +1133,25 @@ export function RequestDetail() {
   const [saveError, setSaveError] = useState<unknown>(),
     [busy, setBusy] = useState(false),
     [success, setSuccess] = useState("");
+  useEffect(() => {
+    setSaveError(null);
+    setSuccess("");
+  }, [id]);
   if (loading) return <Loading />;
-  if (error) return <ErrorNotice error={error} />;
+  if (error)
+    return (
+      <>
+        {success && (
+          <div className="notice success" role="status">
+            {success}
+          </div>
+        )}
+        <ErrorNotice error={error} />
+        <button className="button" onClick={reload}>
+          Retry loading request
+        </button>
+      </>
+    );
   if (!r) return null;
   const requester = user?.role === "requester";
   async function save(e: FormEvent<HTMLFormElement>, action: string) {
@@ -1118,13 +1170,21 @@ export function RequestDetail() {
           ...(f.personnel_id ? { personnel_id: Number(f.personnel_id) } : {}),
         }),
       });
-      await refresh();
       setSuccess(
         action === "reply"
           ? "Your clarification has been sent for review."
           : "The request was updated.",
       );
       reload();
+      try {
+        await refresh();
+      } catch {
+        setSaveError(
+          new Error(
+            "Your update was saved, but workspace information could not be refreshed. Reload the page to update workspace counts.",
+          ),
+        );
+      }
     } catch (e) {
       setSaveError(e);
       if (e instanceof ApiError && e.status === 409) reload();
@@ -1449,6 +1509,7 @@ export function RequestDetail() {
 }
 export function RateService() {
   const { id } = useParams();
+  const { user } = useAuth();
   const nav = useNavigate();
   const { data: r, error, loading } = useLoad<RequestRecord>("/requests/" + id);
   const [rating, setRating] = useState(0),
@@ -1456,9 +1517,15 @@ export function RateService() {
     [saveError, setSaveError] = useState<unknown>(),
     [busy, setBusy] = useState(false);
   const labels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  useEffect(() => {
+    setRating(0);
+    setCategory("");
+    setSaveError(null);
+  }, [id]);
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
+    setSaveError(null);
     try {
       if (!rating) throw new Error("Choose your overall service rating.");
       await api("/requests/" + id + "/evaluation", {
@@ -1476,6 +1543,7 @@ export function RateService() {
       setBusy(false);
     }
   }
+  if (user?.role !== "requester") return <Navigate to="/app" replace />;
   if (loading) return <Loading />;
   if (error) return <ErrorNotice error={error} />;
   if (!r) return null;
@@ -1726,8 +1794,9 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
           </div>
         </Panel>
         <div className="notice">
-          Your feedback stays private and is reviewed by authorized CLSU staff.
-          Please avoid sharing sensitive personal information.
+          Your feedback stays private and is reviewed by authorized CLSU staff.{" "}
+          When signed in, feedback is linked to your account even if contact
+          fields are blank. Please avoid sharing sensitive personal information.
         </div>
         <button className="button primary full" disabled={busy}>
           {busy ? "Sending…" : "Submit feedback"}
@@ -1758,6 +1827,7 @@ type FeedbackData = {
 export function FeedbackHistory() {
   const { user } = useAuth();
   const { data, error, loading } = useLoad<FeedbackData>("/feedback");
+  if (user?.role === "personnel") return <Navigate to="/app" replace />;
   if (loading) return <Loading />;
   return (
     <>
@@ -1921,6 +1991,24 @@ export function Notifications() {
       created_at: string;
     }[]
   >("/notifications");
+  const [readError, setReadError] = useState<unknown>(),
+    [readingId, setReadingId] = useState<number | null>(null);
+  async function markRead(id: number) {
+    setReadError(null);
+    setReadingId(id);
+    try {
+      await api("/notifications/" + id + "/read", {
+        method: "POST",
+        body: "{}",
+      });
+      window.dispatchEvent(new Event("portal-notifications-changed"));
+      reload();
+    } catch (e) {
+      setReadError(e);
+    } finally {
+      setReadingId(null);
+    }
+  }
   return (
     <>
       <PageTitle
@@ -1928,10 +2016,11 @@ export function Notifications() {
         description="Updates and next steps for your service requests."
       />
       <ErrorNotice error={error} />
+      <ErrorNotice error={readError} />
       <Panel title="Latest updates">
         {loading ? (
           <Loading />
-        ) : data?.length ? (
+        ) : error ? null : data?.length ? (
           data.map((n) => (
             <div
               className={"notification-row " + (!n.read_at ? "unread" : "")}
@@ -1947,15 +2036,10 @@ export function Notifications() {
               {!n.read_at && (
                 <button
                   className="button"
-                  onClick={async () => {
-                    await api("/notifications/" + n.id + "/read", {
-                      method: "POST",
-                      body: "{}",
-                    });
-                    reload();
-                  }}
+                  disabled={readingId !== null}
+                  onClick={() => markRead(n.id)}
                 >
-                  Mark read
+                  {readingId === n.id ? "Marking…" : "Mark read"}
                 </button>
               )}
             </div>

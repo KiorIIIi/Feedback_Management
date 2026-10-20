@@ -1,6 +1,4 @@
 import { test, expect, type Page } from "@playwright/test";
-import path from "node:path";
-const out = path.resolve("../.impeccable/review");
 async function login(page: Page, email: string) {
   await page.goto("/login");
   await page.getByLabel("Email address", { exact: true }).fill(email);
@@ -30,7 +28,7 @@ async function assetsAndOverflow(page: Page) {
 }
 test("desktop and mobile visual evidence uses original local Figma assets", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 1124 });
   await page.goto("/");
   await expect(
@@ -38,14 +36,14 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
   ).toBeVisible();
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/portal-desktop.png",
+    path: testInfo.outputPath("portal-desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
   await page.setViewportSize({ width: 429, height: 1074 });
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/portal-mobile.png",
+    path: testInfo.outputPath("portal-mobile.png"),
     fullPage: true,
     animations: "disabled",
   });
@@ -56,7 +54,7 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
   ).toBeVisible();
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/login-desktop.png",
+    path: testInfo.outputPath("login-desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
@@ -64,7 +62,7 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
   await page.setViewportSize({ width: 1276, height: 1684 });
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/desktop.png",
+    path: testInfo.outputPath("desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
@@ -72,7 +70,7 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
   await page.getByRole("heading", { name: "All service requests" }).waitFor();
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/services-desktop.png",
+    path: testInfo.outputPath("services-desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
@@ -87,14 +85,14 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
     .waitFor();
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/detail-desktop.png",
+    path: testInfo.outputPath("detail-desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
   await page.setViewportSize({ width: 429, height: 1074 });
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/mobile.png",
+    path: testInfo.outputPath("mobile.png"),
     fullPage: true,
     animations: "disabled",
   });
@@ -104,7 +102,7 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
   await page.setViewportSize({ width: 1440, height: 1447 });
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/requester-desktop.png",
+    path: testInfo.outputPath("requester-desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
@@ -112,14 +110,14 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
   await page.getByRole("heading", { name: "Your information" }).waitFor();
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/submit-desktop.png",
+    path: testInfo.outputPath("submit-desktop.png"),
     fullPage: true,
     animations: "disabled",
   });
   await page.setViewportSize({ width: 429, height: 1074 });
   await assetsAndOverflow(page);
   await page.screenshot({
-    path: out + "/submit-mobile.png",
+    path: testInfo.outputPath("submit-mobile.png"),
     fullPage: true,
     animations: "disabled",
   });

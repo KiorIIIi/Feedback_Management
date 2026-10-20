@@ -24,18 +24,28 @@
       { "name": "compact-desktop-max", "value": "1250px" },
       { "name": "tablet-max", "value": "1000px" },
       { "name": "mobile-max", "value": "760px" },
-      { "name": "small-mobile-max", "value": "420px" }
+      { "name": "small-mobile-max", "value": "420px" },
+      { "name": "compact-controls-max", "value": "380px" }
     ],
     "focus": { "value": "3px solid #bd8e1a", "offset": "3px", "purpose": "Global focus-visible outline." },
     "reducedMotion": "The prefers-reduced-motion: reduce query disables all animations and transitions.",
-    "source": ["frontend/src/styles.css", "frontend/src/components.tsx", "frontend/src/App.tsx", "frontend/src/main.tsx", "frontend/src/RequesterDashboard.tsx", "frontend/src/requester-dashboard.css", "design-reference/admin.tsx.txt", "design-reference/portal.tsx.txt", "design-reference/requester.tsx.txt"],
+    "source": ["frontend/src/styles.css", "frontend/src/components.tsx", "frontend/src/App.tsx", "frontend/src/main.tsx", "frontend/src/RequesterDashboard.tsx", "frontend/src/requester-dashboard.css", "frontend/src/responsive.css", "design-reference/admin.tsx.txt", "design-reference/portal.tsx.txt", "design-reference/requester.tsx.txt"],
+    "sharedReflow": {
+      "cascade": "responsive.css is imported last, after styles.css and requester-dashboard.css, and owns final responsive overrides.",
+      "viewport": "Breakpoints respond to the effective CSS viewport, including browser zoom. Verification uses zoom-equivalent CSS viewport dimensions, not browser zoom commands; this does not independently verify browser zoom behavior. Preserve normal zoom and font scaling.",
+      "welcome": "Shrinkable 45fr/55fr columns; centered 528px maximum campus content and centered 792px maximum choice area. Layout minimum height is calc(100svh - 100px); fixed 1024px campus minimum is removed. Vertical spacing uses bounded vh clamps. At 1600px and wider, choice inline padding is 104px and campus inline padding is 60px.",
+      "artwork": "CampusArtwork uses ResizeObserver to scale the original 528x250 scene by min(1, wrapper width / 528). The wrapper preserves aspect ratio; SVG root geometry and original scene positions remain unchanged. No fixed 0.82 or 0.65 breakpoint scale remains.",
+      "navigation": "At 1000px and below, requester desktop navigation collapses to mobile navigation; requester header becomes a flexible row at least 85px high. Admin sidebar becomes a toggled 247px drawer capped at calc(100vw - 44px), below a 65px header; admin content loses its sidebar offset.",
+      "mobile": "At 760px and below, welcome hides campus and becomes one column; welcome layout minimum height is calc(100svh - 85px) without forcing a minimum choice-content height. Context strips wrap and grow above their 44px minimum. Detail and form grids become one shrinkable column. At 380px and below, public gutters become 20px, requester main gutters 16px, session/filter controls wrap and search fills a filter row. Metrics retain two columns.",
+      "overflow": "Grid children use min-width:0, action groups wrap, long record text wraps anywhere, and dense tables retain intentional internal scrolling."
+    },
     "requesterDashboard": {
       "route": "/app/requester",
       "figmaFrame": "26:22477",
       "sourceName": "Your dashboard",
       "authority": "The middle supplied Figma dashboard frame, exported as design-reference/requester.tsx.txt.",
       "layout": "1440px maximum main width; 32px 64px 40px padding; centered navigation in a 100px grid header; 48px context strip; four metric columns with 16px gaps; main columns 936fr/352fr with 24px gap; full-width help; hidden footer.",
-      "responsive": "At 1250px gutters become 35px. At 1000px gutters become 24px, metrics become two columns and main columns become 1.7fr/minmax(230px,1fr). At 760px the header is 85px, context strip 44px, gutters 20px, title 27px, main columns stack, metric columns stay two, and table overflow scrolls. At 420px metric padding is 15px. Mobile behavior is a responsive adaptation of the supplied desktop frame.",
+      "responsive": "At 1250px gutters become 35px. At 1000px gutters become 24px, metrics become two columns, main columns become 1.7fr/minmax(230px,1fr), and final shared overrides collapse header navigation to a flexible row at least 85px high. At 760px the context strip wraps above a 44px minimum, gutters become 20px, title 27px, main columns stack, metric columns stay two, and table overflow scrolls. At 420px metric padding is 15px; at 380px main gutters become 16px. Mobile behavior is a responsive adaptation of the supplied desktop frame.",
       "assets": "RequesterIcon resolves exact original exports through Asset screen=requester at /assets/figma/requester/. Preserve colored source variants; do not replace them with shared admin icons or invert primary-action icons.",
       "data": "The four metrics are all-time authenticated-owner counts: My requests, Open requests, Completed, Awaiting my rating. The limited recent list does not define those counts. Clarification and rating prompts are conditional on real records; notification indicators reflect actual unread counts. Empty, loading and error states replace illustrative Figma content. MCP remains disabled.",
       "evidencePaths": [".impeccable/review/requester-match-1440.png", ".impeccable/review/requester-match-429.png"],

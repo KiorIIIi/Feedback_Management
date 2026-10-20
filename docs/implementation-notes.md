@@ -37,7 +37,15 @@ The requester home now follows the explicitly selected middle `Your dashboard` f
 
 Role landing pages now separate MISO administration (`/app/admin`), assigned personnel work (`/app/work`), and the requester dashboard (`/app/requester`). The supplied Figma page contains requester screens, admin screens and personnel sign-in; its PERSONEL frame is the admin staff directory, not a separate personnel work dashboard. The personnel work view composes the existing portal components for the architecture's assignment/progress responsibilities and is not claimed as a direct copy of a missing Figma frame. Personnel do not see requester submission or evaluation prompts. Selected-role login is checked by server authentication; query parameters cannot grant a role.
 
+The landing page combines administrator and personnel access into **Staff login** (`/login?role=staff`). Both use the same form and are redirected using the authenticated account's stored role: admin → `/app/admin`, personnel → `/app/work`. Requester access remains under Request a service and leads to `/app/requester`. Staff sign-in rejects requester credentials before creating a session. Operational account role determines routing and authorization; faculty/student classification does not. Existing role-specific URLs remain supported for compatibility.
+
+The [20 October bug audit](bug-audit.md) records implemented corrections to internal-note privacy, active sessions, personnel access after transfer/reassignment, complete-origin validation, effective priority versions, notification retries, frontend failure recovery, report polling, timestamp parsing, and launcher ownership/readiness checks. No schema changes or new approved workflow policies were introduced.
+
+The final Gemini review added explicit safe model field lists, response headers, configurable production session encryption/secure-cookie defaults, and an isolated Playwright app. Signed-in feedback remains account-linked with an explicit notice; guest feedback is unlinked. An anonymous signed-in mode has not been approved or added. See [security review](security-review.md) for the final report dispositions and deployment boundaries.
+
 ## Deferred scope
+
+The [latest security audit follow-up](security-audit-follow-up.md) adds non-development startup validation, explicit CORS/proxy configuration, environment-aware logging, Unicode CSV hardening and read throttling. Remembered sign-in is now opt-in. Transactional in-app notification rows remain atomic with their workflow; no external notification worker is dispatched before commit.
 
 Attachments and private file uploads; email delivery; password recovery/provisioning; runtime settings and system evaluation; production retention and restoration; background maintenance; response and resolution SLA metrics; advanced role/permission administration; provider/model integration and MCP execution. In-app notifications and report queue jobs work without any AI integration.
 

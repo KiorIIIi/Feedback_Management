@@ -19,11 +19,13 @@ The local instance uses a project-owned MySQL database on `127.0.0.1:3307`. Data
 
 All accounts and service records are synthetic. These credentials are for the local demo only.
 
-Sign-in remembers your account by default; uncheck **Remember me** on a shared device. Refreshing, returning to the app, and browser Back preserve a valid session. Temporary connection failures offer a retry instead of treating you as signed out. Signing out clears the session and remembered login.
+**Remember me** is off by default; enable it when you want persistent sign-in on a trusted device. Refreshing, returning to the app, and browser Back preserve a valid normal session. Temporary connection failures offer a retry instead of treating you as signed out. Signing out clears the session and remembered login.
 
-Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. Admin and personnel sign-in links verify the selected role; an existing session for another role offers an explicit account switch.
+Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/system-architecture.md#login-routing-implemented-prototype).
 
 ## Start again on this Windows machine
+
+The local Windows setup runs Laravel using **Laragon's PHP 8.5**. **Composer installs the backend's PHP/Laravel dependencies** (`composer install --working-dir=backend`); **npm installs the React/TypeScript frontend dependencies** (`npm --prefix frontend ci`). Composer manages dependencies; the project launcher starts the application services. The current setup uses the isolated MySQL instance on port 3307 and the browser address `http://127.0.0.1:5173`, rather than a Laragon `.test` virtual host.
 
 ```powershell
 cd D:\Projects_26\Feedback_Management
@@ -54,17 +56,27 @@ Seeding refuses an existing populated database. On other environments, run `php 
 
 ## Checks
 
+The [Gemini security review](docs/security-review.md) distinguishes verified fixes, unconfirmed claims, local-development choices, and production prerequisites. Backend test bootstrap rejects unsafe database targets and cached configuration before migrations; local report storage is faked during backend tests. Cookie-authenticated write clients must send the configured trusted Origin or a trusted Referer.
+
+The [Gemini security candidate review](docs/security-review.md) distinguishes verified fixes, unconfirmed claims, local-development choices, and production prerequisites. Backend test bootstrap rejects unsafe database targets and cached configuration before migrations; local report storage is faked during backend tests. Cookie-authenticated write clients must send the configured trusted Origin or a trusted Referer.
+
+The [bug audit and fixes](docs/bug-audit.md) records the confirmed defects corrected during the 20 October 2026 review. Run `./scripts/test-local-runtime.ps1` for non-destructive launcher checks. Playwright automatically starts an isolated test app on ports 5174/8001, with a new SQLite database, sessions, cache, queue and private exports under `.local/e2e/<run-id>/`. It leaves the demo's MySQL records and remembered-login tokens alone. Ports must be free; existing services are never reused. The runner uses the same PHP 8.5 executable, overridable through `PORTAL_TEST_PHP`. Logs are in the run's `services.log`; screenshots are in `frontend/test-results/`.
+
 ```powershell
 npm --prefix frontend run build
 php backend/vendor/phpunit/phpunit/phpunit --configuration backend/phpunit.xml
 npm --prefix frontend run test:e2e
 ```
 
-The default PHP test configuration uses an in-memory SQLite database. The suite also ran successfully against a separate MySQL test database (`clsu_feedback_test`); never point the test suite at the demo or a production database. Browser tests use installed Chrome and a running local instance. They create a synthetic request and private report, leaving reviewable demo records.
+The default PHP test configuration uses an in-memory SQLite database. The suite also runs against the separately allowlisted MySQL test database (`clsu_feedback_test` on port 3307); unsafe targets are rejected. Browser tests use installed Chrome and their own isolated instance. Their SQLite integration coverage complements the separate MySQL feature suite. Old `.local/e2e/` run artifacts can be removed when no longer needed; preserve any logs required for review.
 
 Screenshots are in `.impeccable/review/`. Original design context and an asset provenance manifest are in `design-reference/`; 262 Figma images/SVGs are stored locally in `frontend/public/assets/figma/`. Runtime assets do not depend on temporary Figma links.
 
+Shared window-size and zoom reflow rules live in `frontend/src/responsive.css`, loaded after the base and dashboard styles. The welcome illustration scales through its wrapper in `App.tsx`, retaining the original Figma assets. To run the viewport checks: `npm --prefix frontend run test:e2e -- responsive.spec.ts`.
+
 ## Prototype boundaries
+
+The [latest security audit follow-up](docs/security-audit-follow-up.md) records the new hardening and remaining deployment decisions. Non-development startup rejects unsafe configuration; additional origins and trusted proxy IPs/CIDRs must be explicitly configured. Local/testing defaults remain usable. Real hosting/TLS/static-SPA header configuration is still a deployment responsibility.
 
 Settings, system evaluation, password recovery, attachments, outbound email, and MCP execution are reserved for later work. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
 

@@ -1,0 +1,215 @@
+/* Shared reflow rules apply to the effective CSS viewport, including browser zoom. */
+@layer responsive {
+  .main-content,
+  .panel,
+  .panel-body,
+  .page-title > div,
+  .form-layout > *,
+  .detail-grid > *,
+  .requester-dashboard-grid > *,
+  .charts-grid > * {
+    min-width: 0;
+  }
+  .page-title .actions,
+  .form-actions,
+  .insights-bar > div {
+    flex-wrap: wrap;
+  }
+  .concern,
+  .info-grid > div,
+  .summary-meta > div,
+  .info-list > div,
+  .notification-row > div,
+  .feedback-row > div {
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .welcome-content > *,
+  .login-form {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .campus-welcome {
+    padding-block: clamp(36px, 4.65vh, 60px);
+  }
+  .welcome-message {
+    margin-top: clamp(32px, 5.34vh, 60px);
+  }
+  .campus-illustration {
+    margin-top: clamp(32px, 4.98vh, 65px);
+  }
+  .campus-location {
+    margin-top: clamp(32px, 5.16vh, 58px);
+  }
+  .welcome-content {
+    padding-block: clamp(32px, 5vh, 70px);
+  }
+  .welcome-layout .button {
+    white-space: normal;
+  }
+  @media (min-width: 1600px) {
+    .welcome-content {
+      padding-inline: 104px;
+    }
+    .campus-welcome {
+      padding-inline: 60px;
+    }
+  }
+  @media (max-width: 1000px) {
+    .requester-shell .requester-header {
+      display: flex;
+      height: auto;
+      min-height: 85px;
+      padding: 20px 24px;
+      gap: 12px;
+    }
+    .requester-shell .requester-header > nav {
+      display: none;
+    }
+    .requester-shell .requester-header .userbox {
+      margin-left: auto;
+    }
+    .requester-header .mobile-toggle,
+    .admin-header .mobile-toggle {
+      display: block;
+      flex-shrink: 0;
+    }
+    .mobile-requester-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 12px 24px;
+      background: white;
+      border-bottom: 1px solid var(--line);
+    }
+    .mobile-requester-nav a {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+    .mobile-requester-nav a.active {
+      background: var(--soft);
+      color: var(--portal);
+    }
+    .sidebar {
+      transform: translateX(-100%);
+      width: 247px;
+      max-width: calc(100vw - 44px);
+      transition: transform 180ms ease-out;
+      box-shadow: 10px 0 25px #163b2b14;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+      top: 65px;
+    }
+    .admin-header {
+      margin-left: 0;
+      height: 65px;
+      padding: 0 24px;
+    }
+    .admin-shell .main-content {
+      margin-left: 0;
+    }
+    .sidebar nav a {
+      font-size: 12px;
+    }
+    .sidebar .nav-label {
+      font-size: 10px;
+    }
+    .header-right .userbox > span:nth-child(2) {
+      display: none;
+    }
+  }
+  @media (max-width: 760px) {
+    .welcome-content {
+      min-height: 0;
+    }
+    .welcome-layout {
+      min-height: calc(100svh - 85px);
+    }
+    .requester-shell .requester-header {
+      padding: 20px;
+      gap: 8px;
+    }
+    .portal-strip {
+      height: auto !important;
+      min-height: 44px;
+      flex-wrap: wrap;
+      row-gap: 8px;
+      padding-block: 12px !important;
+    }
+    .requester-shell .detail-grid,
+    .detail-grid,
+    .form-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .radio-options {
+      flex-wrap: wrap;
+    }
+    .rating-options {
+      gap: 6px;
+    }
+    .request-summary .summary-title {
+      min-width: 0;
+    }
+    .summary-title .actions {
+      flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 380px) {
+    .public-header,
+    .welcome-content,
+    .public-feedback {
+      padding-inline: 20px;
+    }
+    .session-options {
+      flex-wrap: wrap;
+      row-gap: 12px;
+    }
+    .identity {
+      min-width: 0;
+      flex-shrink: 1;
+    }
+    .identity span {
+      min-width: 0;
+    }
+    .identity small {
+      white-space: normal;
+    }
+    .requester-shell .requester-header .identity strong {
+      font-size: 12px;
+    }
+    .requester-shell .requester-header .identity small {
+      font-size: 6px;
+    }
+    .requester-shell .main-content {
+      padding-inline: 16px;
+    }
+    .stats-grid,
+    .dashboard-metrics {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .filters {
+      flex-wrap: wrap;
+    }
+    .search {
+      flex-basis: 100%;
+    }
+    .priority-filter {
+      margin-left: auto;
+    }
+    .breadcrumbs {
+      min-width: 0;
+      gap: 8px;
+    }
+    .breadcrumbs strong {
+      overflow-wrap: anywhere;
+    }
+    .header-right {
+      gap: 2px;
+    }
+  }
+}

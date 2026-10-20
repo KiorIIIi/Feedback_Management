@@ -1,17 +1,24 @@
 import { test, expect, type Page } from "@playwright/test";
 
-async function signIn(page: Page) {
+async function signIn(page: Page, remember = false) {
   await page.goto("/login");
   await page
     .getByLabel("Email address", { exact: true })
     .fill("andrea@clsu.demo");
   await page.getByLabel("Password", { exact: true }).fill("DemoPass!2026");
-  await expect(page.getByLabel("Remember me")).toBeChecked();
+  await expect(page.getByLabel("Remember me")).not.toBeChecked();
+  if (remember) await page.getByLabel("Remember me").check();
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(page).toHaveURL(/\/app\/requester$/);
   await expect(
     page.getByRole("heading", { name: "Good morning, Andrea." }),
   ).toBeVisible();
+  if (!remember)
+    expect(
+      (await page.context().cookies()).some((cookie) =>
+        cookie.name.startsWith("remember_"),
+      ),
+    ).toBe(false);
 }
 
 test("session survives refresh, leaving and returning, and browser history", async ({
@@ -65,18 +72,19 @@ test("temporary restoration failures offer retry without redirecting to login", 
 test("remembered login restores a new browser context after session cookie loss; logout revokes it", async ({
   page,
   browser,
+  baseURL,
 }) => {
-  await signIn(page);
+  await signIn(page, true);
   const state = await page.context().storageState();
   state.cookies = state.cookies.filter(
-    (cookie) => cookie.name !== "clsu_portal_session",
+    (cookie) => cookie.name !== "clsu_portal_e2e_session",
   );
   expect(
     state.cookies.some((cookie) => cookie.name.startsWith("remember_")),
   ).toBe(true);
   const restored = await browser.newContext({
     storageState: state,
-    baseURL: "http://127.0.0.1:5173",
+    baseURL,
   });
   try {
     const tab = await restored.newPage();
@@ -97,6 +105,7 @@ test("remembered login restores a new browser context after session cookie loss;
 });
 test("sign-out confirmation can be cancelled without ending the session", async ({
   page,
+  baseURL,
 }) => {
   await signIn(page);
   page.once("dialog", async (dialog) => {
@@ -109,6 +118,12 @@ test("sign-out confirmation can be cancelled without ending the session", async 
   expect((await page.request.get("/api/me")).status()).toBe(200);
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "Sign out" }).click();
-  await expect(page).toHaveURL("http://127.0.0.1:5173/");
-  expect((await page.request.get("/api/me",{headers:{Accept:'application/json'}})).status()).toBe(401);
+  await expect(page).toHaveURL(baseURL + "/");
+  expect(
+    (
+      await page.request.get("/api/me", {
+        headers: { Accept: "application/json" },
+      })
+    ).status(),
+  ).toBe(401);
 });

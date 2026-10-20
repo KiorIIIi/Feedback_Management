@@ -7,7 +7,7 @@ for (const [role, email, home, heading] of [
 ])
   test(`${role} login opens the correct workspace and survives refresh`, async ({
     page,
-  }) => {
+  }, testInfo) => {
     await page.goto("/login?role=" + role);
     if (role === "admin") {
       await page
@@ -74,7 +74,7 @@ for (const [role, email, home, heading] of [
       await page.goto(home);
       await expect(page.locator(".loading")).toHaveCount(0);
       await page.screenshot({
-        path: "../.impeccable/review/role-" + role + "-desktop.png",
+        path: testInfo.outputPath("role-" + role + "-desktop.png"),
         fullPage: true,
         animations: "disabled",
       });
@@ -85,7 +85,7 @@ for (const [role, email, home, heading] of [
         ),
       ).toBe(true);
       await page.screenshot({
-        path: "../.impeccable/review/role-" + role + "-mobile.png",
+        path: testInfo.outputPath("role-" + role + "-mobile.png"),
         fullPage: true,
         animations: "disabled",
       });

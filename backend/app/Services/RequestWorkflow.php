@@ -20,19 +20,21 @@ class RequestWorkflow {
   if(isset($data['requesting_office_id'])&&!DB::table('office_memberships')->where('user_id',$actor->id)->where('office_id',$data['requesting_office_id'])->exists())$this->fail('requesting_office_id','Choose one of your office affiliations.');
   return DB::transaction(function()use($actor,$data){
    $handling=DB::table('offices')->where('office_code','MISO')->value('id');abort_unless($handling,503,'The handling office has not been configured.');
-   $r=ServiceRequest::create([...$data,'requester_id'=>$actor->id,'handling_office_id'=>$handling,'job_number'=>'FMS-'.now()->format('Y').'-'.strtoupper((string)Str::ulid()),'status'=>'Pending','record_version'=>1]);
+   abort_if($actor->role==='admin'&&(int)$actor->office_id!==(int)$handling,403,'Only administrators of the handling office can submit requests from the staff workspace.');
+   $r=new ServiceRequest();$r->fill($data);$r->forceFill(['requester_id'=>$actor->id,'handling_office_id'=>$handling,'job_number'=>'FMS-'.now()->format('Y').'-'.strtoupper((string)Str::ulid()),'status'=>'Pending','record_version'=>1]);$r->save();
    $this->event($r,$actor,'Request submitted',$r->description);$this->audit($r,$actor,'request.created',null);
    $this->notify($r,'Your request has been received.');return $r->refresh();
   });
  }
- private function notify(ServiceRequest $r,string $message):void {
-  DB::table('portal_notifications')->insert(['user_id'=>$r->requester_id,'service_request_id'=>$r->id,'message'=>$message,'created_at'=>now()]);
+ private function notify(ServiceRequest $r,string $message,?array $recipients=null):void {
+  foreach(array_unique($recipients??[$r->requester_id]) as $recipient)
+   DB::table('portal_notifications')->insert(['user_id'=>$recipient,'service_request_id'=>$r->id,'message'=>$message,'created_at'=>now()]);
  }
  public function update(User $actor,int $id,array $data):ServiceRequest {
   return DB::transaction(function()use($actor,$id,$data){
    $r=ServiceRequest::lockForUpdate()->findOrFail($id);$this->access->authorize($actor,$r);
    abort_if($r->record_version!==(int)$data['expected_version'],409,'This request changed in another session. Refresh it before saving.');
-   $before=$r->toArray();$action=$data['action'];$message=trim($data['message']??'');
+   $before=$r->toArray();$action=$data['action'];$message=trim($data['message']??'');$publicUpdate=false;$changed=false;$newAssignee=null;
    if($action==='reply'){
     abort_unless($actor->id===$r->requester_id&&$r->status==='For Clarification',403,'Only the requester can reply to an open clarification.');
     if(!$message)$this->fail('message','Enter the clarification details.');
@@ -42,28 +44,34 @@ class RequestWorkflow {
     $this->access->admin($actor);if(!$message)$this->fail('message','Specify the details the requester needs to provide.');
     if(!in_array('For Clarification',config('workflow.transitions.'.$r->status,[]),true))$this->fail('status','Clarification is not available in the current status.');
     $this->event($r,$actor,'Clarification requested',$message);$r->status='For Clarification';$r->first_response_at??=now();
+    $publicUpdate=true;
    }elseif($action==='manage'){
     abort_if($actor->role==='requester',403);
+    abort_if($actor->role==='personnel'&&in_array($r->status,['Pending','For Clarification'],true),403,'Wait for administrator review before updating this request.');
     if($r->status==='Completed')$this->fail('status','Completed requests cannot be edited.');
     $current=DB::table('assignments')->where('service_request_id',$r->id)->whereNull('ended_at')->first();
-    $personnel=isset($data['personnel_id'])?(int)$data['personnel_id']:($current?->personnel_id);
+    $personnel=array_key_exists('personnel_id',$data)?($data['personnel_id']===null?null:(int)$data['personnel_id']):($current?->personnel_id);
     if($personnel!==($current?->personnel_id)){
      $this->access->admin($actor);
-     $eligible=User::whereKey($personnel)->where('role','personnel')->where('is_active',true)->where('office_id',$r->handling_office_id)->exists()&&DB::table('personnel_eligibilities')->where('user_id',$personnel)->where('service_type_id',$r->service_type_id)->exists();
+     $eligible=$personnel===null||(User::whereKey($personnel)->where('role','personnel')->where('is_active',true)->where('office_id',$r->handling_office_id)->exists()&&DB::table('personnel_eligibilities')->where('user_id',$personnel)->where('service_type_id',$r->service_type_id)->exists());
      if(!$eligible)$this->fail('personnel_id','Select active personnel eligible for this service and handling office.');
      DB::table('assignments')->where('service_request_id',$r->id)->whereNull('ended_at')->update(['ended_at'=>now()]);
-     DB::table('assignments')->insert(['service_request_id'=>$r->id,'personnel_id'=>$personnel,'assigned_by'=>$actor->id,'assigned_at'=>now()]);
-     $this->event($r,$actor,'Personnel assigned','Assigned to '.User::findOrFail($personnel)->name);$r->first_response_at??=now();
+     if($personnel!==null)DB::table('assignments')->insert(['service_request_id'=>$r->id,'personnel_id'=>$personnel,'assigned_by'=>$actor->id,'assigned_at'=>now()]);
+     $this->event($r,$actor,$personnel===null?'Personnel unassigned':'Personnel assigned',$personnel===null?'The assignment was cleared for review.':'Assigned to '.User::findOrFail($personnel)->name);$r->first_response_at??=now();
+     $changed=$publicUpdate=true;$newAssignee=$personnel;
     }
     if(array_key_exists('priority',$data)&&$data['priority']!==$r->priority){
      $this->access->admin($actor);
-     $rule=DB::table('priority_rules')->join('priority_rule_versions','priority_rule_versions.id','=','priority_rules.priority_rule_version_id')->where('urgency',$r->urgency)->where('impact',$r->impact)->orderByDesc('priority_rule_version_id')->select('priority_rules.*')->first();
+     $today=now()->toDateString();
+     $rule=DB::table('priority_rules')->join('priority_rule_versions','priority_rule_versions.id','=','priority_rules.priority_rule_version_id')->where('urgency',$r->urgency)->where('impact',$r->impact)->where('effective_from','<=',$today)->where(fn($dates)=>$dates->whereNull('effective_until')->orWhere('effective_until','>=',$today))->orderByDesc('effective_from')->orderByDesc('priority_rule_version_id')->select('priority_rules.*')->first();
      if(!$rule)$this->fail('priority','No priority rule is configured for this situation.');
      if($data['priority']!==$rule->resulting_priority&&!trim($data['reason']??''))$this->fail('reason','A reason is required when overriding the priority matrix.');
      $r->priority=$data['priority'];$r->priority_rule_id=$rule->id;
+     $changed=true;
      $this->event($r,$actor,'Priority reviewed','Official priority: '.$r->priority.'. '.($data['reason']??'Draft matrix applied.'),'internal');
     }
     $next=$data['status']??$r->status;
+    if(in_array($next,['Assigned','In Progress','On Hold','Completed'],true)&&!$personnel)$this->fail('personnel_id','An active assignment is required in this status.');
     if($next!==$r->status){
      if(!in_array($next,config('workflow.transitions.'.$r->status,[]),true))$this->fail('status','This status transition is not allowed.');
      if(in_array($next,['Assigned','In Progress','Completed'],true)&&!$personnel)$this->fail('personnel_id','Assign eligible personnel first.');
@@ -72,13 +80,20 @@ class RequestWorkflow {
      if(in_array($next,['In Progress','On Hold','Completed'],true)&&!$message)$this->fail('message','Record the actions taken or the reason for this status change.');
      if($next==='Completed'&&!trim($data['outcome']??''))$this->fail('outcome','Record the service outcome before completing the job.');
      $r->status=$next;if($next==='Completed'){$r->completed_at=now();DB::table('assignments')->where('service_request_id',$r->id)->whereNull('ended_at')->update(['ended_at'=>now()]);}
-     $this->event($r,$actor,$next,$message?:'Request '.$next);
+     $changed=$publicUpdate=true;
+     // The status remains public; an internal action note must not be copied into it.
+     $this->event($r,$actor,$next,($data['visibility']??'requester')==='internal'?'Request '.$next:($message?:'Request '.$next));
     }
-    if($message)$this->event($r,$actor,$r->status==='Completed'?'Actions taken':'Progress update',$message,$data['visibility']??'requester');
+    if($message){$this->event($r,$actor,$r->status==='Completed'?'Actions taken':'Progress update',$message,$data['visibility']??'requester');$changed=true;if(($data['visibility']??'requester')==='requester')$publicUpdate=true;}
     if($r->status==='Completed')$this->event($r,$actor,'Service outcome',trim($data['outcome']));
-    $r->first_response_at??=now();
+    if(!$changed)$this->fail('action','There are no changes to save.');
+    if($publicUpdate)$r->first_response_at??=now();
    }else $this->fail('action','Unknown workflow action.');
-   $r->record_version++;$r->save();$this->audit($r,$actor,'request.'.$action,$before);$this->notify($r,'Your request has an update: '.$r->status.'.');return $r;
+   $r->record_version++;$r->save();$this->audit($r,$actor,'request.'.$action,$before);
+   if($action==='reply')$this->notify($r,'A requester has replied to clarification. Review is needed.',User::where('role','admin')->where('is_active',true)->where('office_id',$r->handling_office_id)->pluck('id')->all());
+   elseif($publicUpdate)$this->notify($r,'Your request has an update: '.$r->status.'.');
+   if($newAssignee!==null)$this->notify($r,'A service request has been assigned to you.',[$newAssignee]);
+   return $r;
   });
  }
  public function evaluate(User $actor,int $id,array $data):void {

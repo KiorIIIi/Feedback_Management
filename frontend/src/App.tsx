@@ -2,6 +2,8 @@ import {
   createContext,
   useContext,
   useEffect,
+  useLayoutEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -15,7 +17,13 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { api, ApiError, type User, type Catalog } from "./api";
+import {
+  api,
+  ApiError,
+  SESSION_EXPIRED_EVENT,
+  type User,
+  type Catalog,
+} from "./api";
 import { roleHome } from "./routing";
 import RequesterDashboard, { RequesterIcon } from "./RequesterDashboard";
 import {
@@ -58,10 +66,23 @@ export default function App() {
     [loading, setLoading] = useState(true),
     [sessionError, setSessionError] = useState<unknown>(),
     [restoreAttempt, setRestoreAttempt] = useState(0);
+  const sessionEpoch = useRef(0);
+  useEffect(() => {
+    const expireSession = () => {
+      sessionEpoch.current += 1;
+      setUser(null);
+      setCatalog(null);
+      setSessionError(undefined);
+    };
+    window.addEventListener(SESSION_EXPIRED_EVENT, expireSession);
+    return () =>
+      window.removeEventListener(SESSION_EXPIRED_EVENT, expireSession);
+  }, []);
   async function refresh(signal?: AbortSignal) {
+    const epoch = sessionEpoch.current;
     const u = await api<User>("/me", { signal });
     const nextCatalog = await api<Catalog>("/catalog", { signal });
-    if (signal?.aborted) return;
+    if (signal?.aborted || epoch !== sessionEpoch.current) return;
     setUser(u);
     setCatalog(nextCatalog);
   }
@@ -210,13 +231,40 @@ function RolePage({
   const { user } = useAuth();
   return user?.role === role ? children : <HomeRedirect />;
 }
+function CampusArtwork() {
+  const wrapper = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  useLayoutEffect(() => {
+    const element = wrapper.current;
+    if (!element) return;
+    const resize = () =>
+      setScale(Math.min(1, element.getBoundingClientRect().width / 528));
+    resize();
+    const observer = new ResizeObserver(resize);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div ref={wrapper} className="campus-illustration">
+      <div className="campus-scene" style={{ transform: `scale(${scale})` }}>
+        <Asset screen="portal" name="imgSun" className="campus-sun" />
+        <Asset
+          screen="portal"
+          name="imgCampusArchitecture"
+          className="campus-building"
+        />
+        <small>ROOTED IN SERVICE. BUILT FOR OUR COMMUNITY.</small>
+      </div>
+    </div>
+  );
+}
 function Welcome({ login = false }: { login?: boolean }) {
   const { user, refresh } = useAuth();
   const nav = useNavigate();
   const loc = useLocation();
   const mode = new URLSearchParams(loc.search).get("role") || "requester";
   const selectedRole = new URLSearchParams(loc.search).get("role");
-  const expectedRole = ["admin", "personnel", "requester"].includes(
+  const expectedRole = ["admin", "personnel", "requester", "staff"].includes(
     selectedRole || "",
   )
     ? selectedRole
@@ -248,7 +296,11 @@ function Welcome({ login = false }: { login?: boolean }) {
     }
   }
   if (user && login) {
-    if (!expectedRole || user.role === expectedRole)
+    if (
+      !expectedRole ||
+      user.role === expectedRole ||
+      (expectedRole === "staff" && ["admin", "personnel"].includes(user.role))
+    )
       return <Navigate to={roleHome(user.role)} replace />;
     return (
       <>
@@ -313,15 +365,7 @@ function Welcome({ login = false }: { login?: boolean }) {
               helps improve CLSU services.
             </p>
           </div>
-          <div className="campus-illustration">
-            <Asset screen="portal" name="imgSun" className="campus-sun" />
-            <Asset
-              screen="portal"
-              name="imgCampusArchitecture"
-              className="campus-building"
-            />
-            <small>ROOTED IN SERVICE. BUILT FOR OUR COMMUNITY.</small>
-          </div>
+          <CampusArtwork />
           <p className="campus-location">
             Science City of Muñoz, Nueva Ecija, Philippines
           </p>
@@ -333,16 +377,19 @@ function Welcome({ login = false }: { login?: boolean }) {
                 ‹ Back to options
               </Link>
               <p className="eyebrow">
-                {mode === "admin"
-                  ? "ADMINISTRATOR ACCESS"
-                  : mode === "personnel"
-                    ? "PERSONNEL ACCESS"
-                    : "SERVICE REQUEST"}
+                {mode === "staff"
+                  ? "STAFF ACCESS"
+                  : mode === "admin"
+                    ? "ADMINISTRATOR ACCESS"
+                    : mode === "personnel"
+                      ? "PERSONNEL ACCESS"
+                      : "SERVICE REQUEST"}
               </p>
               <h1>Sign in to continue</h1>
               <p>
-                Use your authorized account to submit a request and follow
-                updates.
+                {mode === "staff"
+                  ? "Sign in as an administrator or service personnel. Your account determines your workspace."
+                  : "Use your authorized account to submit a request and follow updates."}
               </p>
               <div className="notice">
                 {mode === "requester"
@@ -383,7 +430,7 @@ function Welcome({ login = false }: { login?: boolean }) {
                 </Field>
                 <div className="session-options">
                   <label>
-                    <input name="remember" type="checkbox" defaultChecked />
+                    <input name="remember" type="checkbox" />
                     Remember me
                   </label>
                   <Link to="/help">Forgot password</Link>
@@ -439,10 +486,13 @@ function Welcome({ login = false }: { login?: boolean }) {
                 </Link>
               </div>
               <div className="option">
-                <h2>Administrator</h2>
-                <p>Manage requests, feedback, and service records.</p>
-                <Link className="button primary full" to="/login?role=admin">
-                  Admin login
+                <h2>Staff access</h2>
+                <p>
+                  Administrators and service personnel: manage requests and
+                  assigned work.
+                </p>
+                <Link className="button primary full" to="/login?role=staff">
+                  Staff login
                   <Asset screen="portal" name="imgArrowRight" />
                 </Link>
               </div>
@@ -450,9 +500,6 @@ function Welcome({ login = false }: { login?: boolean }) {
                 One place for better campus service. Choose an option to get
                 started.
               </div>
-              <Link className="personnel-access" to="/login?role=personnel">
-                Personnel sign in
-              </Link>
             </>
           )}
           <footer>
@@ -478,7 +525,16 @@ function Shell() {
   const nav = useNavigate();
   const loc = useLocation();
   const [menu, setMenu] = useState(false);
+  const [logoutBusy, setLogoutBusy] = useState(false);
+  const [logoutError, setLogoutError] = useState<unknown>();
   const [unreadCount, setUnreadCount] = useState(0);
+  const [notificationRevision, setNotificationRevision] = useState(0);
+  useEffect(() => {
+    const changed = () => setNotificationRevision((revision) => revision + 1);
+    window.addEventListener("portal-notifications-changed", changed);
+    return () =>
+      window.removeEventListener("portal-notifications-changed", changed);
+  }, []);
   useEffect(() => {
     if (user?.role !== "requester") return;
     const controller = new AbortController();
@@ -488,7 +544,7 @@ function Shell() {
       .then((rows) => setUnreadCount(rows.filter((n) => !n.read_at).length))
       .catch(() => {});
     return () => controller.abort();
-  }, [user?.id, user?.role, loc.pathname]);
+  }, [user?.id, user?.role, loc.pathname, notificationRevision]);
   const admin = user?.role === "admin";
   const personnel = user?.role === "personnel";
   useEffect(() => {
@@ -496,9 +552,21 @@ function Shell() {
     window.scrollTo(0, 0);
   }, [loc.pathname]);
   async function logout() {
+    if (logoutBusy) return;
     if (!window.confirm("Are you sure you want to sign out?")) return;
-    await api("/logout", { method: "POST", body: "{}" });
-    window.location.assign("/");
+    setLogoutBusy(true);
+    setLogoutError(undefined);
+    try {
+      await api("/logout", { method: "POST", body: "{}" });
+      window.location.assign("/");
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        window.location.assign("/");
+        return;
+      }
+      setLogoutError(error);
+      setLogoutBusy(false);
+    }
   }
   const label =
     adminLinks.find(
@@ -523,7 +591,12 @@ function Shell() {
               : user?.classification + " · CLSU"}
         </small>
       </span>
-      <button className="icon-button" onClick={logout} aria-label="Sign out">
+      <button
+        className="icon-button"
+        onClick={logout}
+        aria-label="Sign out"
+        disabled={logoutBusy}
+      >
         {user?.role === "requester" ? <RequesterIcon name="imgLogOut" /> : "↪"}
       </button>
     </div>
@@ -604,6 +677,7 @@ function Shell() {
             <button
               className="mobile-toggle"
               aria-label="Toggle navigation"
+              aria-expanded={menu}
               onClick={() => setMenu(!menu)}
             >
               ☰
@@ -650,6 +724,7 @@ function Shell() {
             <button
               className="mobile-toggle"
               aria-label="Toggle navigation"
+              aria-expanded={menu}
               onClick={() => setMenu(!menu)}
             >
               ☰
@@ -695,6 +770,7 @@ function Shell() {
         </>
       )}
       <main id="main" className="main-content">
+        <ErrorNotice error={logoutError} />
         <Outlet />
       </main>
       {!admin && (

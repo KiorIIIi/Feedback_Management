@@ -59,10 +59,13 @@ export class ApiError extends Error {
     super(message);
   }
 }
+export const SESSION_EXPIRED_EVENT = "portal:session-expired";
+let authGeneration = 0;
 export async function api<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
+  const requestGeneration = authGeneration;
   const res = await fetch("/api" + path, {
     ...options,
     credentials: "same-origin",
@@ -73,9 +76,20 @@ export async function api<T>(
       ...options.headers,
     },
   });
-  const data = await res.json().catch(() => ({
-    message: "The server returned an unexpected response. Please retry.",
-  }));
+  if (res.status === 401 && requestGeneration === authGeneration) {
+    authGeneration += 1;
+    window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
+  }
+  if (res.ok && (path === "/login" || path === "/logout")) authGeneration += 1;
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    throw new ApiError(
+      "The server returned an unexpected response. Please retry.",
+      res.status,
+    );
+  }
   if (!res.ok)
     throw new ApiError(
       data.message || "The request failed.",
@@ -84,8 +98,18 @@ export async function api<T>(
     );
   return data;
 }
+// Query-builder timestamps have no offset and are stored in the application's
+// Asia/Manila timezone. Eloquent's ISO timestamps already include their offset.
+export function parseDate(value: string) {
+  const local = value.replace(" ", "T");
+  if (/^\d{4}-\d{2}-\d{2}$/.test(local))
+    return new Date(local + "T00:00:00+08:00");
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?$/.test(local))
+    return new Date(local + "+08:00");
+  return new Date(value);
+}
 export const date = (value: string) =>
-  new Date(value).toLocaleDateString("en-PH", {
+  parseDate(value).toLocaleDateString("en-PH", {
     day: "numeric",
     month: "short",
     year: "numeric",
