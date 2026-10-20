@@ -97,4 +97,4 @@ The date rollover exposed an existing CSV-test fixture issue: a seeded submissio
 
 Scheduled report delivery, outbound email, semantic/AI concern analysis, business-hour/SLA calculations, category rename/delete, completed-record recategorization and MCP execution are outside this iteration. General-feedback reply/moderation workflows are not added. The full proposed schema has not been certified as 3NF, and no MISO acceptance, exhaustive accessibility/security audit, load test or production-readiness claim is made.
 
-The public link depends on this PC, its internet connection and the temporary tunnel. Credentials and private exports must not be committed. See [implementation notes](implementation-notes.md), [verification history](verification.md), and the [README](../README.md) for operational details.
+The public link depends on this PC, its internet connection and the temporary tunnel. Credentials and private exports must not be committed. See [implementation notes](../../../project/implementation-notes.md), [verification history](../../../testing/verification.md), and the [README](../../../../README.md) for operational details.

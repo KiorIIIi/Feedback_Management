@@ -1,6 +1,6 @@
 # Bug audit and fixes — 20 October 2026
 
-This pass reviewed the implemented local prototype's authentication, record access, request lifecycle, notifications, reports, responsive behavior, and Windows launchers. The findings below were corrected in code. Test coverage and final results are recorded in [verification](verification.md). This is a scoped review, not a claim that every possible defect has been eliminated.
+This pass reviewed the implemented local prototype's authentication, record access, request lifecycle, notifications, reports, responsive behavior, and Windows launchers. The findings below were corrected in code. Test coverage and final results are recorded in [verification](../verification.md). This is a scoped review, not a claim that every possible defect has been eliminated.
 
 ## Access, privacy, and backend behavior
 

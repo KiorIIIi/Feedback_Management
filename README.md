@@ -21,7 +21,7 @@ All accounts and service records are synthetic. These credentials are for the lo
 
 **Remember me** is off by default; enable it when you want persistent sign-in on a trusted device. Refreshing, returning to the app, and browser Back preserve a valid normal session. Temporary connection failures offer a retry instead of treating you as signed out. Signing out clears the session and remembered login.
 
-Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/system-architecture.md#login-routing-implemented-prototype).
+Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/architecture/system-architecture.md#login-routing-implemented-prototype).
 
 ## Start again on this Windows machine
 
@@ -81,21 +81,19 @@ Quick Tunnels have no uptime guarantee. The PHP built-in server is used for this
 
 ## Service evaluation reports
 
-The [Iteration 1 change log](docs/iteration-1.md) records report/category additions, the full feedback reading view, changed behavior, verification and remaining boundaries.
+The [Iteration 1 change log](docs/changes/iteration-01/iteration-overview.md) records report/category additions, the full feedback reading view, changed behavior, verification and remaining boundaries.
 
 Open **Reports & analytics** as a MISO administrator. Choose a rolling period or **Calendar month**, then export PDF, Excel (`.xlsx`) or a CSV request register. The queue worker prepares private downloads. Reports group requests by staff-assigned category, official priority, current status and personnel, with verified-rating and calendar-hour resolution averages. Expand **How these figures are calculated** for denominators and exclusions.
 
-Create office categories at the bottom of that page, then assign a **Request category** in an open request's review form. Categories are separate from service types; existing records are Uncategorized. See [report definitions and boundaries](docs/implementation-notes.md#service-evaluation-reporting-implemented-on-20-october).
+Create office categories at the bottom of that page, then assign a **Request category** in an open request's review form. Categories are separate from service types; existing records are Uncategorized. See [report definitions and boundaries](docs/project/implementation-notes.md#service-evaluation-reporting-implemented-on-20-october).
 
 For an existing development installation, run `php backend/artisan migrate` after updating dependencies. The isolated public demo can apply additive migrations with `php scripts/migrate-public.php`; this CLI reads local migration credentials without giving them to the public web process. Restart the report worker after backend updates and rebuild the frontend. Never rerun the demo seed on populated data.
 
 ## Checks
 
-The [Gemini security review](docs/security-review.md) distinguishes verified fixes, unconfirmed claims, local-development choices, and production prerequisites. Backend test bootstrap rejects unsafe database targets and cached configuration before migrations; local report storage is faked during backend tests. Cookie-authenticated write clients must send the configured trusted Origin or a trusted Referer.
+The [Gemini security review](docs/testing/audits/security-review.md) distinguishes verified fixes, unconfirmed claims, local-development choices, and production prerequisites. Backend test bootstrap rejects unsafe database targets and cached configuration before migrations; local report storage is faked during backend tests. Cookie-authenticated write clients must send the configured trusted Origin or a trusted Referer.
 
-The [Gemini security candidate review](docs/security-review.md) distinguishes verified fixes, unconfirmed claims, local-development choices, and production prerequisites. Backend test bootstrap rejects unsafe database targets and cached configuration before migrations; local report storage is faked during backend tests. Cookie-authenticated write clients must send the configured trusted Origin or a trusted Referer.
-
-The [bug audit and fixes](docs/bug-audit.md) records the confirmed defects corrected during the 20 October 2026 review. Run `./scripts/test-local-runtime.ps1` for non-destructive launcher checks. Playwright automatically starts an isolated test app on ports 5174/8001, with a new SQLite database, sessions, cache, queue and private exports under `.local/e2e/<run-id>/`. It leaves the demo's MySQL records and remembered-login tokens alone. Ports must be free; existing services are never reused. The runner uses the same PHP 8.5 executable, overridable through `PORTAL_TEST_PHP`. Logs are in the run's `services.log`; screenshots are in `frontend/test-results/`.
+The [bug audit and fixes](docs/testing/audits/bug-audit.md) records the confirmed defects corrected during the 20 October 2026 review. Run `./scripts/test-local-runtime.ps1` for non-destructive launcher checks. Playwright automatically starts an isolated test app on ports 5174/8001, with a new SQLite database, sessions, cache, queue and private exports under `.local/e2e/<run-id>/`. It leaves the demo's MySQL records and remembered-login tokens alone. Ports must be free; existing services are never reused. The runner uses the same PHP 8.5 executable, overridable through `PORTAL_TEST_PHP`. Logs are in the run's `services.log`; screenshots are in `frontend/test-results/`.
 
 ```powershell
 npm --prefix frontend run build
@@ -111,17 +109,21 @@ Shared window-size and zoom reflow rules live in `frontend/src/responsive.css`, 
 
 ## Prototype boundaries
 
-The [latest security audit follow-up](docs/security-audit-follow-up.md) records the new hardening and remaining deployment decisions. Non-development startup rejects unsafe configuration; additional origins and trusted proxy IPs/CIDRs must be explicitly configured. Local/testing defaults remain usable. Real hosting/TLS/static-SPA header configuration is still a deployment responsibility.
+The [latest security audit follow-up](docs/testing/audits/security-audit-follow-up.md) records the new hardening and remaining deployment decisions. Non-development startup rejects unsafe configuration; additional origins and trusted proxy IPs/CIDRs must be explicitly configured. Local/testing defaults remain usable. Real hosting/TLS/static-SPA header configuration is still a deployment responsibility.
 
-Settings, system evaluation, password recovery, attachments, outbound email, and MCP execution are reserved for later work. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
+Settings, system evaluation, password recovery, attachments, outbound email, and MCP execution are reserved for later work. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
 
 ## Documentation
 
-| Document | Purpose |
-| --- | --- |
-| [Agent Instructions](AGENTS.md) | Repository guidance for future coding sessions, including project references, implementation rules, and verification expectations. |
-| [System Architecture](docs/system-architecture.md) | System scope, technology choices, modules, workflows, access controls, MCP capabilities, deployment, and verification requirements. |
-| [Database Design](docs/database-design.md) | Proposed core and full ERDs, entities, relationships, keys, integrity rules, assumptions, and acceptance scenarios. |
-| [Database Normalization](docs/database-normalization.md) | Normalization assessment, recommended refinements, intentional duplication, and conditions for a formal 3NF assessment. |
+Start with the [documentation index](docs/README.md). The [documentation map](docs/project/documentation-map.md) records relocated files.
 
-Read the architecture first, then the database design and normalization assessment. The database design remains a proposal; unresolved choices and normalization refinements must be addressed before treating it as a finalized implementation schema.
+| Area | Contents |
+| --- | --- |
+| [Agile](docs/agile/README.md) | Epics, product backlog, sprint records, implementation plans and story tests |
+| [Architecture](docs/architecture/README.md) | System architecture, database design/normalization and historical exports |
+| [Changes](docs/changes/README.md) | Iteration 1 and documentation change records |
+| [Project](docs/project/README.md) | Implementation decisions and project guidance |
+| [Requirements](docs/requirements/README.md) | Original research paper and requirement traceability |
+| [Testing](docs/testing/README.md) | Verification evidence, test commands and audit records |
+
+[Agent instructions](AGENTS.md), [product context](PRODUCT.md) and [design context](DESIGN.md) remain at the repository root. Read the architecture before database design/normalization; proposed policies and diagrams are distinct from implemented and verified features. Epic/sprint records for Iteration 1 are explicitly retrospective.

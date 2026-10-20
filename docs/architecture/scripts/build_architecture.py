@@ -7,7 +7,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from PIL import Image, ImageDraw, ImageFont
 
-BASE = Path(__file__).resolve().parent
+BASE = Path(__file__).resolve().parent.parent / 'exports'
 QA = BASE / '_architecture_qa'
 QA.mkdir(exist_ok=True)
 OUT = BASE / 'CLSU_System_Architecture.docx'

@@ -27,7 +27,7 @@ Startup and logging configuration probes passed. The production guard error iden
 
 The original CORS test assumed an unlisted origin would always receive no allow-origin header. Inspection of the installed framework showed its valid single-origin optimization emits a fixed configured origin. The test now checks that an unlisted origin is never authorized, and also covers the multi-origin branch; no custom workaround was added to alter safe framework behavior.
 
-Final automated results are recorded in [verification](verification.md). Browser tests use the isolated application and database described in [security review](security-review.md); they do not target the working demo.
+Final automated results are recorded in [verification](../verification.md). Browser tests use the isolated application and database described in [security review](security-review.md); they do not target the working demo.
 
 ## Remaining decisions and limits
 
