@@ -48,7 +48,13 @@ class PortalController {
   return response()->json(['message'=>'Thank you. Your feedback has been received for private review.'],201);
  }
  public function feedbackIndex(Request $request,\App\Services\FeedbackReader $feedback){
-  $filters=$request->validate(['general_page'=>'sometimes|integer|min:1','evaluation_page'=>'sometimes|integer|min:1']);
+  $filters=$request->validate([
+   'general_page'=>'sometimes|integer|min:1','evaluation_page'=>'sometimes|integer|min:1',
+   'search'=>'nullable|string|max:200',
+   'rating'=>['nullable',Rule::in(['low','unrated','1','2','3','4','5'])],
+   'days'=>['nullable',Rule::in(['7','30','90'])],
+   'category'=>['nullable',Rule::in(['Complaint','Suggestion','Compliment','Other'])],
+  ]);
   return $feedback->index($request->user(),$filters);
  }
  public function feedbackShow(Request $request,string $kind,int $id,\App\Services\FeedbackReader $feedback){

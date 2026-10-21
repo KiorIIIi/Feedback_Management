@@ -16,7 +16,7 @@ test("admin opens the complete feedback message and supplied contact details", a
   await page.goto("/app/feedback");
   const row = page.locator(".feedback-row").filter({ has: page.getByRole("heading", { name: "Synthetic full reading check", exact: true }) });
   await expect(row).not.toContainText("Final feedback sentence.");
-  await row.getByRole("link", { name: "View full feedback", exact: true }).click();
+  await row.getByRole("link", { name: "View feedback", exact: true }).click();
   await expect(page.locator(".feedback-full-message")).toHaveText(message);
   await expect(page.getByText("synthetic@example.invalid", { exact: true })).toBeVisible();
   await expect(page.getByText("UNVERIFIED-READING", { exact: true })).toBeVisible();

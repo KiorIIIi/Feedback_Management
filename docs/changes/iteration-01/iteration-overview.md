@@ -4,7 +4,7 @@ This folder contains the change history for the first iteration cycle. Initial f
 
 | Sprint | Records |
 | --- | --- |
-| [Sprint 01](sprint-01/sprint-overview.md) | Reporting/feedback implementation and the subsequent documentation changes |
+| [Sprint 01](sprint-01/sprint-overview.md) | Reporting/feedback implementation, documentation changes and a Figma-only feedback UI evaluation |
 
 The sprint grouping was recorded retrospectively. It does not establish earlier sprint ceremonies, estimates or MISO approval. Follow-up changes are added as separate files in the existing sprint rather than replacing the initial feature record.
 

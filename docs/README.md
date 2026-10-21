@@ -1,5 +1,7 @@
 # Documentation
 
+Active development branch: **`front-main`**. Follow the user's [development and publishing workflow](project/development-workflow.md) until final merge approval.
+
 Start here for the CLSU Feedback Management System and Service Tracker. The folders follow the supplied reference: agile work records, architecture, changes, project guidance, requirements and testing.
 
 | Folder | What belongs here | Start with |

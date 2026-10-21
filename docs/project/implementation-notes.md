@@ -61,6 +61,10 @@ The [20 October bug audit](../testing/audits/bug-audit.md) records implemented c
 
 The final Gemini review added explicit safe model field lists, response headers, configurable production session encryption/secure-cookie defaults, and an isolated Playwright app. Signed-in feedback remains account-linked with an explicit notice; guest feedback is unlinked. An anonymous signed-in mode has not been approved or added. See [security review](../testing/audits/security-review.md) for the final report dispositions and deployment boundaries.
 
+## Feedback UI revamp · Iteration 02 / Sprint 02
+
+The user selected Figma Option A (list and separate detail pages). Feedback now opens on General feedback, with separate tab counts, real server-side search/rating/date/category filtering, compact readable rows and a responsive full-message reader. Source pills sit at the top right beside numeric/star ratings. Detail links preserve URL filters/pages; session-only per-account scroll offsets restore browsing position. Verified details expose authorized service/office/final-assignee/completion/request-category context. General contact fields remain as supplied and typed references remain unverified text. No schema, workflow or deployment changes were made. See the [Iteration 02 change and verification record](../changes/iteration-02/sprint-02/001-feedback-ui-revamp.md).
+
 ## Deferred scope
 
 The [Iteration 1 log](../changes/iteration-01/sprint-01/001-reporting-and-feedback.md) records the reporting and feedback-reading additions. Feedback history now paginates both independent submissions and verified evaluations. Shared `FeedbackReader` queries enforce the same MISO-only routing, requester ownership and administrative handling-office scope for the list and full-message detail routes. General-feedback detail includes optional contact fields as supplied, without treating a typed job number as verified or granting private request access. Personnel access remains denied. Messages are rendered as escaped text with preserved line breaks; they cannot authorize application actions.

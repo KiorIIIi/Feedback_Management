@@ -4,6 +4,7 @@
 | --- | --- |
 | [Repository README](../../README.md) | Installation, local startup, temporary public hosting and test entry points |
 | [Implementation notes](implementation-notes.md) | Implemented flows, prototype decisions, refinements and deferred scope |
+| [Development workflow](development-workflow.md) | Active `front-main` branch, authorized commit/push workflow and final-merge boundary |
 | [Documentation map](documentation-map.md) | Folder conventions and old-to-new file locations |
 | [Root product context](../../PRODUCT.md) | Product audience, stack and constraints used by design tooling |
 | [Root design context](../../DESIGN.md) | Existing portal visual system |
