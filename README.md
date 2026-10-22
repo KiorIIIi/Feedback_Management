@@ -30,7 +30,7 @@ The local Windows setup runs Laravel using **Laragon's PHP 8.5**. **Composer ins
 ```powershell
 cd D:\Projects_26\Feedback_Management
 .\scripts\init-local-db.ps1
-.\scripts\start.ps1
+.\scripts\start.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe'
 ```
 
 The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. The launchers explicitly select the patched PHP 8.5.12 runtime. The Windows user PATH also selects this version after reopening the terminal. The default path is `C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
@@ -64,9 +64,9 @@ The device-hosted demo uses the complete React/Laravel/MySQL app through a tempo
 # One-time project-local client installation; verifies the official SHA-256.
 .\scripts\install-cloudflared.ps1
 # Build and start the isolated public demo.
-.\scripts\start-public.ps1 -UseWindowsDns
+.\scripts\start-public.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe' -UseWindowsDns
 # Disconnect the public link and stop only its web process and queue worker.
-.\scripts\stop-public.ps1
+.\scripts\stop-public.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe'
 ```
 
 The client is pinned to cloudflared 2026.10.2 (Windows amd64). `-UseWindowsDns` is a version-specific workaround for this machine's connector DNS failures: Windows resolves the official Cloudflare edge names, which are passed through the client's explicit-edge option. TLS verification stays enabled and system DNS/firewall settings are unchanged. Omit the switch where ordinary connector DNS works. Hostname propagation can take time; startup verifies the public HTTPS `/up` endpoint and stops the public processes if it fails.
