@@ -1,4 +1,4 @@
-param([string]$PhpPath='C:\laragon\bin\php\php-8.5.10-Win32-vs17-x64\php.exe',[switch]$SkipBuild,[switch]$UseWindowsDns)
+param([string]$PhpPath='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe',[switch]$SkipBuild,[switch]$UseWindowsDns)
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'local-runtime.ps1')
 $projectRoot=Split-Path -Parent $PSScriptRoot

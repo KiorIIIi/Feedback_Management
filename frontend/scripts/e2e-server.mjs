@@ -13,7 +13,7 @@ const root = path.resolve(
 const backend = path.join(root, "backend");
 const php =
   process.env.PORTAL_TEST_PHP ||
-  "C:/laragon/bin/php/php-8.5.10-Win32-vs17-x64/php.exe";
+  "C:/laragon/bin/php/php-8.5.12-Win32-vs17-x64/php.exe";
 const runRoot = path.join(
   root,
   ".local",

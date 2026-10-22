@@ -11,3 +11,5 @@
 | [Agent instructions](../../AGENTS.md) | Repository implementation and verification rules |
 
 The root files remain in place because repository and design tools read those entry points. This folder links to them instead of maintaining duplicate copies.
+
+- [PHP runtime security update — 22 October 2026](php-runtime-security.md)

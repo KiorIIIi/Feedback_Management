@@ -33,14 +33,16 @@ cd D:\Projects_26\Feedback_Management
 .\scripts\start.ps1
 ```
 
-The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. PHP 8.5 is selected explicitly because the system default PHP is older. The default path is `C:\laragon\bin\php\php-8.5.10-Win32-vs17-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
+The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. The launchers explicitly select the patched PHP 8.5.12 runtime. The Windows user PATH also selects this version after reopening the terminal. The default path is `C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
+
+See the [22 October PHP security update](docs/project/php-runtime-security.md) for the advisory, verified versions, and retired-runtime details.
 
 ## Fresh installation
 
-Requirements: PHP 8.5 with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo and zip; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.10, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
+Requirements: PHP 8.5.12 or a newer patched PHP 8.5 release with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo and zip; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.12, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
 
 ```powershell
-$env:PATH='C:\laragon\bin\php\php-8.5.10-Win32-vs17-x64;'+$env:PATH
+$env:PATH='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64;'+$env:PATH
 composer install --working-dir=backend
 npm --prefix frontend ci
 Copy-Item backend/.env.example backend/.env
