@@ -75,6 +75,6 @@ The embedded assistant stays disconnected. Provider/runtime selection, external 
 
 ## Verification
 
-`backend/tests/Feature/McpFoundationTest.php` exercises the real HTTP endpoint, credential lifecycle, per-tool catalog/denials, identity/office changes, literal search, minimal fields, bounded history, workload/metrics, private report status and session/API isolation. See the [change record](../changes/iteration-02/sprint-02/005-mcp-read-foundation.md) for actual commands, results and remaining limitations.
+`backend/tests/Feature/McpFoundationTest.php` exercises the real HTTP endpoint, credential lifecycle, per-tool catalog/denials, identity/office changes, literal search, minimal fields, bounded history, workload/metrics, private report status and session/API isolation. See the [Iteration 03 / Sprint 03 change record](../changes/iteration-03/sprint-03/001-mcp-read-foundation.md) for actual commands, results and remaining limitations.
 
 [Architecture index](README.md) · [System architecture](system-architecture.md) · [Implementation notes](../project/implementation-notes.md)

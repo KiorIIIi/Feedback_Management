@@ -204,4 +204,4 @@ Remove-Item Env:CLSU_MCP_TOKEN -ErrorAction SilentlyContinue
 
 To disable the pilot entirely, set `MCP_ENABLED=false` in the intended environment and refresh its configuration/runtime. Keep authorization and audit identity rows; use the revocation command rather than deleting token records.
 
-[Project index](README.md) · [MCP implementation](../architecture/mcp-implementation.md) · [Change and verification record](../changes/iteration-02/sprint-02/006-mcp-client-connection-guide.md)
+[Project index](README.md) · [MCP implementation](../architecture/mcp-implementation.md) · [Iteration 03 / Sprint 03 change and verification record](../changes/iteration-03/sprint-03/002-mcp-client-connection-guide.md)

@@ -13,4 +13,4 @@ The active development branch is **`front-main`**, tracking **`origin/front-main
 
 Pushing a branch is separate from deploying the running system. Deployments require their own task authorization.
 
-[Project guidance](README.md) · [Iteration 02](../changes/iteration-02/iteration-overview.md)
+[Project guidance](README.md) · [Current iteration: 03](../changes/iteration-03/iteration-overview.md) · [Iteration 02](../changes/iteration-02/iteration-overview.md)

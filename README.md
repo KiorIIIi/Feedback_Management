@@ -121,11 +121,13 @@ Settings, system evaluation, password recovery, attachments, outbound email, emb
 
 Start with the [documentation index](docs/README.md). The [documentation map](docs/project/documentation-map.md) records relocated files.
 
+Current major-feature work is documented as [Iteration 03 / Sprint 03 — Implementation of major feature](docs/changes/iteration-03/iteration-overview.md), covering the MCP foundation and external-client connection guide.
+
 | Area | Contents |
 | --- | --- |
 | [Agile](docs/agile/README.md) | Epics, product backlog, sprint records, implementation plans and story tests |
 | [Architecture](docs/architecture/README.md) | System architecture, database design/normalization and historical exports |
-| [Changes](docs/changes/README.md) | Iteration 1 and documentation change records |
+| [Changes](docs/changes/README.md) | Iteration and sprint change records |
 | [Project](docs/project/README.md) | Implementation decisions and project guidance |
 | [Requirements](docs/requirements/README.md) | Original research paper and requirement traceability |
 | [Testing](docs/testing/README.md) | Verification evidence, test commands and audit records |
