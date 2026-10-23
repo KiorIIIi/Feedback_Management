@@ -34,17 +34,10 @@ class ReportController {
         return response()->json(['id'=>$id,'status'=>'pending','format'=>$filters['format']],202);
     }
     private function authorizedJob(Request $request,int $id): object {
-        $job=DB::table('report_jobs')->where('id',$id)->where('requested_by',$request->user()->id)->first();
-        abort_unless($job,404);
-        $office=json_decode($job->filters,true)['handling_office_id']??null;
-        abort_unless($request->user()->role==='admin' && $request->user()->is_active && (int)$office===(int)$request->user()->office_id,403);
-        return $job;
+        return app(\App\Services\ReportJobReader::class)->authorizedJob($request->user(),$id);
     }
     public function show(Request $request,int $id): array {
-        $job=$this->authorizedJob($request,$id);
-        $format=json_decode($job->filters,true)['format']??'csv';
-        $ready=$job->status==='completed' && $job->path && Storage::disk('local')->exists($job->path);
-        return ['id'=>$id,'status'=>$job->status,'format'=>$format,'error'=>$job->status==='completed'&&!$ready?'The export file is no longer available. Generate a new report.':$job->error,'download_url'=>$ready?'/api/reports/'.$id.'/download':null];
+        return app(\App\Services\ReportJobReader::class)->show($request->user(),$id);
     }
     public function download(Request $request,int $id) {
         $job=$this->authorizedJob($request,$id);

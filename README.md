@@ -1,6 +1,6 @@
 # CLSU Feedback Management System and Service Tracker
 
-Working rough version of the CLSU Feedback Management System and Service Tracker. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. MCP is disabled, with a reserved interface and documented future adapter boundary.
+Working rough version of the CLSU Feedback Management System and Service Tracker. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An opt-in authenticated read-only MCP pilot is implemented; the embedded assistant and operational MCP writes remain deferred.
 
 The implementation follows the supplied Figma layouts and uses locally exported Figma assets. Requesters can submit, track, clarify, and evaluate services. MISO can review, prioritize, assign, and export scoped reports; personnel can update their assigned work. The user delegated configurable demo workflow rules for this prototype.
 
@@ -113,7 +113,7 @@ Shared window-size and zoom reflow rules live in `frontend/src/responsive.css`, 
 
 The [latest security audit follow-up](docs/testing/audits/security-audit-follow-up.md) records the new hardening and remaining deployment decisions. Non-development startup rejects unsafe configuration; additional origins and trusted proxy IPs/CIDRs must be explicitly configured. Local/testing defaults remain usable. Real hosting/TLS/static-SPA header configuration is still a deployment responsibility.
 
-Settings, system evaluation, password recovery, attachments, outbound email, and MCP execution are reserved for later work. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
+Settings, system evaluation, password recovery, attachments, outbound email, embedded AI chat and operational MCP writes are reserved for later work. The [MCP pilot guide](docs/architecture/mcp-implementation.md) documents the disabled-by-default HTTP endpoint, five scoped read tools, expiring credentials, revocation and invocation auditing. No provider is configured or public MCP deployment enabled. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
 
 ## Documentation
 

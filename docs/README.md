@@ -13,7 +13,9 @@ Start here for the CLSU Feedback Management System and Service Tracker. The fold
 | [requirements](requirements/README.md) | Research source, requirements and traceability | [Requirements](requirements/system-requirements.md) |
 | [testing](testing/README.md) | Test commands, recorded results, bug reviews and security audits | [Verification history](testing/verification.md) |
 
-For the work just completed, read [Iteration 1](changes/iteration-01/iteration-overview.md), then the [EPIC-002 sprint record](agile/sprints/EPIC-002/sprint-01/sprint-01.md). The sprint documents organize existing implementation evidence retrospectively; they do not claim earlier sprint ceremonies or MISO approval.
+For the original reporting delivery, read [Iteration 1](changes/iteration-01/iteration-overview.md), then the [EPIC-002 sprint record](agile/sprints/EPIC-002/sprint-01/sprint-01.md). Those records organize existing implementation evidence retrospectively; they do not claim earlier sprint ceremonies or MISO approval.
+
+The latest backend addition is the [MCP read-only foundation](architecture/mcp-implementation.md), recorded in [Iteration 02 / Sprint 02](changes/iteration-02/sprint-02/005-mcp-read-foundation.md). It is opt-in and does not connect the embedded assistant or expose operational writes.
 
 The original paper is preserved under [requirements/source](requirements/source/itrm-3100.md). Word/PDF architecture exports and their rendered review pages are under [architecture/exports](architecture/README.md#historical-exports). Current implementation status is recorded in Markdown; historical exports can lag behind it.
 

@@ -205,6 +205,8 @@ MySQL holds file metadata. Attachments and generated exports remain in private s
 
 ## MCP connection and agent capabilities
 
+**Implementation status, 23 October 2026:** the [read-only pilot](mcp-implementation.md) implements authenticated request search/details, personnel workload, service-feedback metrics and report-job status. It is disabled by default and uses scoped expiring credentials plus invocation auditing. The full catalog below remains the release plan; attention ranking, operational writes, operation-result retrieval, embedded AI runtime and external multi-user OAuth are not implemented by this milestone.
+
 MCP exposes application capabilities to a compatible agent host. The host runs the agent/model interaction; Laravel authenticates calls and enforces application rules. An embedded React assistant additionally needs a server-side AI runtime and configured provider.
 
 The first release enables authorized MISO administrators to analyze records and perform explicitly requested operational updates.

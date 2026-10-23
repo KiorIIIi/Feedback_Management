@@ -4,7 +4,7 @@
 
 The project now contains a React/TypeScript/Vite frontend and Laravel 12 API backed by MySQL. The saved architecture and logical database documents remain the planning baseline. This document records the narrower, implemented prototype and its provisional decisions.
 
-Implemented flows: session sign-in/out; public independent feedback; authenticated service submission; own-request tracking; office-scoped MISO review; eligibility-checked assignment; priority review; clarification with preserved original statements and revision history; personnel progress; human completion with actions and outcome; one optional verified evaluation; private in-app notices; scoped metrics; and queued private PDF, Excel and CSV exports. MCP has a disabled UI slot and documented adapter boundary only.
+Implemented flows: session sign-in/out; public independent feedback; authenticated service submission; own-request tracking; office-scoped MISO review; eligibility-checked assignment; priority review; clarification with preserved original statements and revision history; personnel progress; human completion with actions and outcome; one optional verified evaluation; private in-app notices; scoped metrics; and queued private PDF, Excel and CSV exports. The [MCP read-only pilot](../architecture/mcp-implementation.md) adds five scoped authenticated read tools, expiring/revocable credentials and invocation auditing on 23 October. The endpoint is opt-in; the embedded assistant remains disconnected.
 
 ## User-delegated prototype policy
 
@@ -33,7 +33,7 @@ Report definitions are visible in the screen, PDF and Excel Summary sheet:
 - Empty averages display an em dash, never a misleading zero. PDF and Excel include summaries, definitions, breakdowns, recurrence and a request register; CSV contains the register. Internal notes and contact details are omitted. Excel strings are explicitly text cells and CSV formula prefixes are neutralized.
 - Report jobs remain pending/processing until the private file is stored successfully. Job status/download recheck requester identity, active administrator role and handling office. Failed or missing files provide no download link. Completed job retries reuse the stored result.
 
-Reports are generated on demand through the queue. Automatic scheduled delivery, outbound email, MCP report tools and ARTA certification are not implemented. The paper does not establish the final campus reporting policies; current definitions remain explicit prototype choices.
+Reports are generated on demand through the queue. Automatic scheduled delivery, outbound email, MCP report creation and ARTA certification are not implemented. MCP can read an owned report job's authorized status; private downloads require the portal session. The paper does not establish the final campus reporting policies; current definitions remain explicit prototype choices.
 
 ## Physical schema refinements and intentional summaries
 
@@ -41,7 +41,7 @@ Reports are generated on demand through the queue. Automatic scheduled delivery,
 
 For this rough version, operational roles use a controlled `users.role` field and a primary `office_id`; office memberships and service eligibility use relational junctions. This is a smaller access model than the proposed full roles/permissions schema. Fine-grained grants, multi-office administrative scope, availability history and complete configuration administration are deferred. There is no claim of fully verified 3NF for the entire schema.
 
-Future agent authorization and scope tables are intentionally not created without an active integration. Their required relational design and provenance/idempotency rules are recorded at `backend/app/Integrations/Mcp/README.md`.
+The MCP foundation now creates relational authorization/tool scopes and invocation audits around Sanctum tokens. The [implementation guide](../architecture/mcp-implementation.md) records their consistency rules and the operation-id/approval prerequisites still required before writes.
 
 ## Figma implementation
 
@@ -71,6 +71,6 @@ The [Iteration 1 log](../changes/iteration-01/sprint-01/001-reporting-and-feedba
 
 The [latest security audit follow-up](../testing/audits/security-audit-follow-up.md) adds non-development startup validation, explicit CORS/proxy configuration, environment-aware logging, Unicode CSV hardening and read throttling. Remembered sign-in is now opt-in. Transactional in-app notification rows remain atomic with their workflow; no external notification worker is dispatched before commit.
 
-Attachments and private file uploads; email delivery; password recovery/provisioning; runtime settings and system evaluation; production retention and restoration; background maintenance; response and resolution SLA metrics; advanced role/permission administration; provider/model integration and MCP execution. In-app notifications and report queue jobs work without any AI integration.
+Attachments and private file uploads; email delivery; password recovery/provisioning; runtime settings and system evaluation; production retention and restoration; background maintenance; response and resolution SLA metrics; advanced role/permission administration; provider/model integration, embedded chat and operational MCP writes. In-app notifications and report queue jobs work without any AI integration.
 
 This is a local prototype with synthetic demo accounts, not a production deployment. Do not load personal or operational campus data until identity provisioning, final policies, hosting, retention, backups, and security hardening are approved.

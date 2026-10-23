@@ -9,5 +9,4 @@ return [
         'On Hold' => ['In Progress', 'For Clarification'],
         'Completed' => [],
     ],
-    'mcp_enabled' => false,
 ];

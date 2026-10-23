@@ -20,17 +20,13 @@ class PortalController {
  public function logout(Request $request){Auth::logout();$request->session()->invalidate();$request->session()->regenerateToken();return response()->json(['message'=>'Signed out.']);}
  public function catalog(Request $request){
   $user=$request->user();$personnel=[];
-  if($user->role==='admin')$personnel=User::where('role','personnel')->where('office_id',$user->office_id)->where('is_active',true)->get(['id','name','office_id'])->map(function($p){$p->active_assignments=DB::table('assignments')->where('personnel_id',$p->id)->whereNull('ended_at')->count();$p->service_type_ids=DB::table('personnel_eligibilities')->where('user_id',$p->id)->pluck('service_type_id');return $p;});
+  if($user->role==='admin')$personnel=app(\App\Services\PersonnelWorkload::class)->get($user)['data'];
   return ['offices'=>DB::table('offices')->whereIn('id',DB::table('office_memberships')->where('user_id',$user->id)->select('office_id'))->get(),'service_types'=>DB::table('service_types')->get(),'personnel'=>$personnel,'categories'=>$user->role==='admin'?DB::table('request_categories')->where('handling_office_id',$user->office_id)->orderBy('name')->get(['id','name']):[],'policy_mode'=>config('workflow.policy_mode')];
  }
  public function createCategory(Request $request,\App\Services\RequestCategories $categories){$data=$request->validate(['name'=>'required|string|max:80']);return response()->json($categories->create($request->user(),$data['name']),201);}
  public function index(Request $request,RequestAccess $access){
   $data=$request->validate(['search'=>'nullable|string|max:200','status'=>'nullable|string|max:40','priority'=>'nullable|string|max:20','personnel_id'=>'nullable|integer','page'=>'nullable|integer|min:1']);
-  $q=$access->scope(ServiceRequest::query(),$request->user());
-  if($data['search']??false){$s=$data['search'];$q->where(fn($q)=>$q->where('subject','like',"%$s%")->orWhere('job_number','like',"%$s%"));}
-  foreach(['status','priority'] as $f)if($data[$f]??false)$q->where($f,$data[$f]);
-  if($data['personnel_id']??false)$q->whereExists(fn($s)=>$s->selectRaw('1')->from('assignments')->whereColumn('service_request_id','service_requests.id')->where('personnel_id',$data['personnel_id'])->whereNull('ended_at'));
-  $rows=$q->orderByDesc('id')->paginate(20);return ['data'=>$rows->getCollection()->map(fn($r)=>$access->present($r,$request->user())),'total'=>$rows->total(),'current_page'=>$rows->currentPage(),'last_page'=>$rows->lastPage()];
+  return app(\App\Services\RequestReader::class)->search($request->user(),$data);
  }
  public function show(Request $request,int $id,RequestAccess $access){return $access->present(ServiceRequest::findOrFail($id),$request->user(),true);}
  public function store(Request $request,RequestWorkflow $workflow,RequestAccess $access){

@@ -405,6 +405,10 @@ These keys and foreign keys enforce reference existence and uniqueness; they do 
 
 These are proposed acceptance cases, not tests already run against an application. The repository currently contains architecture documents rather than implemented models or migrations.
 
+## Implemented MCP extension · 23 October 2026
+
+The subsequent [MCP pilot physical schema](mcp-implementation.md#authorization-storage-and-audit-consistency), implemented 23 October, uses Sanctum tokens, fixed user/client/office authorizations, relational scope memberships and invocation audits with derived actor identity. It implements read tools only; the operation and approval structures in the logical proposal above remain deferred.
+
 ## Implemented category extension · 20 October 2026
 
 The logical model above remains a proposal. The prototype now separately implements `request_categories(id PK, handling_office_id FK, name)` and nullable `service_requests.category_id` in migration `2026_10_20_000200_add_request_categories`. Names are unique within an office. A composite foreign key `(category_id, handling_office_id)` references the category's unique `(id, handling_office_id)` pair, preventing cross-office category assignment even below the service layer. The redundant unique pair supports this integrity constraint; category identity remains its primary key.
