@@ -6,6 +6,6 @@ Goal: Implement the feedback revamp from the reviewed Figma design. The user sel
 
 | Sprint | Scope |
 | --- | --- |
-| [Sprint 02](sprint-02/sprint-overview.md) | Feedback browsing, real filters, full reading, authorized service context, shared borderless status labels and the opt-in MCP read foundation |
+| [Sprint 02](sprint-02/sprint-overview.md) | Feedback browsing, real filters, full reading, authorized service context, shared borderless status labels, the opt-in MCP read foundation and client connection guide |
 
 The [Iteration 01 design evaluation](../iteration-01/sprint-01/005-feedback-ui-evaluation.md) remains the historical design-only record. This iteration records the subsequent authorization to implement it. Additional changes in this cycle belong in new numbered records under the appropriate sprint.

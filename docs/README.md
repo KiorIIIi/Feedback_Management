@@ -17,6 +17,8 @@ For the original reporting delivery, read [Iteration 1](changes/iteration-01/ite
 
 The latest backend addition is the [MCP read-only foundation](architecture/mcp-implementation.md), recorded in [Iteration 02 / Sprint 02](changes/iteration-02/sprint-02/005-mcp-read-foundation.md). It is opt-in and does not connect the embedded assistant or expose operational writes.
 
+To connect an external client, follow the [Claude, ChatGPT and Gemini how-to guide](project/mcp-client-connection-guide.md), including its current OAuth, feature-access and region restrictions.
+
 The original paper is preserved under [requirements/source](requirements/source/itrm-3100.md). Word/PDF architecture exports and their rendered review pages are under [architecture/exports](architecture/README.md#historical-exports). Current implementation status is recorded in Markdown; historical exports can lag behind it.
 
 [Repository setup](../README.md), [agent instructions](../AGENTS.md), [product context](../PRODUCT.md) and [design context](../DESIGN.md) stay at the repository root for their existing tools and entry points. Private credentials, report downloads and current public-demo screenshots remain in ignored `.local/` storage.

@@ -10,6 +10,8 @@ The stateless HTTP endpoint is **POST `/api/mcp`**. Route registration is stable
 
 ## Pilot setup
 
+For client-specific instructions, use the [Claude, ChatGPT and Gemini connection guide](../project/mcp-client-connection-guide.md). It distinguishes bearer-capable pilot clients from consumer-app connections that need OAuth or account/region eligibility.
+
 Use a development or separately authorized pilot environment. Apply additive migrations; never reseed populated data:
 
 ```powershell
