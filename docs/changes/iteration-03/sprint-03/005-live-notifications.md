@@ -35,4 +35,21 @@ The adjusted responsive suite passed all four local checks (public surfaces plus
 
 The [second CI run](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40070072729) again passed all new live cases and all non-browser jobs; the browser failure moved to the following administrator reload. The high-volume UI runner now uses an explicit testing-only read budget of 1200, matching its existing testing-only login budget approach. Ordinary local/production/staging retain 240 reads/minute, and testing without the override also defaults to 240. A subprocess regression verifies those environment boundaries; the existing account-isolation/throttling feature test remains active. Application scopes, mutation limits and session rules are unchanged.
 
+## Final CI evidence
+
+[GitHub Actions run 40070527905](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40070527905), automatically triggered by code/test commit `f31cd8db2912d578bb5f954ca403395ebae2ec7e`, passed all six jobs on 24 October 2026:
+
+| Job | Final result |
+| --- | --- |
+| Backend (MySQL 8.0.46) | PASS: 94 tests, 720 assertions, no skips. |
+| Backend (SQLite on Linux) | PASS: 94 tests, 705 assertions, one expected opt-in MySQL provisioning skip. |
+| Browser | PASS: all 39 isolated Chrome tests, without test retries. |
+| Frontend | PASS: locked install, dependency advisory audit and production build. |
+| Documentation | PASS: local links/anchors. |
+| Windows runtime | PASS: existing launcher and private-file ACL regressions. |
+
+After the test-only budget change, the local focused notification/security suite also passed 13 tests / 129 assertions, including the new environment-boundary probe. Earlier 93-test local runs above predate that additional probe. Initial failed CI attempts are preserved above rather than presented as passing results. The successful final run resolved the rapid shared-account UI-suite failures without changing ordinary app read limits.
+
+Only verification documentation changed after this tested commit. The evidence-only update is checked with `python scripts/check-docs.py` and `git diff --check`; application tests are not repeated for that update. Public hosting, operating-system push and a human-inactivity session policy remain outside this delivery.
+
 [Sprint overview](sprint-overview.md) · [Testing index](../../../testing/README.md)
