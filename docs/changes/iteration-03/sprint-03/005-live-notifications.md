@@ -29,6 +29,8 @@ Initial browser checks corrected test fixtures: request search is entered throug
 
 Started the existing project-owned MySQL instance after confirming the documented local target. Applied the pending additive MCP foundation migration and the new notification extension to `clsu_feedback` on loopback port 3307. Before/after aggregate counts matched: 12 requests, 0 general-feedback entries and 12 notifications. No seed, reset, credential issuance or public deployment was performed. The backend test runs used a separate allowlisted test database and fake private storage.
 
-GitHub Actions results for the published feature commit will be recorded separately from these local checks.
+The [first GitHub run](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40069376822) passed the MySQL, SQLite, frontend, documentation and Windows jobs. All three new live-update browser cases passed; the complete browser job finished with 38 passed and one existing responsive-navigation check failing after its final full-page reload. The viewport test now returns through the actual Dashboard navigation and explicitly waits for its destination, preserving the mobile-menu assertions while avoiding another unrelated session-restoration cycle. No production read limit or application authorization control was relaxed. Final remote results will be recorded after this test adjustment.
+
+The adjusted responsive suite passed all four local checks (public surfaces plus requester, personnel and administrator workspace routes).
 
 [Sprint overview](sprint-overview.md) · [Testing index](../../../testing/README.md)
