@@ -21,6 +21,8 @@ All accounts and service records are synthetic. These credentials are for the lo
 
 **Remember me** is off by default; enable it when you want persistent sign-in on a trusted device. Refreshing, returning to the app, and browser Back preserve a valid normal session. Temporary connection failures offer a retry instead of treating you as signed out. Signing out clears the session and remembered login.
 
+[Live workspace updates](docs/project/live-updates.md) check for new requests, feedback and notifications about every five seconds while visible/online. Badges, open lists and dashboards update automatically; request editing drafts are preserved. Existing installations must apply the additive migration with `php backend/artisan migrate` before using the updated notification feed.
+
 Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/architecture/system-architecture.md#login-routing-implemented-prototype).
 
 ## Start again on this Windows machine

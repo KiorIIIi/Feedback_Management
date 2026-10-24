@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { api, date } from "./api";
 import { useAuth } from "./App";
+import { useLoad } from "./useLoad";
 import { Empty, ErrorNotice, Field, Icon, Loading, Panel } from "./components";
 
 type Summary = {
@@ -119,22 +120,12 @@ function Categories() {
 export function ReportWorkspace() {
   const [days, setDays] = useState(30); const [month, setMonth] = useState("");
   const query = month ? "month=" + month : "days=" + days;
-  const [result, setResult] = useState<{ query: string; data?: Report; error?: unknown }>({ query: "" });
-  const [retry, setRetry] = useState(0);
-  useEffect(() => {
-    const controller = new AbortController(); setResult({ query: "" });
-    api<Report>("/report-summary?" + query, { signal: controller.signal }).then(data => {
-      if (!controller.signal.aborted) setResult({ query, data });
-    }).catch(error => { if (!controller.signal.aborted) setResult({ query, error }); });
-    return () => controller.abort();
-  }, [query, retry]);
-  const data = result.query === query ? result.data : undefined;
-  const error = result.query === query ? result.error : undefined;
+  const { data, error, reload } = useLoad<Report>("/report-summary?" + query, { live: true });
   const s = data?.summary;
   return <div className="report-workspace">
     <ReportControls days={days} setDays={setDays} month={month} setMonth={setMonth} />
     <ErrorNotice error={error} />
-    {error ? <button className="button" onClick={() => setRetry(n => n + 1)}>Retry loading reports</button> : !data ? <Loading /> : <>
+    {error ? <button className="button" onClick={reload}>Retry loading reports</button> : !data ? <Loading /> : <>
       <p className="report-period">{data.office} · {date(data.period_start)} – {date(data.period_end)}<span>Generated {data.generated_at} · Asia/Manila</span></p>
       <div className="stats-grid">
         {[

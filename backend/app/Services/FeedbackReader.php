@@ -7,7 +7,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 class FeedbackReader {
-    private function general(User $user): Builder {
+    public function generalScope(User $user): Builder {
         abort_unless(in_array($user->role,['admin','requester'],true),403);
         $query=DB::table('general_feedback');
         if ($user->role==='requester') return $query->where('user_id',$user->id);
@@ -22,7 +22,7 @@ class FeedbackReader {
             ->select('service_evaluations.*','service_requests.subject','service_requests.job_number');
     }
     public function index(User $user, array $filters): array {
-        $generalQuery=$this->general($user);
+        $generalQuery=$this->generalScope($user);
         $evaluationQuery=$this->evaluations($user);
         $counts=['general'=>(clone $generalQuery)->count(),'evaluations'=>(clone $evaluationQuery)->count()];
         $this->filter($generalQuery,$filters,'general_feedback',['general_feedback.subject','message','unverified_job_number']);
@@ -59,7 +59,7 @@ class FeedbackReader {
     }
     public function detail(User $user, string $kind, int $id): array {
         if ($kind==='general') {
-            $record=$this->general($user)->where('id',$id)->first();
+            $record=$this->generalScope($user)->where('id',$id)->first();
         } elseif ($kind==='evaluation') {
             $record=$this->evaluations($user)
                 ->leftJoin('service_types','service_types.id','=','service_requests.service_type_id')

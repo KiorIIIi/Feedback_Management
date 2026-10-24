@@ -276,7 +276,7 @@ Deploy the React build and Laravel application under one HTTPS domain where prac
 
 External agents need network access to the MCP endpoint. A campus-only server requires an approved network path from the chosen agent host. Provider calls require outbound connectivity. Connecting a client does not create an always-running monitoring agent.
 
-React refetches affected records after successful actions. Initial cross-session updates can use polling; broadcasting can be introduced when needed. Database changes do not automatically update an open browser.
+React refetches affected records after successful actions. The [24 October implemented synchronization](../project/live-updates.md) checks notifications, lists, dashboards and report summaries about every five seconds while visible/online, pauses detail replacement during editing, and retries temporary failures with backoff. Broadcast infrastructure remains a future option; these are periodic authenticated reads rather than instantaneous server push.
 
 | Failure | Required behavior |
 | --- | --- |

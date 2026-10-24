@@ -16,7 +16,7 @@ import {
   YAxis,
 } from "recharts";
 import { api, ApiError, date, type RequestRecord, type Catalog } from "./api";
-import { useAuth } from "./App";
+import { useAuth, useNotifications } from "./App";
 import { ReportControls, ReportWorkspace } from "./reports";
 import {
   Asset,
@@ -236,8 +236,8 @@ export function Dashboard() {
   const { user } = useAuth();
   const admin = user?.role === "admin";
   const [days, setDays] = useState(30);
-  const metrics = useLoad<Metrics>("/metrics?days=" + days),
-    requests = useLoad<{ data: RequestRecord[]; total: number }>("/requests");
+  const metrics = useLoad<Metrics>("/metrics?days=" + days, { live: true }),
+    requests = useLoad<{ data: RequestRecord[]; total: number }>("/requests", { live: true });
   const rows = requests.data?.data || [];
   const needsClarification = rows.find((r) => r.status === "For Clarification");
   const unrated = rows.find((r) => r.status === "Completed" && !r.evaluation);
@@ -390,7 +390,7 @@ export function Dashboard() {
 }
 export function PersonnelDashboard() {
   const { user } = useAuth();
-  const { data, error, loading } = useLoad<Metrics>("/metrics?days=30");
+  const { data, error, loading } = useLoad<Metrics>("/metrics?days=30", { live: true });
   if (loading) return <Loading />;
   if (error) return <ErrorNotice error={error} />;
   return (
@@ -533,7 +533,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
     data: RequestRecord[];
     total: number;
     last_page: number;
-  }>("/requests?" + qs.toString());
+  }>("/requests?" + qs.toString(), { live: true });
   return (
     <Panel
       title={
@@ -980,18 +980,20 @@ export function NewRequest() {
 export function RequestDetail() {
   const { id } = useParams();
   const { user, catalog, refresh } = useAuth();
+  const [editing, setEditing] = useState(false);
+  const [saveError, setSaveError] = useState<unknown>(),
+    [busy, setBusy] = useState(false),
+    [success, setSuccess] = useState("");
   const {
     data: r,
     error,
     loading,
     reload,
-  } = useLoad<RequestRecord>("/requests/" + id);
-  const [saveError, setSaveError] = useState<unknown>(),
-    [busy, setBusy] = useState(false),
-    [success, setSuccess] = useState("");
+  } = useLoad<RequestRecord>("/requests/" + id, { live: true, paused: editing || busy });
   useEffect(() => {
     setSaveError(null);
     setSuccess("");
+    setEditing(false);
   }, [id]);
   if (loading) return <Loading />;
   if (error)
@@ -1032,6 +1034,7 @@ export function RequestDetail() {
           ? "Your clarification has been sent for review."
           : "The request was updated.",
       );
+      setEditing(false);
       reload();
       try {
         await refresh();
@@ -1044,7 +1047,7 @@ export function RequestDetail() {
       }
     } catch (e) {
       setSaveError(e);
-      if (e instanceof ApiError && e.status === 409) reload();
+      // Keep the draft and the version it was based on until the user reviews current state.
     } finally {
       setBusy(false);
     }
@@ -1066,6 +1069,10 @@ export function RequestDetail() {
         </div>
       )}
       <ErrorNotice error={saveError} />
+      {saveError instanceof ApiError && saveError.status === 409 && <div className="notice">
+        <p>Review the latest request before saving. Loading it will clear this draft.</p>
+        <button className="button" onClick={() => { setEditing(false); reload(); }}>Load latest request</button>
+      </div>}
       <Panel className="request-summary">
         <div className="summary-title">
           <div>
@@ -1132,7 +1139,7 @@ export function RequestDetail() {
               title="A few more details will help us move forward"
               subtitle="Respond below. Your original request and job number will be preserved."
             >
-              <form className="panel-body" onSubmit={(e) => save(e, "reply")}>
+              <form className="panel-body" onChangeCapture={() => setEditing(true)} onSubmit={(e) => save(e, "reply")}>
                 <div className="notice gold">
                   {
                     r.events?.find(
@@ -1234,6 +1241,7 @@ export function RequestDetail() {
                   className="panel-body"
                   key={r.record_version}
                   onSubmit={(e) => save(e, "manage")}
+                  onChangeCapture={() => setEditing(true)}
                 >
                   <Field label="Status">
                     <select name="status" defaultValue={r.status}>
@@ -1333,6 +1341,7 @@ export function RequestDetail() {
                   <form
                     className="panel-body"
                     onSubmit={(e) => save(e, "clarify")}
+                    onChangeCapture={() => setEditing(true)}
                   >
                     <Field label="What information is needed? *">
                       <textarea
@@ -1680,7 +1689,9 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
 export { FeedbackHistory, FeedbackDetail } from "./feedback";
 
 export function Personnel() {
-  const { user, catalog } = useAuth();
+  const { user, catalog: initialCatalog } = useAuth();
+  const current = useLoad<Catalog>("/catalog", { live: user?.role === "admin" });
+  const catalog = current.data || initialCatalog;
   if (user?.role !== "admin") return <Navigate to="/app" replace />;
   return (
     <>
@@ -1743,15 +1754,7 @@ export function Reports() {
   return <><PageTitle title="Reports & analytics" description="Service evaluation, request activity and office performance." /><ReportWorkspace /></>;
 }
 export function Notifications() {
-  const { data, error, loading, reload } = useLoad<
-    {
-      id: number;
-      service_request_id: number;
-      message: string;
-      read_at: string | null;
-      created_at: string;
-    }[]
-  >("/notifications");
+  const { data, error, loading, reload } = useNotifications();
   const [readError, setReadError] = useState<unknown>(),
     [readingId, setReadingId] = useState<number | null>(null);
   async function markRead(id: number) {
@@ -1774,7 +1777,7 @@ export function Notifications() {
     <>
       <PageTitle
         title="Your notifications"
-        description="Updates and next steps for your service requests."
+        description="New submissions, service updates and next steps."
       />
       <ErrorNotice error={error} />
       <ErrorNotice error={readError} />
@@ -1789,7 +1792,7 @@ export function Notifications() {
             >
               <Icon name="bell" />
               <div>
-                <Link to={"/app/requests/" + n.service_request_id}>
+                <Link to={n.url || "/app/requests/" + n.service_request_id}>
                   {n.message}
                 </Link>
                 <small>{date(n.created_at)}</small>

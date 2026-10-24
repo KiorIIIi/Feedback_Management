@@ -1,5 +1,9 @@
 # Verification · 20 October 2026
 
+## Automatic workspace updates · 24 October 2026
+
+The [live notification change record](../changes/iteration-03/sprint-03/005-live-notifications.md) records automatic badges/alerts and background synchronization. Local full backend runs on SQLite and the isolated MySQL test target each completed **93 tests / 694 assertions, with one intentional optional provisioning skip**. **All 39 isolated Chrome tests passed** in the final full run, covering new cross-session updates, drafts/stale versions and connection recovery alongside existing workflows. The production build, new PHP syntax checks, desktop/mobile notification inspection, documentation links and Git whitespace checks passed. Additive migrations were applied to the verified ordinary local database with unchanged request/feedback/notification counts; no reseeding or public deployment occurred. Remote CI evidence is distinct from these local results.
+
 ## Security remediation · 24 October 2026
 
 The [DeepSeek audit follow-up](../changes/iteration-03/sprint-03/004-security-audit-remediation.md) records the subsequent CI, strict MCP configuration, private-file, provisioning and audit-recovery fixes. The full local SQLite suite completed with **87 tests / 651 assertions and one intentional live-MySQL provisioning skip**; **all 36 isolated Chrome browser tests passed** in a final full run. The production build, Composer/npm advisory queries, six Windows ACL checks, 13 non-destructive launcher checks, workflow YAML checks and documentation checks passed. Earlier failed attempts and corrections are retained in the change record. MySQL and GitHub execution evidence are separate from these local results.

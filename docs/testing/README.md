@@ -21,6 +21,8 @@ Public-demo checks are separately described in the [repository README](../../REA
 
 ## Audit records
 
+The [live notification change record](../changes/iteration-03/sprint-03/005-live-notifications.md) tracks cross-session updates, office/privacy restrictions, unread totals, transactional rollback and editing/connection regressions.
+
 - [Bug audit and fixes](audits/bug-audit.md)
 - [Security review and findings disposition](audits/security-review.md)
 - [Supplied security audit](audits/security-audit.md), preserved as evidence

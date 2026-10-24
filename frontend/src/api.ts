@@ -63,6 +63,18 @@ export class ApiError extends Error {
   }
 }
 export const SESSION_EXPIRED_EVENT = "portal:session-expired";
+export const DATA_CHANGED_EVENT = "portal:data-changed";
+export type PortalNotification = {
+  id: number;
+  kind?: "request" | "feedback" | "evaluation";
+  service_request_id: number | null;
+  general_feedback_id?: number | null;
+  message: string;
+  read_at: string | null;
+  created_at: string;
+  url?: string;
+};
+export type NotificationFeed = { notifications: PortalNotification[]; unread_count: number };
 let authGeneration = 0;
 export async function api<T>(
   path: string,
@@ -99,6 +111,9 @@ export async function api<T>(
       res.status,
       data.errors,
     );
+  if (options.method && !["GET", "HEAD"].includes(options.method.toUpperCase()) && !["/login", "/logout"].includes(path)) {
+    window.dispatchEvent(new Event(DATA_CHANGED_EVENT));
+  }
   return data;
 }
 // Query-builder timestamps have no offset and are stored in the application's

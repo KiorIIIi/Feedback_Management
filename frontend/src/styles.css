@@ -2917,4 +2917,26 @@
     width: 20px;
     height: 20px;
   }
+  .admin-header .icon-button { position: relative; }
+  .notification-count {
+    position: absolute; inset-block-start: -3px; inset-inline-end: -5px;
+    min-width: 18px; padding: 2px 4px; border-radius: 4px;
+    background: var(--deep); color: white; font-size: 11px; line-height: 1.2;
+    text-align: center; font-variant-numeric: tabular-nums;
+  }
+  .live-update-status { color: var(--deep); font-size: 14px; margin-block-end: 16px; }
+  .live-notification {
+    position: fixed; inset-inline-end: 24px; inset-block-end: 24px; z-index: 45;
+    display: flex; align-items: center; gap: 16px; padding: 16px;
+    width: min(440px, calc(100vw - 32px)); border: 1px solid var(--line);
+    border-radius: 8px; background: white; color: var(--deep);
+    box-shadow: 0 4px 16px #123e2a14; overflow-wrap: anywhere;
+  }
+  .live-notification > div { min-width: 0; flex: 1; }
+  .live-notification strong { display: block; font-size: 14px; line-height: 1.5; }
+  .live-notification a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; text-decoration: underline; }
+  .live-notification button { min-height: 44px; flex-shrink: 0; }
+  @media (max-width: 760px) {
+    .live-notification { inset-inline-end: 16px; inset-block-end: 16px; }
+  }
 }

@@ -40,7 +40,7 @@ class PortalController {
  public function evaluate(Request $request,int $id,RequestWorkflow $workflow){$data=$request->validate(['rating'=>'required|integer|min:1|max:5','category'=>['nullable',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'remarks'=>'nullable|string|max:5000']);$workflow->evaluate($request->user(),$id,$data);return response()->json(['message'=>'Thank you. Your service evaluation has been recorded.'],201);}
  public function feedback(Request $request){
   $data=$request->validate(['category'=>['required',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'subject'=>'required|string|max:200','message'=>'required|string|min:10|max:10000','unverified_job_number'=>'nullable|string|max:100','rating'=>'nullable|integer|min:1|max:5','contact_name'=>'nullable|string|max:100','contact_email'=>'nullable|email|max:200']);
-  DB::transaction(function()use($data,$request){DB::table('general_feedback')->insert([...$data,'user_id'=>$request->user()?->id,'created_at'=>now()]);DB::table('audit_entries')->insert(['actor_user_id'=>$request->user()?->id,'actor_kind'=>$request->user()?'human':'anonymous','action'=>'feedback.submitted','occurred_at'=>now()]);});
+  app(\App\Services\GeneralFeedback::class)->submit($request->user(),$data);
   return response()->json(['message'=>'Thank you. Your feedback has been received for private review.'],201);
  }
  public function feedbackIndex(Request $request,\App\Services\FeedbackReader $feedback){
@@ -57,6 +57,6 @@ class PortalController {
   return $feedback->detail($request->user(),$kind,$id);
  }
  public function metrics(Request $request,ReportingService $reports){$data=$request->validate(['days'=>'sometimes|integer|min:1|max:366']);return $reports->metrics($request->user(),$data['days']??30);}
- public function notifications(Request $request){return DB::table('portal_notifications')->where('user_id',$request->user()->id)->orderByDesc('id')->limit(100)->get();}
- public function readNotification(Request $request,int $id){$notice=DB::table('portal_notifications')->where('id',$id)->where('user_id',$request->user()->id);abort_unless((clone $notice)->exists(),404);$notice->whereNull('read_at')->update(['read_at'=>now()]);return ['message'=>'Marked as read.'];}
+ public function notifications(Request $request,\App\Services\PortalNotifications $notifications){$data=$request->validate(['feed'=>'sometimes|boolean']);$feed=$notifications->feed($request->user());return response()->json(($data['feed']??false)?$feed:$feed['notifications'])->header('Cache-Control','private, no-store');}
+ public function readNotification(Request $request,int $id,\App\Services\PortalNotifications $notifications){$notifications->markRead($request->user(),$id);return ['message'=>'Marked as read.'];}
 }

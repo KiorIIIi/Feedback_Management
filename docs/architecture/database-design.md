@@ -405,6 +405,10 @@ These keys and foreign keys enforce reference existence and uniqueness; they do 
 
 These are proposed acceptance cases, not tests already run against an application. The repository currently contains architecture documents rather than implemented models or migrations.
 
+## Implemented notification extension · 24 October 2026
+
+The [24 October notification extension](../project/live-updates.md#schema-and-rollout) adds a constrained kind and nullable foreign key to general feedback on the existing `portal_notifications` table, plus an inbox index. Request/evaluation notices retain their existing service-request reference; feedback notices use their own typed target. Recipient identity is referenced once, and current office/record authority is derived on reads. Historical ERDs above remain proposed logical diagrams.
+
 ## Implemented MCP extension · 23 October 2026
 
 The subsequent [MCP pilot physical schema](mcp-implementation.md#authorization-storage-and-audit-consistency), implemented 23 October, uses Sanctum tokens, fixed user/client/office authorizations, relational scope memberships and invocation audits with derived actor identity. It implements read tools only; the operation and approval structures in the logical proposal above remain deferred.

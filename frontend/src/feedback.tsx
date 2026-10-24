@@ -53,7 +53,7 @@ export function FeedbackHistory() {
   apiParams.delete("tab");
   // The category control belongs to independent feedback, not request categories.
   if (kind === "evaluation") apiParams.delete("category");
-  const { data, error, loading, reload } = useLoad<FeedbackData>(`/feedback?${apiParams}`);
+  const { data, error, loading, reload } = useLoad<FeedbackData>(`/feedback?${apiParams}`, { live: true });
   const key = scrollKey(user?.id, query);
   const restored = useRef<string | null>(null);
   useEffect(() => {
@@ -172,7 +172,7 @@ export function FeedbackDetail() {
   const { user } = useAuth();
   const { kind, id } = useParams();
   const location = useLocation();
-  const { data, error, loading, reload } = useLoad<{ kind: Kind; record: FeedbackRecord }>(`/feedback/${kind}/${id}`);
+  const { data, error, loading, reload } = useLoad<{ kind: Kind; record: FeedbackRecord }>(`/feedback/${kind}/${id}`, { live: true });
   useEffect(() => { window.scrollTo(0, 0); }, [kind, id]);
   if (user?.role === "personnel") return <Navigate to="/app" replace />;
   const record = data?.record;
