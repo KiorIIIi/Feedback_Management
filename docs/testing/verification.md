@@ -1,5 +1,9 @@
 # Verification · 20 October 2026
 
+## Security remediation · 24 October 2026
+
+The [DeepSeek audit follow-up](../changes/iteration-03/sprint-03/004-security-audit-remediation.md) records the subsequent CI, strict MCP configuration, private-file, provisioning and audit-recovery fixes. The full local SQLite suite completed with **87 tests / 651 assertions and one intentional live-MySQL provisioning skip**; **all 36 isolated Chrome browser tests passed** in a final full run. The production build, Composer/npm advisory queries, six Windows ACL checks, 13 non-destructive launcher checks, workflow YAML checks and documentation checks passed. Earlier failed attempts and corrections are retained in the change record. MySQL and GitHub execution evidence are separate from these local results.
+
 ## Temporary device-hosted public synthetic demo
 
 The `hosted-demo` TypeScript/Vite build, PHP syntax checks for all four public-host PHP scripts, PowerShell syntax checks for the installer/start/stop scripts, and the 13 non-destructive local-runtime checks passed. The Cloudflare Windows client download was verified against the official release SHA-256. Public startup and stop/restart were exercised; a separate synthetic MySQL database and scoped runtime account were used. No existing local-demo data was copied or reset.

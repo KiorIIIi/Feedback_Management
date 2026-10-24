@@ -10,4 +10,6 @@ Goal: Implement the MCP integration as a major feature of the CLSU Feedback Mana
 
 The implementation and guide were first recorded under Iteration 02 / Sprint 02. At the user's explicit request, their canonical records now live here as records 001 and 002 with original dates and evidence preserved. The former paths remain relocation notices. [Record 003](sprint-03/003-iteration-and-sprint-classification.md) documents this classification change.
 
+The [24 October security follow-up](sprint-03/004-security-audit-remediation.md) addresses the independent audit's CI, MCP configuration/audit recovery and temporary-demo provisioning findings. Its verification is recorded separately from the original foundation evidence.
+
 [All iterations](../README.md) · [Agile sprint record](../../agile/sprints/EPIC-003/sprint-03/sprint-03.md) · [MCP implementation](../../architecture/mcp-implementation.md)

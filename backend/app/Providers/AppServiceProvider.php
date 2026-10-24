@@ -7,7 +7,7 @@ class AppServiceProvider extends ServiceProvider {
   \Illuminate\Support\Facades\RateLimiter::for('portal-mcp',fn($r)=>\Illuminate\Cache\RateLimiting\Limit::perMinute(config('mcp.requests_per_minute'))->by('mcp:'.$r->attributes->get('mcp_authorization')->id));
   \App\Services\ProductionConfiguration::assertSafe([
    'app'=>config('app'),'session'=>config('session'),'database'=>config('database'),'security'=>config('security'),
-   'demo_seed'=>config('security.demo_seed'),
+   'demo_seed'=>config('security.demo_seed'),'mcp'=>config('mcp'),
   ]);
   \Illuminate\Support\Facades\RateLimiter::for('portal-login',fn($r)=>[
    \Illuminate\Cache\RateLimiting\Limit::perMinute(config('security.login_ip_per_minute'))->by('login-ip:'.$r->ip()),

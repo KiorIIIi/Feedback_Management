@@ -22,6 +22,7 @@ final class ProductionConfiguration {
   foreach($settings['security']['trusted_origins']??[] as $origin){$parts=parse_url(trim($origin));if(!$parts||!filter_var(trim($origin),FILTER_VALIDATE_URL)||($parts['scheme']??null)!=='https'||empty($parts['host'])||str_contains($parts['host'],'*')||isset($parts['user'])||isset($parts['pass']))$failures[]='PORTAL_TRUSTED_ORIGINS';}
   foreach($settings['security']['trusted_proxies']??[] as $proxy)if(!self::validProxy($proxy))$failures[]='PORTAL_TRUSTED_PROXIES';
   if($settings['demo_seed']??false)$failures[]='DEMO_SEED';
+  if(!is_bool($settings['mcp']['enabled']??false))$failures[]='MCP_ENABLED';
   if($failures)throw new \RuntimeException('Unsafe production configuration: '.implode(', ',array_unique($failures)).'.');
  }
 }

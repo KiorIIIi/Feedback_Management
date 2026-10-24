@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Integrations\Mcp\McpAuthorization;
+use App\Integrations\Mcp\McpInvocationAudit;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ class AuthenticateMcp
 {
     public function handle(Request $request, Closure $next)
     {
-        abort_unless(config('mcp.enabled'), 404);
+        abort_unless(config('mcp.enabled') === true, 404);
         abort_unless(app()->environment(['local', 'testing']) || $request->isSecure(), 403, 'HTTPS is required for MCP.');
         // Stateless bearer transport. Reject untrusted browser origins even with a token.
         if ($request->hasHeader('Origin')) {
@@ -51,7 +52,7 @@ class AuthenticateMcp
             throw $exception;
         } finally {
             if ($invocation !== null) {
-                DB::table('mcp_invocations')->where('id', $invocation)->update([
+                app(McpInvocationAudit::class)->finish($invocation, [
                     'outcome' => $outcome, 'error_code' => $error, 'finished_at' => now(),
                     'service_request_id' => $request->attributes->get('mcp_request_id'),
                     'report_job_id' => $request->attributes->get('mcp_report_job_id'),

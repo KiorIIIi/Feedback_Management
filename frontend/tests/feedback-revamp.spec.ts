@@ -59,7 +59,8 @@ test("real filters, query state, compact badges and full-width mobile reading", 
   await expect(page.getByLabel("Rating", { exact: true })).toHaveValue("low");
   await page.getByRole("button", { name: "Clear filters", exact: true }).click();
   await page.getByRole("link", { name: "Clearer guidance for service requests", exact: true }).click();
-  await expect(page.getByText("Not rated", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Clearer guidance for service requests");
+  await expect(page.locator(".feedback-message-header .feedback-score-value")).toHaveText("Not rated");
   await expect(page.getByText("Not supplied", { exact: true })).toHaveCount(3);
   await page.getByRole("link", { name: "Back to feedback", exact: true }).click();
   await page.setViewportSize({ width: 390, height: 844 });

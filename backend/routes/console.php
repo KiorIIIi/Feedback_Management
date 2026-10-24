@@ -3,6 +3,20 @@
 use App\Integrations\Mcp\McpAuthorization;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
+
+Artisan::command('mcp:reconcile-invocations {--minutes=60 : Minimum age in minutes (15–10080)}', function () {
+    $minutes = filter_var($this->option('minutes'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 15, 'max_range' => 10080]]);
+    if ($minutes === false) {
+        $this->error('Minimum age must be an integer from 15 to 10080 minutes.');
+        return 1;
+    }
+    $count = app(\App\Integrations\Mcp\McpInvocationAudit::class)->reconcile(now()->subMinutes($minutes));
+    $this->info('Reconciled '.$count.' stale MCP invocations; execution outcomes remain unknown.');
+    return 0;
+})->purpose('Close stale MCP audit entries without asserting an execution outcome');
+
+Schedule::command('mcp:reconcile-invocations')->hourly()->withoutOverlapping();
 
 Artisan::command('mcp:issue {user : User ID} {--client= : Trusted client label} {--tool=* : Explicit read-tool scope (repeatable)} {--hours=24 : Lifetime, 1–168 hours}', function () {
     try {

@@ -20,7 +20,7 @@ class LatestAuditTest extends TestCase {
   return ['app'=>['env'=>'production','debug'=>false,'url'=>'https://portal.example','key'=>'base64:'.base64_encode(random_bytes(32))],
    'session'=>['secure'=>true,'encrypt'=>true],
    'database'=>['default'=>'mysql','connections'=>['mysql'=>['database'=>'clsu_portal','username'=>'portal_app','password'=>'fixture-production-password']]],
-   'security'=>['trusted_origins'=>[],'trusted_proxies'=>[]],'demo_seed'=>false];
+   'security'=>['trusted_origins'=>[],'trusted_proxies'=>[]],'demo_seed'=>false,'mcp'=>['enabled'=>false]];
  }
  public function test_production_guard_accepts_secure_config_and_rejects_unsafe_fields():void {
   $safe=$this->production();ProductionConfiguration::assertSafe($safe);$this->addToAssertionCount(1);
@@ -29,6 +29,10 @@ class LatestAuditTest extends TestCase {
    try{ProductionConfiguration::assertSafe($invalid);$this->fail('Unsafe production setting accepted: '.$field);}
    catch(\RuntimeException $error){$this->assertStringStartsWith('Unsafe production configuration:',$error->getMessage());$this->assertStringNotContainsString('fixture-production-password',$error->getMessage());}
   }
+  $invalid=$safe;$invalid['mcp']['enabled']='off';
+  try{ProductionConfiguration::assertSafe($invalid);$this->fail('Non-boolean MCP configuration accepted.');}
+  catch(\RuntimeException $error){$this->assertStringContainsString('MCP_ENABLED',$error->getMessage());}
+  $safe['mcp']['enabled']=true;ProductionConfiguration::assertSafe($safe);$this->addToAssertionCount(1);
   foreach(['local','testing'] as $environment){ProductionConfiguration::assertSafe(['app'=>['env'=>$environment]]);$this->addToAssertionCount(1);}
  }
  public function test_cors_does_not_authorize_unlisted_origins():void {

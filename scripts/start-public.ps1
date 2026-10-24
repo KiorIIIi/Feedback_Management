@@ -8,6 +8,7 @@ foreach($file in @($PhpPath,$tunnelPath,(Join-Path $projectRoot 'backend/vendor/
  if(-not (Test-Path -LiteralPath $file -PathType Leaf)){throw "Required file is missing: $file"}
 }
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
+& (Join-Path $PSScriptRoot 'protect-public-secrets.ps1') -Directory $runtimeDir
 foreach($name in @('web','worker','tunnel')){
  $savedId=Get-LocalRuntimePid (Join-Path $runtimeDir ($name+'.pid'))
  if($savedId -and (Get-Process -Id $savedId -ErrorAction SilentlyContinue)){throw 'A public-host process is already running. Use stop-public.ps1 before restarting.'}
