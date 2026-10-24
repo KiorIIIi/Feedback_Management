@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Process\Process;
 
 require_once dirname(__DIR__, 3).'/scripts/public-demo-security.php';
 
@@ -95,6 +96,7 @@ class PublicDemoProvisioningTest extends TestCase
         $database = 'clsu_public_demo_'.$suffix;
         $username = 'portal_'.$suffix;
         $runtimePassword = bin2hex(random_bytes(24));
+        $container = getenv('PORTAL_TEST_MYSQL_CONTAINER');
         // A similarly named database must not match underscore wildcard grants.
         $neighbor = 'clsuXpublicXdemoX'.$suffix;
         $createdNeighbor = false;
@@ -105,16 +107,36 @@ class PublicDemoProvisioningTest extends TestCase
             $admin->exec('CREATE TABLE `'.$neighbor.'`.`synthetic_probe` (id INT PRIMARY KEY)');
             try {
                 (new \PublicDemoProvisioner($admin))->provision($database, $username, $runtimePassword,
-                    function () use ($admin, $database, $username, $runtimePassword, $neighbor, &$verified) {
+                    function () use ($admin, $database, $username, $runtimePassword, $neighbor, $container, &$verified) {
                         $admin->exec('CREATE TABLE `'.$database.'`.`synthetic_probe` (id INT PRIMARY KEY)');
-                        $runtime = new \PDO('mysql:host=127.0.0.1;port=3307;dbname='.$database, $username, $runtimePassword, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
-                        $runtime->exec('INSERT INTO synthetic_probe VALUES (1)');
-                        $this->assertSame(1, (int) $runtime->query('SELECT COUNT(*) FROM synthetic_probe')->fetchColumn());
-                        $runtime->exec('UPDATE synthetic_probe SET id=2');
-                        $runtime->exec('DELETE FROM synthetic_probe');
+                        if ($container) {
+                            // Docker bridge connections do not authenticate as user@127.0.0.1.
+                            // Exercise the actual loopback-only runtime account inside the service.
+                            $execute = function (string $sql) use ($container, $database, $username, $runtimePassword): array {
+                                $process = new Process(['docker', 'exec', '--env', 'MYSQL_PWD', $container, 'mysql', '--no-defaults', '--protocol=TCP', '--host=127.0.0.1', '--user='.$username, '--database='.$database, '--batch', '--skip-column-names', '--execute', $sql], null, ['MYSQL_PWD' => $runtimePassword]);
+                                $process->run();
+                                return [$process->isSuccessful(), $process->getOutput(), $process->getErrorOutput()];
+                            };
+                        } else {
+                            $runtime = new \PDO('mysql:host=127.0.0.1;port=3307;dbname='.$database, $username, $runtimePassword, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+                            $execute = function (string $sql) use ($runtime): array {
+                                try {
+                                    $statement = $runtime->query($sql);
+                                    return [true, $statement->columnCount() > 0 ? (string) $statement->fetchColumn() : '', ''];
+                                }
+                                catch (\PDOException $error) { return [false, '', $error->getCode()]; }
+                            };
+                        }
+                        $this->assertTrue($execute('INSERT INTO synthetic_probe VALUES (1)')[0]);
+                        [$success, $count] = $execute('SELECT COUNT(*) FROM synthetic_probe');
+                        $this->assertTrue($success);
+                        $this->assertSame(1, (int) $count);
+                        $this->assertTrue($execute('UPDATE synthetic_probe SET id=2')[0]);
+                        $this->assertTrue($execute('DELETE FROM synthetic_probe')[0]);
                         foreach (['CREATE TABLE forbidden (id INT)', 'SELECT * FROM `'.$neighbor.'`.synthetic_probe'] as $sql) {
-                            try { $runtime->exec($sql); $this->fail('Runtime grant exceeded its intended scope.'); }
-                            catch (\PDOException $error) { $this->assertSame('42000', $error->getCode()); }
+                            [$success, , $error] = $execute($sql);
+                            $this->assertFalse($success, 'Runtime grant exceeded its intended scope.');
+                            $this->assertStringContainsString('42000', $error);
                         }
                         $verified = true;
                         throw new \RuntimeException('Intentional isolated provisioning rollback.');

@@ -65,6 +65,8 @@ jobs:
       - run: composer install --no-interaction --prefer-dist --no-progress
       - run: composer audit --locked --no-interaction
       - run: vendor/bin/phpunit --configuration phpunit.xml
+        env:
+          PORTAL_TEST_MYSQL_CONTAINER: ${{ job.services.mysql.id }}
 
   frontend:
     runs-on: ubuntu-latest

@@ -36,7 +36,9 @@ No dependencies, schema, priority/evaluation policy, remembered-login lifetime, 
 
 Initial attempts and corrections: the first backend run failed because Windows PowerShell inherited PowerShell 7's module search path; the helper now imports its own security module explicitly and uses a process-scoped `RemoteSigned` policy. An initial sandboxed browser startup could not share its Node/PHP-generated files; the final isolated suite ran outside that sandbox. The first complete browser run found the ambiguous locator described above (35 passed, 1 failed); the corrected full rerun passed all 36. Restricted-network advisory attempts failed DNS resolution; both final advisory queries succeeded outside that restriction. These unsuccessful attempts are not counted as passing checks.
 
-The repaired workflow's remote execution will be checked after publishing the development branch. Local results do not establish that GitHub jobs, live MySQL provisioning, or production hosting passed. No public tunnel, credential issuance, deployment, production database reset, or real-client MCP connection was performed.
+GitHub's existing workflow was manually disabled. It was re-enabled through the authenticated Actions API and [dispatched on `front-main`](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40059449105) at commit `7c9434d`. Windows, frontend, documentation and Linux SQLite jobs passed (SQLite: 87 tests, 653 assertions, one expected MySQL skip). The first remote run exposed two verification setup problems: the MySQL runtime-account test connected through Docker's bridge instead of its required loopback path, and two browser tests navigated while asynchronous logout was still redirecting. The MySQL fixture now runs the runtime client on loopback inside the service container, and those browser tests explicitly wait for the logout landing URL before navigating. Authentication/grant restrictions and product behavior are unchanged. The next remote results will be recorded after this adjustment.
+
+No public tunnel, credential issuance, deployment, production database reset, or real-client MCP connection was performed.
 
 ## Boundaries
 
