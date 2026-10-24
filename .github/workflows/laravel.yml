@@ -112,6 +112,12 @@ jobs:
       - run: npx playwright install --with-deps chrome
         working-directory: frontend
       - run: npm --prefix frontend run test:e2e
+      - name: Show browser failure context
+        if: failure()
+        run: |
+          for context in frontend/test-results/*/error-context.md; do
+            if [ -f "$context" ]; then cat "$context"; fi
+          done
 
   documentation:
     runs-on: ubuntu-latest

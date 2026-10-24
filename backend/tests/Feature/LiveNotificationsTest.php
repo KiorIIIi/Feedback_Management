@@ -9,6 +9,7 @@ use App\Services\PortalNotifications;
 use App\Services\RequestWorkflow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Process\Process;
 use Tests\TestCase;
 
 class LiveNotificationsTest extends TestCase
@@ -109,5 +110,19 @@ class LiveNotificationsTest extends TestCase
     {
         $this->expectException(\Illuminate\Database\QueryException::class);
         DB::table('portal_notifications')->insert(['user_id' => $this->user('admin')->id, 'kind' => 'feedback', 'general_feedback_id' => 999999, 'message' => 'Synthetic invalid target.', 'created_at' => now()]);
+    }
+
+    public function test_browser_read_budget_override_is_ignored_outside_testing(): void
+    {
+        $script = 'require "vendor/autoload.php"; $config = require "config/security.php"; echo $config["reads_per_minute"];';
+        foreach (['local' => 240, 'production' => 240, 'staging' => 240, 'testing' => 1200] as $environment => $expected) {
+            $process = new Process([PHP_BINARY, '-r', $script], base_path(), ['APP_ENV' => $environment, 'PORTAL_TEST_READ_LIMIT' => '1200']);
+            $process->run();
+            $this->assertSame(0, $process->getExitCode(), $process->getErrorOutput());
+            $this->assertSame((string) $expected, $process->getOutput());
+        }
+        $process = new Process([PHP_BINARY, '-r', $script], base_path(), ['APP_ENV' => 'testing', 'PORTAL_TEST_READ_LIMIT' => false]);
+        $process->mustRun();
+        $this->assertSame('240', $process->getOutput());
     }
 }

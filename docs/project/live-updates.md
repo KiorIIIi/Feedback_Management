@@ -16,6 +16,8 @@ Hidden/offline tabs skip background reads. Focus, visibility restoration, reconn
 
 This is periodic synchronization, not instantaneous delivery or a capacity certification. Existing read throttles apply. Large deployments may need broadcasting or more selective invalidation after measurement.
 
+Authenticated checks follow Laravel's existing sliding session lifetime: an open, active polling tab can keep its session active. This feature does not establish a human-inactivity timeout or change remembered-login policy. The isolated high-volume browser runner has a testing-only read budget override; ordinary local/production/staging remain at 240 reads/minute, independently verified by a regression test.
+
 ## API and authorization
 
 `GET /api/notifications?feed=1` returns `{notifications, unread_count}`: the latest 100 authorized notices plus the unread total across all authorized notices. Without `feed=1`, the existing array shape is retained. The frontend also accepts that older shape during rollout. Responses use private/no-store caching.

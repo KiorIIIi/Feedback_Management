@@ -33,4 +33,6 @@ The [first GitHub run](https://github.com/KiorIIIi/Feedback_Management/actions/r
 
 The adjusted responsive suite passed all four local checks (public surfaces plus requester, personnel and administrator workspace routes).
 
+The [second CI run](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40070072729) again passed all new live cases and all non-browser jobs; the browser failure moved to the following administrator reload. The high-volume UI runner now uses an explicit testing-only read budget of 1200, matching its existing testing-only login budget approach. Ordinary local/production/staging retain 240 reads/minute, and testing without the override also defaults to 240. A subprocess regression verifies those environment boundaries; the existing account-isolation/throttling feature test remains active. Application scopes, mutation limits and session rules are unchanged.
+
 [Sprint overview](sprint-overview.md) · [Testing index](../../../testing/README.md)
