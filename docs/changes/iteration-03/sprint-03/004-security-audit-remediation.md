@@ -36,7 +36,22 @@ No dependencies, schema, priority/evaluation policy, remembered-login lifetime, 
 
 Initial attempts and corrections: the first backend run failed because Windows PowerShell inherited PowerShell 7's module search path; the helper now imports its own security module explicitly and uses a process-scoped `RemoteSigned` policy. An initial sandboxed browser startup could not share its Node/PHP-generated files; the final isolated suite ran outside that sandbox. The first complete browser run found the ambiguous locator described above (35 passed, 1 failed); the corrected full rerun passed all 36. Restricted-network advisory attempts failed DNS resolution; both final advisory queries succeeded outside that restriction. These unsuccessful attempts are not counted as passing checks.
 
-GitHub's existing workflow was manually disabled. It was re-enabled through the authenticated Actions API and [dispatched on `front-main`](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40059449105) at commit `7c9434d`. Windows, frontend, documentation and Linux SQLite jobs passed (SQLite: 87 tests, 653 assertions, one expected MySQL skip). The first remote run exposed two verification setup problems: the MySQL runtime-account test connected through Docker's bridge instead of its required loopback path, and two browser tests navigated while asynchronous logout was still redirecting. The MySQL fixture now runs the runtime client on loopback inside the service container, and those browser tests explicitly wait for the logout landing URL before navigating. Authentication/grant restrictions and product behavior are unchanged. The next remote results will be recorded after this adjustment.
+GitHub's existing workflow was manually disabled. It was re-enabled through the authenticated Actions API and [dispatched on `front-main`](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40059449105) at commit `7c9434d`. Windows, frontend, documentation and Linux SQLite jobs passed (SQLite: 87 tests, 653 assertions, one expected MySQL skip). The first remote run exposed two verification setup problems: the MySQL runtime-account test connected through Docker's bridge instead of its required loopback path, and two browser tests navigated while asynchronous logout was still redirecting. The MySQL fixture now runs the runtime client on loopback inside the service container, and those browser tests explicitly wait for the logout landing URL before navigating. Authentication/grant restrictions and product behavior are unchanged. A subsequent local targeted browser repeat timed out during isolated-server startup; it is not counted as a pass. The complete remote browser run below verifies the final tests.
+
+### Final GitHub Actions evidence
+
+The push of code/test commit **`ee4a4b8709a81a95255ee69fd9931470d09373c8`** automatically triggered [run 40066862414](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40066862414), which completed successfully on 24 October 2026. All six jobs passed:
+
+| Job | Observed result |
+| --- | --- |
+| Backend (MySQL) | PASS: 87 tests, 668 assertions, no skipped tests on isolated MySQL 8.0.46 / PHP 8.5.12. The real provisioning regression proved DML access, schema-operation denial, denial for a similarly named neighboring database, and removal of the created database/user after intentional failure. |
+| Backend (SQLite) | PASS: 87 tests, 653 assertions, one expected MySQL-only skip. The two extra assertions versus Windows check POSIX directory/file modes. |
+| Browser | PASS: all 36 isolated Chrome tests on Linux, with no retry configuration. |
+| Frontend | PASS: locked install, advisory audit and production build. |
+| Documentation | PASS: local links/anchors. |
+| Windows runtime | PASS: launcher and private-file ACL checks. |
+
+No application code changed after this verified commit. The final evidence-only documentation update is checked locally with the documentation checker and Git whitespace check; it does not rerun application tests. The workflow remains enabled for subsequent development pushes and pull requests.
 
 No public tunnel, credential issuance, deployment, production database reset, or real-client MCP connection was performed.
 
