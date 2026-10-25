@@ -19,4 +19,15 @@ External ChatGPT has an OAuth authorization-code/S256-PKCE path using Passport 1
 
 Verification corrected Windows OpenSSL configuration, Passport/Sanctum model-trait incompatibility, a post-save reload race, an early stylesheet layer-order regression and a truthy cast in the legacy enablement fallback. A host pause interrupted one browser-startup attempt; it was not counted as passed. Local smoke checks use rendered controls rather than network-idle on polling pages. Provider-disabled state and local diagnostics are verified separately from external-client interoperability.
 
+## Final remote verification
+
+[GitHub Actions run 40172377551](https://github.com/KiorIIIi/Feedback_Management/actions/runs/40172377551) completed successfully for code commit `b8ec352`. All six jobs passed: backend MySQL, backend SQLite, browser, frontend, documentation and Windows runtime/ACL checks.
+
+- MySQL: **100 tests / 790 assertions, no skips**.
+- Linux SQLite: **100 tests / 775 assertions, one expected optional MySQL-provisioning skip**.
+- Chrome: **all 42 tests passed in one run** on the final local-only variant, including live notifications and all three admin/OAuth/local-tool tests.
+- Locked dependency checks, frontend build, documentation links and Windows helper/private-file checks passed.
+
+No application code changed after this verified commit. Subsequent evidence-only documentation updates do not enable a provider, publish the system or establish external-client interoperability.
+
 [Sprint overview](sprint-overview.md) · [Iteration overview](../iteration-overview.md)
