@@ -29,6 +29,7 @@ import {
 import { useLoad } from "./useLoad";
 import { roleHome } from "./routing";
 import RequesterDashboard, { RequesterIcon } from "./RequesterDashboard";
+import AssistantWorkspace, { AssistantConnection } from "./AssistantWorkspace";
 import {
   Asset,
   Identity,
@@ -208,7 +209,8 @@ export default function App() {
           <Route path="personnel" element={<Personnel />} />
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="assistant" element={<Reserved kind="assistant" />} />
+          <Route path="assistant" element={<AssistantWorkspace />} />
+          <Route path="assistant/settings" element={<AssistantWorkspace />} />
           <Route path="settings" element={<Reserved kind="settings" />} />
           <Route path="evaluation" element={<Reserved kind="evaluation" />} />
           <Route path="help" element={<HelpPage />} />
@@ -297,7 +299,9 @@ function Welcome({ login = false }: { login?: boolean }) {
         }),
       });
       await refresh();
-      nav(roleHome(signedIn.role), { replace: true });
+      const returnTo = new URLSearchParams(loc.search).get("return_to");
+      if (signedIn.role === "admin" && returnTo?.startsWith("/oauth/authorize?")) window.location.assign(returnTo);
+      else nav(roleHome(signedIn.role), { replace: true });
     } catch (e) {
       setError(e);
     } finally {
@@ -618,7 +622,7 @@ function Shell() {
     <NavLink
       key={path}
       to={path ? "/app/" + path : roleHome(user!.role)}
-      end={!path}
+      end={!path || path === "assistant"}
     >
       {user?.role === "requester" ? (
         <RequesterIcon
@@ -641,7 +645,6 @@ function Shell() {
         unreadCount > 0 && (
           <small className="requester-notification-count">{unreadCount}</small>
         )}
-      {path === "assistant" && <small className="soon">Soon</small>}
     </NavLink>
   );
   return (
@@ -676,6 +679,7 @@ function Shell() {
             <nav>
               {[
                 ["settings", "Service settings", "settings"],
+                ["assistant/settings", "Assistant settings", "assistant"],
                 ["evaluation", "System evaluation", "evaluation"],
               ].map(navLink)}
             </nav>
@@ -699,10 +703,7 @@ function Shell() {
               <strong>{label}</strong>
             </span>
             <div className="header-right">
-              <span className="connection">
-                <i />
-                MCP not connected
-              </span>
+              <AssistantConnection />
               <Link
                 className="icon-button"
                 to="/app/notifications"

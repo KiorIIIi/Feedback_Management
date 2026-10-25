@@ -70,7 +70,11 @@ class McpAuthorization
             abort_unless($grant, 404);
             DB::table('mcp_authorizations')->where('id', $id)->update(['revoked_at' => now()]);
             // Keep credential identity rows for provenance; the raw credential was never stored.
-            PersonalAccessToken::whereKey($grant->personal_access_token_id)->update(['expires_at' => now()]);
+            if ($grant->personal_access_token_id) PersonalAccessToken::whereKey($grant->personal_access_token_id)->update(['expires_at' => now()]);
+            if ($grant->oauth_access_token_id ?? null) {
+                DB::table('oauth_access_tokens')->where('id', $grant->oauth_access_token_id)->update(['revoked' => true]);
+                DB::table('oauth_refresh_tokens')->where('access_token_id', $grant->oauth_access_token_id)->update(['revoked' => true]);
+            }
         });
     }
 }

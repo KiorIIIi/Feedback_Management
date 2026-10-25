@@ -5,6 +5,7 @@
 | [Repository README](../../README.md) | Installation, local startup, temporary public hosting and test entry points |
 | [Implementation notes](implementation-notes.md) | Implemented flows, prototype decisions, refinements and deferred scope |
 | [Automatic workspace updates](live-updates.md) | Live in-app notifications, background refreshes, draft protection and the additive migration |
+| [Admin assistant setup](assistant-admin-setup.md) | Admin settings, encrypted key storage, ChatGPT OAuth, read scopes, revocation and the embedded-provider approval boundary |
 | [MCP client connection guide](mcp-client-connection-guide.md) | Claude, ChatGPT and Gemini setup paths, current compatibility, prerequisites and troubleshooting |
 | [Development workflow](development-workflow.md) | Active `front-main` branch, authorized commit/push workflow and final-merge boundary |
 | [Documentation map](documentation-map.md) | Folder conventions and old-to-new file locations |

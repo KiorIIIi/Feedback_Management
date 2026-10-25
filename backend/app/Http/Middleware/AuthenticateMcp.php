@@ -13,14 +13,17 @@ class AuthenticateMcp
 {
     public function handle(Request $request, Closure $next)
     {
-        abort_unless(config('mcp.enabled') === true, 404);
+        abort_unless(app(\App\Integrations\Mcp\AssistantSettings::class)->enabled(), 404);
         abort_unless(app()->environment(['local', 'testing']) || $request->isSecure(), 403, 'HTTPS is required for MCP.');
         // Stateless bearer transport. Reject untrusted browser origins even with a token.
         if ($request->hasHeader('Origin')) {
             abort_unless(in_array($request->header('Origin'), [rtrim(config('app.url'), '/'), ...config('security.trusted_origins', [])], true), 403);
         }
         $auth = app(McpAuthorization::class);
-        $grant = $auth->authenticate($request->bearerToken());
+        $bearer = $request->bearerToken();
+        $grant = $bearer && substr_count($bearer, '.') === 2
+            ? app(\App\Integrations\Mcp\OAuthConnections::class)->authenticate($request)
+            : $auth->authenticate($bearer);
         $request->setUserResolver(fn () => $grant->user);
         $request->attributes->set('mcp_authorization', $grant);
         $invocation = null;

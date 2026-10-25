@@ -8,7 +8,7 @@ export default defineConfig({
       "X-Frame-Options": "DENY",
       "Referrer-Policy": "strict-origin-when-cross-origin",
     },
-    proxy: { "/api": process.env.PORTAL_API_TARGET || "http://127.0.0.1:8000" },
+    proxy: Object.fromEntries(["/api", "/oauth", "/.well-known"].map(path => [path, process.env.PORTAL_API_TARGET || "http://127.0.0.1:8000"])),
   },
   build: {
     rollupOptions: { output: { manualChunks: { charts: ["recharts"] } } },

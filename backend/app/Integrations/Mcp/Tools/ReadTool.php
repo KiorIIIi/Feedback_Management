@@ -17,10 +17,12 @@ abstract class ReadTool extends Tool
 {
     abstract protected function rules(): array;
 
+    public function validationRules(): array { return $this->rules(); }
+
     public function shouldRegister(): bool
     {
         $grant = request()->attributes->get('mcp_authorization');
-        return config('mcp.enabled') && $grant && app(McpAuthorization::class)->permits($grant, $this->name());
+        return app(\App\Integrations\Mcp\AssistantSettings::class)->enabled() && $grant && app(McpAuthorization::class)->permits($grant, $this->name());
     }
 
     public function toArray(): array
