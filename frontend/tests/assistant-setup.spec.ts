@@ -8,8 +8,8 @@ test("admin can configure MCP, authorize scoped ChatGPT access, and revoke it", 
   test.setTimeout(120000);
   expect((await page.request.post("/api/login", { headers, data: {email:"admin@clsu.demo", password:"DemoPass!2026", role:"staff"} })).ok()).toBeTruthy();
   await page.goto("/app/assistant");
-  await expect(page.getByRole("heading", {name:"Set up your assistant"})).toBeVisible();
-  await page.getByRole("link", {name:"Open connection settings"}).click();
+  await expect(page.getByRole("heading", {name:"Local demo tools"})).toBeVisible();
+  await page.getByRole("navigation", {name:"Assistant navigation"}).getByRole("link", {name:"Connection settings",exact:true}).click();
   await page.getByLabel("Enable the MCP server", {exact:true}).check();
   await page.getByLabel("Current password", {exact:true}).fill("DemoPass!2026");
   const saved = page.waitForResponse(r => r.url().endsWith("/api/assistant/settings") && r.request().method() === "PUT");
@@ -66,4 +66,25 @@ test("requesters and personnel cannot access assistant setup", async ({ page }) 
     await expect(page.getByRole("link",{name:"Assistant settings",exact:true})).toHaveCount(0);
     await page.request.post("/api/logout",{headers});
   }
+});
+
+test("local demo tools work while provider calls stay disabled", async ({ page }, info) => {
+  expect((await page.request.post('/api/login',{headers,data:{email:'admin@clsu.demo',role:'staff',password:'DemoPass!2026'}})).ok()).toBeTruthy();
+  const setup=await (await page.request.get('/api/assistant/settings')).json();
+  expect(setup.provider_calls_enabled).toBe(false);
+  let providerRequests=0;
+  await page.route('https://api.openai.com/**',route=>{providerRequests++;return route.abort();});
+  await page.goto('/app/assistant');
+  await expect(page.getByRole('heading',{name:'Local demo tools',exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Run local read',exact:true}).click();
+  await expect(page.getByRole('region',{name:'Local tool result'})).toContainText('Pending');
+  expect(providerRequests).toBe(0);
+  expect((await page.request.post('/api/assistant/chat',{headers,data:{messages:[{role:'user',content:'Synthetic example'}]}})).status()).toBe(409);
+  expect((await page.request.post('/api/assistant/test',{headers,data:{}})).status()).toBe(409);
+  await page.setViewportSize({width:1440,height:1000});
+  await page.screenshot({path:info.outputPath('assistant-local-desktop.png'),fullPage:true,animations:'disabled'});
+  await page.setViewportSize({width:390,height:844});
+  await expect.poll(async()=>{const b=await page.locator('.sidebar').boundingBox();return b!.x+b!.width;}).toBeLessThanOrEqual(1);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:info.outputPath('assistant-local-mobile.png'),fullPage:true,animations:'disabled'});
 });

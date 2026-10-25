@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./App";
 import { api, date } from "./api";
@@ -9,7 +9,7 @@ import "./assistant.css";
 type Client = { id: string; name: string; redirect_uri: string; tools: string[]; revoked: boolean };
 type Setup = {
   record_version: number; editable: boolean; mcp_enabled: boolean; endpoint: string; remote_ready: boolean;
-  assistant_available: boolean; assistant_enabled: boolean; key_configured: boolean; model: string; provider_checked_at: string | null;
+  local_tools_available: boolean; assistant_available: boolean; assistant_enabled: boolean; key_configured: boolean; model: string; provider_checked_at: string | null;
   last_external_call_at: string | null; tools: string[]; clients: Client[];
 };
 const toolLabels: Record<string, string> = {
@@ -32,7 +32,7 @@ export default function AssistantWorkspace() {
 function AssistantContent({ settings }: { settings: boolean }) {
   const loaded = useLoad<Setup>("/assistant/settings");
   return <div className="assistant-workspace">
-    <div className="page-title"><div><h1>MCP Assistant</h1><p>Ask about your MISO records and manage AI connections.</p></div></div>
+    <div className="page-title"><div><h1>MCP Assistant</h1><p>Inspect local demo records and manage MCP connections.</p></div></div>
     <nav className="assistant-tabs" aria-label="Assistant navigation">
       <Link to="/app/assistant" aria-current={!settings ? "page" : undefined}>Assistant</Link>
       <Link to="/app/assistant/settings" aria-current={settings ? "page" : undefined}>Connection settings</Link>
@@ -40,7 +40,7 @@ function AssistantContent({ settings }: { settings: boolean }) {
     <ErrorNotice error={loaded.error} />
     {!!loaded.error && <button className="button" onClick={loaded.reload}>Retry loading settings</button>}
     {loaded.loading && <Loading />}
-    {!loaded.loading && loaded.data && (settings ? <ConnectionSettings key={loaded.data.record_version} setup={loaded.data} reload={loaded.reload} /> : <AssistantChat setup={loaded.data} />)}
+    {!loaded.loading && loaded.data && (settings ? <ConnectionSettings key={loaded.data.record_version} setup={loaded.data} reload={loaded.reload} /> : <LocalDemoTools setup={loaded.data} />)}
   </div>;
 }
 
@@ -69,16 +69,17 @@ function ConnectionSettings({ setup, reload }: { setup: Setup; reload: () => voi
   return <>
     {!setup.editable && <div className="notice" role="status">Integration changes are locked by the hosting operator for this environment. Ask the operator to allow admin integration setup.</div>}
     <form className="assistant-settings-form" onSubmit={save}>
-      <Panel title="Portal assistant" subtitle="Use an OpenAI model inside your admin workspace.">
+      <Panel title="Portal assistant" subtitle="Provider calls are disabled. Local demo tools remain available.">
         <div className="panel-body assistant-form-body">
-          {!setup.assistant_available && <p className="notice">Embedded model execution is awaiting approval for provider data sharing. You can save a key and model now; no messages or records will be sent.</p>}
+          <p className="notice">Synthetic demo data only. Model calls go to OpenAI’s API and are blocked outside the designated local demo environment.</p>
+          {!setup.assistant_available && <p className="notice">The embedded AI chat and model test are disabled by the current data-sharing policy. Use the local demo tools on the Assistant tab.</p>}
           <label className="assistant-check"><input type="checkbox" checked={assistantEnabled} onChange={e => setAssistantEnabled(e.target.checked)} disabled={!setup.editable || !setup.assistant_available || busy} />Enable the portal assistant</label>
-          <p>Chat and authorized record results are sent to the model provider when you ask a question. Use synthetic records until your organization approves sharing campus data.</p>
+          <p>The saved configuration stays on this server. Enabling an external provider would require a separate approved change.</p>
           <div className="assistant-form-grid">
             <Field label="OpenAI API key" hint={setup.key_configured ? "A key is saved. Leave blank to keep it; saved keys are never displayed." : "Stored encrypted on the server. This is an API key, not your ChatGPT password."}>
-              <input type="password" value={key} onChange={e => {setKey(e.target.value); setRemoveKey(false);}} autoComplete="new-password" maxLength={1024} disabled={!setup.editable || busy} />
+              <input type="password" value={key} onChange={e => {setKey(e.target.value); setRemoveKey(false);}} autoComplete="new-password" maxLength={1024} disabled />
             </Field>
-            <Field label="Model ID" hint="Enter a Responses API model available to your OpenAI API project."><input value={model} onChange={e => setModel(e.target.value)} maxLength={100} placeholder="Your enabled model ID" disabled={!setup.editable || busy} /></Field>
+            <Field label="Model ID" hint="Enter a Responses API model available to your OpenAI API project."><input value={model} onChange={e => setModel(e.target.value)} maxLength={100} placeholder="Provider calls disabled" disabled /></Field>
           </div>
           {setup.key_configured && <label className="assistant-check"><input type="checkbox" checked={removeKey} onChange={e => {setRemoveKey(e.target.checked); if(e.target.checked) {setKey(""); setAssistantEnabled(false);}}} disabled={!setup.editable || busy} />Remove the saved API key</label>}
           <small>{setup.provider_checked_at ? `Last successful model check: ${date(setup.provider_checked_at)}` : "The saved model connection has not been verified."}</small>
@@ -137,33 +138,32 @@ function ChatGPTClients({ setup, reload }: { setup: Setup; reload: () => void })
   </Panel>;
 }
 
-function AssistantChat({ setup }: { setup: Setup }) {
-  const [messages, setMessages] = useState<{role: "user" | "assistant"; content: string; tools?: string[]}[]>([]);
-  const [question, setQuestion] = useState("");
+function LocalDemoTools({ setup }: { setup: Setup }) {
+  const [tool, setTool] = useState("search_requests");
+  const [recordId, setRecordId] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>();
-  const controller = useRef<AbortController | undefined>(undefined);
-  const end = useRef<HTMLDivElement>(null);
-  useEffect(() => () => controller.current?.abort(), []);
-  useEffect(() => { if(messages.length) end.current?.scrollIntoView({block:"nearest"}); }, [messages]);
-  const ready = setup.assistant_available && setup.editable && setup.assistant_enabled && setup.key_configured;
-  async function send(event: FormEvent) {
-    event.preventDefault(); if(!question.trim() || busy) return;
-    setBusy(true); setError(undefined); controller.current = new AbortController();
-    const input = [...messages.map(({role, content}) => ({role, content})), {role: "user" as const, content: question.trim()}].slice(-11);
-    try {
-      const reply = await api<{reply:string; tools_used:string[]}>("/assistant/chat", {method:"POST", body:JSON.stringify({messages:input}), signal:controller.current.signal});
-      setMessages([...input, {role:"assistant", content:reply.reply, tools:reply.tools_used}]); setQuestion("");
-    } catch (e) { if(!controller.current.signal.aborted) setError(e); } finally {setBusy(false);}
+  const [result, setResult] = useState<unknown>();
+  async function run(event: FormEvent) {
+    event.preventDefault(); setBusy(true); setError(undefined); setResult(undefined);
+    const args = tool === "get_request_details" ? {request_id:Number(recordId)} : tool === "get_report_job" ? {report_job_id:Number(recordId)} : tool === "search_requests" ? {status:"Pending",page:1} : tool === "get_feedback_metrics" ? {days:30} : {page:1};
+    try { const reply = await api<{data:unknown}>("/assistant/local-read",{method:"POST",body:JSON.stringify({tool,arguments:args})}); setResult(reply.data); }
+    catch(e) {setError(e);} finally {setBusy(false);}
   }
-  return <Panel title="Your MISO assistant" action={<Link className="button" to="/app/assistant/settings">Connection settings</Link>}>
+  return <Panel title="Local demo tools" subtitle="Check authorized demo records without connecting an AI provider." action={<Link className="button" to="/app/assistant/settings">Connection settings</Link>}>
     <div className="panel-body assistant-chat">
-      {!ready ? <div className="assistant-setup-prompt"><h2>Set up your assistant</h2><p>Add a server-side API key and model, then enable the portal assistant. You can also register an external ChatGPT connection in settings.</p><Link className="button primary" to="/app/assistant/settings">Open connection settings</Link></div> : <p className="notice">Reads your authorized MISO records. Review AI answers before acting. This assistant cannot change requests or complete work.</p>}
-      {ready && messages.length === 0 && <div className="assistant-suggestions"><h3>Start with a question</h3>{["Show my office’s pending service requests.", "Summarize feedback metrics for the last 30 days.", "What is the current personnel workload?"].map(prompt => <button type="button" className="button" key={prompt} onClick={() => setQuestion(prompt)}>{prompt}</button>)}</div>}
-      <div className="assistant-transcript" role="log" aria-label="Assistant conversation" aria-live="polite">{messages.map((message, i) => <div className={`assistant-message ${message.role}`} key={i}><strong>{message.role === "user" ? "You" : "MISO assistant"}</strong><p>{message.content}</p>{message.tools?.length ? <small>Read tools used: {message.tools.map(tool => toolLabels[tool]).join(" · ")}</small> : null}</div>)}<div ref={end} /></div>
+      <p className="notice">Provider calls are disabled. These reads run inside this system using the same authorized services as MCP. Results are data, not an AI-generated answer.</p>
+      {!setup.local_tools_available && <p>Local tool checks are available only to the synthetic demo administrator in the local demo environment.</p>}
+      <form onSubmit={run}>
+        <Field label="Local read tool"><select value={tool} onChange={e=>{setTool(e.target.value);setResult(undefined);setError(undefined);}} disabled={busy || !setup.local_tools_available}>{setup.tools.map(name=><option key={name} value={name}>{toolLabels[name]}</option>)}</select></Field>
+        {(tool === "get_request_details" || tool === "get_report_job") && <Field label={tool === "get_request_details" ? "Request ID" : "Report job ID"}><input type="number" min={1} step={1} value={recordId} onChange={e=>setRecordId(e.target.value)} required disabled={busy} /></Field>}
+        {tool === "search_requests" && <p>Shows Pending requests in your handling office, 20 per page.</p>}
+        {tool === "get_feedback_metrics" && <p>Uses the last 30 calendar days and the system’s existing reporting definitions.</p>}
+        <div className="actions"><button className="button primary" disabled={busy || !setup.local_tools_available}>{busy ? "Reading local records…" : "Run local read"}</button></div>
+      </form>
+      {busy && <p role="status">Reading authorized demo records…</p>}
       <ErrorNotice error={error} />
-      {busy && <p role="status">Checking your question and authorized records…</p>}
-      <form onSubmit={send}><Field label="Ask the assistant" hint="This conversation stays in this tab and is cleared when you leave the page."><textarea rows={3} maxLength={4000} value={question} onChange={e => setQuestion(e.target.value)} disabled={!ready || busy} required /></Field><div className="actions"><button className="button primary" disabled={!ready || busy || !question.trim()}>{busy ? "Waiting for answer…" : "Send question"}</button><button type="button" className="button" disabled={busy || !messages.length} onClick={() => {setMessages([]); setError(undefined);}}>Clear conversation</button></div></form>
+      {result !== undefined && <section aria-label="Local tool result"><h3>Local tool result</h3><p>Use this output to verify the read tool before connecting an external client.</p><pre className="assistant-local-result">{JSON.stringify(result,null,2)}</pre></section>}
     </div>
   </Panel>;
 }

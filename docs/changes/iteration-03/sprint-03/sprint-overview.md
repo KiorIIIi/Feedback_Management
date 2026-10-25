@@ -9,11 +9,11 @@ User-designated grouping: **23 October 2026, Asia/Manila**. Major feature: authe
 | [003 — Iteration and sprint classification](003-iteration-and-sprint-classification.md) | User-requested Iteration 03 / Sprint 03 grouping, preserved record history, updated navigation and documentation verification |
 | [004 — Security audit remediation](004-security-audit-remediation.md) | CI repair, strict MCP enablement, private demo secret files, provisioning cleanup and interrupted-invocation recovery |
 | [005 — Live notifications](005-live-notifications.md) | Scoped submission alerts, unread badges, automatic updates and preservation of editing drafts |
-| [006 — Admin assistant setup](006-admin-assistant-setup.md) | Admin settings, ChatGPT OAuth and read-tool client management; embedded provider execution awaits data-sharing approval |
+| [006 — Admin assistant setup](006-admin-assistant-setup.md) | Admin settings, ChatGPT OAuth, read-tool client management and an explicitly authorized local-only demo assistant |
 
 Status: the first implementation milestone is verified against the recorded backend checks. The guide is documentation-verified only. US-012 remains partially implemented: write retries/approvals, operational tools, OAuth, embedded AI and actual external-client verification are deferred. Sprint documentation does not establish production or MISO acceptance.
 
-The [25 October setup follow-up](006-admin-assistant-setup.md) implements admin configuration and an OAuth path; earlier dated verification and release boundaries remain historical evidence. Actual external interoperability and embedded execution remain unverified.
+The [25 October setup follow-up](006-admin-assistant-setup.md) implements admin configuration, OAuth and local synthetic read tools; earlier dated verification and release boundaries remain historical evidence. Actual ChatGPT-account and live-provider interoperability remain unverified without the required account/key setup.
 
 Add subsequent work in this sprint as `007-<change-name>.md`; preserve the dated evidence in earlier records.
 

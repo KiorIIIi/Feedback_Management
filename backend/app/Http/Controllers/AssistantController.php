@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Integrations\Mcp\{AssistantSettings, McpAuthorization, OAuthConnections};
+use App\Integrations\Mcp\LocalAssistant;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -35,5 +36,24 @@ class AssistantController
         $data = $r->validate(['password' => 'required|string|max:255']);
         $settings->confirm($r->user(), $data['password']); $oauth->revoke($r->user(), $id);
         return $this->response(['message' => 'Client access revoked.']);
+    }
+
+    public function test(Request $r)
+    {
+        app(McpAuthorization::class)->assertAdministrator($r->user());
+        abort(409, 'Provider calls are disabled. Use the local demo read tools instead.');
+    }
+
+    public function chat(Request $r)
+    {
+        app(McpAuthorization::class)->assertAdministrator($r->user());
+        abort(409, 'Provider calls are disabled. Your data stays in this system.');
+    }
+
+    public function localRead(Request $r, LocalAssistant $assistant)
+    {
+        app(McpAuthorization::class)->assertAdministrator($r->user());
+        $data = $r->validate(['tool' => ['required', Rule::in(McpAuthorization::TOOLS)], 'arguments' => 'sometimes|array']);
+        return $this->response($assistant->read($r->user(), $data['tool'], $data['arguments'] ?? []));
     }
 }

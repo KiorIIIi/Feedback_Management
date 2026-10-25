@@ -1,6 +1,6 @@
 # CLSU Feedback Management System and Service Tracker
 
-Working rough version of the CLSU Feedback Management System and Service Tracker. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An opt-in authenticated read-only MCP pilot is implemented; the embedded assistant and operational MCP writes remain deferred.
+Working rough version of the CLSU Feedback Management System and Service Tracker. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An authenticated read-only MCP pilot, [admin setup](docs/project/assistant-admin-setup.md), ChatGPT OAuth and local synthetic demo tools are implemented. Outbound model calls are disabled. Operational MCP writes remain deferred.
 
 The implementation follows the supplied Figma layouts and uses locally exported Figma assets. Requesters can submit, track, clarify, and evaluate services. MISO can review, prioritize, assign, and export scoped reports; personnel can update their assigned work. The user delegated configurable demo workflow rules for this prototype.
 
@@ -23,6 +23,8 @@ All accounts and service records are synthetic. These credentials are for the lo
 
 [Live workspace updates](docs/project/live-updates.md) check for new requests, feedback and notifications about every five seconds while visible/online. Badges, open lists and dashboards update automatically; request editing drafts are preserved. Existing installations must apply the additive migration with `php backend/artisan migrate` before using the updated notification feed.
 
+Administrators can open **MCP Assistant → Connection settings** or **Assistant settings** in the management menu to enable MCP, register/revoke their own ChatGPT clients, select read permissions and inspect provider-disabled status. Existing installations need the additive 25 October migration and PHP Sodium. The [setup guide](docs/project/assistant-admin-setup.md) distinguishes local readiness, HTTPS/ChatGPT sign-in and the local-only assistant mode and disabled provider calls.
+
 Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/architecture/system-architecture.md#login-routing-implemented-prototype).
 
 ## Start again on this Windows machine
@@ -41,7 +43,7 @@ See the [22 October PHP security update](docs/project/php-runtime-security.md) f
 
 ## Fresh installation
 
-Requirements: PHP 8.5.12 or a newer patched PHP 8.5 release with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo and zip; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.12, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
+Requirements: PHP 8.5.12 or a newer patched PHP 8.5 release with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo, zip and Sodium; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.12, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
 
 ```powershell
 $env:PATH='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64;'+$env:PATH
@@ -121,7 +123,7 @@ The [latest security audit follow-up](docs/testing/audits/security-audit-follow-
 
 The [24 October independent audit](docs/testing/audits/deepseek-security-review-2026-10-24.md) and [remediation record](docs/changes/iteration-03/sprint-03/004-security-audit-remediation.md) cover the subsequent CI, MCP flag/audit recovery and demo-provisioning findings. Automated verification now targets `front-main` and `main`; configured jobs and observed passing runs are distinct evidence.
 
-Settings, system evaluation, password recovery, attachments, outbound email, embedded AI chat and operational MCP writes are reserved for later work. The [MCP pilot guide](docs/architecture/mcp-implementation.md) documents the disabled-by-default HTTP endpoint, five scoped read tools, expiring credentials, revocation and invocation auditing. No provider is configured or public MCP deployment enabled. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
+Service-policy settings, system evaluation, password recovery, attachments, outbound email and operational MCP writes remain future work. [Assistant settings](docs/project/assistant-admin-setup.md) and local synthetic read tools are implemented separately. Provider calls are disabled under the current data policy; no key or working model connection is bundled. No public MCP deployment is enabled. Priority policies and status transitions remain demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for implementation boundaries. This rough build is not a production deployment.
 
 ## Documentation
 

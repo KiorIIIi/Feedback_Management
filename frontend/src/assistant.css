@@ -1,3 +1,4 @@
+@layer reset,tokens,base,components,responsive;
 @layer components {
   .assistant-workspace { max-width: 1280px; }
   .assistant-tabs { display:flex; gap:24px; border-bottom:1px solid var(--line); margin:-5px 0 24px; }
@@ -40,6 +41,7 @@
   .assistant-message { padding:16px 0; border-bottom:1px solid var(--line); }
   .assistant-message p { margin:8px 0; white-space:pre-wrap; overflow-wrap:anywhere; max-width:76ch; }
   .assistant-message.user strong { color:var(--deep); }
+  .assistant-local-result { max-height:420px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; padding:16px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); font-size:12px; line-height:1.6; }
 }
 @layer responsive {
   @media(max-width:760px) {

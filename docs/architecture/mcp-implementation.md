@@ -1,6 +1,8 @@
 # MCP implementation — read-only pilot
 
-Implemented foundation, 23 October 2026. This is the first delivery against the [planned MCP catalog](system-architecture.md#mcp-connection-and-agent-capabilities), not the complete operational-agent release. No model provider, embedded chat, external client connection, deployment or MISO policy acceptance is claimed.
+Initial foundation, 23 October 2026, extended with [admin setup, ChatGPT OAuth and a local-only demo assistant](../project/assistant-admin-setup.md) on 25 October. This is a read-only delivery against the [planned MCP catalog](system-architecture.md#mcp-connection-and-agent-capabilities), not the complete operational-agent release. Provider calls are disabled by the latest local-only data policy. Actual vendor-account connection, live model-provider verification, deployment and MISO policy acceptance are not claimed.
+
+The 25 October interface adds configuration, selected read-tool grants and client revocation. Where admin setup is allowed, a saved administrator enable/disable choice takes precedence over the legacy `MCP_ENABLED` default. Non-local/testing environments require the operator's `MCP_ADMIN_SETUP_ALLOWED=true` opt-in; the public demo forces that off. The sections below describe the original fixed-token pilot. The current admin guide documents the additional OAuth credential and resource bindings.
 
 ## Selected stack and transport
 
@@ -32,7 +34,7 @@ php backend/artisan mcp:revoke 1
 
 The second command revokes the authorization ID printed by issuance; it is not a user ID. Issuance prints the raw credential once to the trusted operator terminal. Store it in the client's secret store, never in frontend code, source control, chat, screenshots or logs. Use `Authorization: Bearer <credential>` on every MCP request. Lifetime must be 1–168 hours; the default is 24 hours. CLI commands are trusted operator administration, never MCP tools or browser endpoints. Issuing a credential does not enable the endpoint.
 
-Cookie authentication is deliberately insufficient for MCP. MCP credentials cannot authenticate ordinary session API routes, create reports, or change requests. External multi-user OAuth and credential renewal are future work. This pilot requires a compatible client that can supply a bearer header; no particular external client is certified by the automated tests.
+Cookie authentication is deliberately insufficient for MCP. MCP credentials cannot authenticate ordinary session API routes, create reports, or change requests. The original pilot requires a client that can supply a bearer header; [admin setup](../project/assistant-admin-setup.md) adds a separately registered ChatGPT OAuth path with renewal. No particular external client is certified by local automated tests.
 
 Example legacy tool call after initialization, with `Content-Type: application/json`, `Accept: application/json`, a bearer header and `MCP-Protocol-Version: 2025-11-25`:
 

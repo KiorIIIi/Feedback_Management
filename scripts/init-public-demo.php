@@ -17,6 +17,7 @@ if (file_exists($directory.'/runtime.json')) {
     if (($runtime['APP_ENV'] ?? '') !== 'production' || !str_starts_with($runtime['DB_DATABASE'] ?? '', 'clsu_public_demo_')) throw new RuntimeException('Unexpected public-demo configuration.');
     $runtime['APP_URL'] = $url;
     $runtime['MCP_ENABLED'] = 'false';
+    $runtime['MCP_ADMIN_SETUP_ALLOWED'] = 'false';
     PublicDemoFiles::writeJson($directory.'/runtime.json', $runtime);
     echo "Existing public demo retained; origin updated.\n";
     exit;
@@ -40,7 +41,7 @@ $runtime = [
     'CACHE_STORE'=>'file', 'CACHE_FILE_PATH'=>$directory.'/cache', 'CACHE_PREFIX'=>'public_demo_'.$suffix,
     'PRIVATE_STORAGE_PATH'=>$directory.'/private', 'LARAVEL_STORAGE_PATH'=>$directory,
     'QUEUE_CONNECTION'=>'database', 'LOG_CHANNEL'=>'stderr', 'LOG_LEVEL'=>'warning',
-    'DEMO_SEED'=>'false', 'MCP_ENABLED'=>'false', 'PORTAL_TRUSTED_ORIGINS'=>'', 'PORTAL_TRUSTED_PROXIES'=>'127.0.0.1,::1',
+    'DEMO_SEED'=>'false', 'MCP_ENABLED'=>'false', 'MCP_ADMIN_SETUP_ALLOWED'=>'false', 'PORTAL_TRUSTED_ORIGINS'=>'', 'PORTAL_TRUSTED_PROXIES'=>'127.0.0.1,::1',
 ];
 (new PublicDemoProvisioner($pdo))->provision($database, $username, $password, function () use ($runtime, $local, $root) {
     // Use the existing trusted operator credentials only in this private initialization process.

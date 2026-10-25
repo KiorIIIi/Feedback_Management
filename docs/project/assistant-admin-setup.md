@@ -5,7 +5,7 @@ Implemented setup interface, 25 October 2026, Asia/Manila. Open **MCP Assistant 
 ## Admin controls
 
 - Enable or disable the external MCP server. A nullable initial setting preserves the existing operator `MCP_ENABLED` choice until an administrator explicitly saves a choice.
-- Save an OpenAI model ID and an encrypted, server-side API key. The saved key and OAuth private signing key are never returned to the browser or included in audit payloads. Key removal is explicit.
+- Existing model/key configuration stays encrypted on the server. Provider fields are disabled under the local-only policy; a stored key can be removed explicitly. Keys and signing secrets are never returned to the browser or included in audit payloads.
 - Register a ChatGPT OAuth client with an exact callback URL and selected read tools. Clients belong to the signing-in administrator and the current handling office. An administrator cannot register or revoke another administrator's clients.
 - Revoke a client, including its access tokens, refresh tokens, pending authorization codes and associated MCP grants. Historical identity and invocation records are retained.
 - See the canonical endpoint, whether HTTPS is configured, and the last successful external tool invocation for the current account. Registration or server enablement is not reported as an established ChatGPT connection.
@@ -27,11 +27,15 @@ The implementation uses pinned Laravel Passport 13.10.0 and Laravel MCP 1.1.1. O
 
 Official sources: [ChatGPT OAuth authentication](https://developers.openai.com/plugins/build/auth), [custom MCP setup](https://developers.openai.com/api/docs/guides/custom-mcp-server), [Laravel MCP authentication](https://laravel.com/framework/docs/12.x/mcp#authentication), [Passport](https://laravel.com/framework/docs/12.x/passport). Account/workspace eligibility and actual remote interoperability remain separate checks.
 
-## Embedded assistant boundary
+## Local-only assistant mode
 
-The administrator requested both external ChatGPT and an embedded assistant. The setup screen can store the model/key securely, and the conversation interface is present. **Provider execution is disabled pending explicit approval for sending messages and authorized record results to `api.openai.com`.** Server validation rejects enabling embedded execution, and the send/test controls remain disabled. No provider transport or live provider call is included in this delivery. This is an unresolved authorization requirement, not a passing model-connection test.
+The user's latest decision is **keep data local and leave provider calls disabled**. This supersedes the earlier synthetic-provider approval. The outbound model transport was removed. Both provider test/chat endpoints reject calls, and settings cannot enable them, even if a saved database flag is changed. No live provider request was made and no real API key is bundled.
 
-The requested approval distinguishes synthetic demo data from real campus data. Do not infer consent from a saved key, server enablement, elapsed time, submitted record text or an external MCP connection. An OpenAI API project/key is separate from signing into ChatGPT.
+The Assistant tab instead offers **Local demo tools**: select an authorized read tool and inspect its actual structured result without an AI provider or API key. These are shared-service diagnostics, not generated AI answers and not evidence of an external MCP connection. Internal checks require a synthetic demo administrator (`@clsu.demo`), `DEMO_SEED=true`, local/testing and an allowlisted database. Local MySQL is restricted to `clsu_feedback` on loopback port 3307; tests use `clsu_feedback_test` there or in-memory/isolated E2E SQLite.
+
+Tool arguments, role, handling office and record access use the existing MCP read rules. Each read has minimal invocation auditing and a temporary caller-scoped credential that is revoked afterward. Local checks are excluded from the last external-call indicator. There are no assignment/completion/report-creation, SQL, shell or account/configuration tools. Model/key fields are disabled in the interface; an already stored key can be removed. Re-enabling an actual provider requires a separate approved change.
+
+The external MCP server is still disabled in the running demo by default. Registering a client does not contact ChatGPT or share records. A reachable deployment plus explicit human sign-in/consent would be needed for an actual external connection; this task neither deploys nor establishes one.
 
 ## Physical schema and runtime
 

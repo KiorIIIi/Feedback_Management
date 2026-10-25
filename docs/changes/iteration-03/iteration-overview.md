@@ -14,4 +14,6 @@ The [24 October security follow-up](sprint-03/004-security-audit-remediation.md)
 
 The [live-notification follow-up](sprint-03/005-live-notifications.md) adds automatic workspace updates, scoped submission alerts and draft-preserving background refreshes.
 
+The [25 October admin setup](sprint-03/006-admin-assistant-setup.md) adds configuration, a pre-registered ChatGPT OAuth path and an explicitly authorized local-only demo assistant. Actual vendor/provider connection remains unverified without account/key setup. The original scope statement above records the earlier milestone.
+
 [All iterations](../README.md) · [Agile sprint record](../../agile/sprints/EPIC-003/sprint-03/sprint-03.md) · [MCP implementation](../../architecture/mcp-implementation.md)

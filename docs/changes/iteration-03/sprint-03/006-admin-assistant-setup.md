@@ -1,20 +1,22 @@
-# Admin assistant setup and ChatGPT OAuth
+# Admin assistant setup, local demo tools and ChatGPT OAuth
 
-25 October 2026, Asia/Manila. The administrator identified the reserved MCP screen as missing a required admin setup feature, then requested both external ChatGPT and an embedded assistant.
+25 October 2026, Asia/Manila. Replaced the reserved MCP screen with an admin workspace and setup interface. The user's latest instruction is to keep data local and leave provider calls disabled. This supersedes earlier synthetic-provider approval; the outbound model transport was removed before delivery. No live model request was made.
 
-Replaced the placeholder with an admin assistant workspace and connection settings. Added password-confirmed, version-checked configuration; encrypted server-side model/key storage; external MCP enablement; per-administrator ChatGPT client registration, individual read-tool selection, and revocation. The header now reflects server readiness instead of a hardcoded disconnected label. Detailed behavior and deployment prerequisites are in the [admin setup guide](../../../project/assistant-admin-setup.md).
+Administrators can save password-confirmed, version-checked configuration, enable/disable the MCP server, register their own ChatGPT OAuth clients, select read tools and revoke access. Existing model/key configuration is encrypted on the server; provider fields and calls remain disabled under the current policy. The header reflects actual server readiness without claiming a connected client. The [admin setup guide](../../../project/assistant-admin-setup.md) documents behavior and deployment prerequisites.
 
-External ChatGPT now has an OAuth authorization-code/S256-PKCE implementation using Passport 13.10.0 and existing MCP read services. Exact callback validation, consent, token/resource/client/office binding, expiry, refresh and revocation are server boundaries. No public deployment, tunnel or actual ChatGPT account connection is claimed.
+The Assistant tab provides local synthetic demo diagnostics through the existing five authorized read services. Reads validate arguments and office/record scope, record minimal invocation outcomes and revoke their temporary credentials. These checks have no provider transport and are excluded from external-client activity indicators. Provider chat/test endpoints reject calls even if database settings are manually changed.
 
-The requested embedded model transport was rejected by automatic approval review because sending potentially private messages and tool results to `api.openai.com` lacked explicit data/destination authorization. A specific approval question is pending. The model configuration and conversation interface are present, but server validation and UI prevent provider execution. No model-provider request ran.
+External ChatGPT has an OAuth authorization-code/S256-PKCE path using Passport 13.10.0: exact callbacks, explicit human consent, fixed resource/client/user/office binding, selected tools, expiry, refresh, code-replay rejection and revocation. No public deployment, tunnel, actual ChatGPT account connection or real-campus-data use is claimed. The local MCP server remains disabled until an administrator explicitly enables it.
 
 ## Verification
 
-- Initial SQLite admin/OAuth checks passed: **3 tests, 43 assertions**. Existing MCP regressions passed during the earlier combined run; follow-up full results are recorded after completion.
-- Initial frontend TypeScript/Vite production build passed after correcting two TypeScript issues.
-- The additive migration applied to the verified local `clsu_feedback` database on loopback port 3307. Existing counts stayed **12 requests, 0 general feedback entries, 12 notifications**. No reset or seed ran.
-- MySQL, browser, final regression and documentation results are pending in this working record; do not treat configured tests as passing evidence.
+- Initial SQLite and isolated MySQL admin/OAuth checks passed: 3 tests / 43 assertions on each. Later SQLite renewal/replay checks passed: 3 tests / 51 assertions.
+- Before the final local-only choice, the full SQLite suite passed 102 tests / 782 assertions with one expected optional MySQL-provisioning skip, and all 42 browser tests passed. Mocked synthetic-provider code from that intermediate state was subsequently removed; these counts do not verify the final local-only variant.
+- Revised local-only setup/diagnostic checks passed on both SQLite and isolated MySQL: **6 tests / 70 assertions on each**, including forced provider denial and no outbound HTTP requests. All three browser cases passed across scoped runs after adapting the navigation to the local-tools screen. Final CI results are recorded separately.
+- The additive migration applied to the verified local database on loopback port 3307. Counts stayed **12 requests, 0 general feedback entries, 12 notifications**; no reset/seed ran.
+- The production TypeScript/Vite build passed after the local-only revision. Composer reported no advisories. Thirteen non-destructive runtime checks, six private-file ACL checks and syntax checks for updated public PHP scripts passed.
+- Documentation link checks passed: **80 files / 456 links and anchors**. Whitespace checks passed. A live local smoke check confirmed rendered local results, provider calls disabled, MCP disabled, HTTP 409 on provider chat, a working notification feed and no JavaScript errors.
 
-Initial verification caught a Windows OpenSSL configuration failure, a Passport/Sanctum model-trait conflict and a browser assertion that read the header before the initial signing-key save completed. Corrections use Passport's key generator with PHP's bundled configuration, a separate Passport user provider mapped back to the domain user, and an explicit save-response wait.
+Verification corrected Windows OpenSSL configuration, Passport/Sanctum model-trait incompatibility, a post-save reload race, an early stylesheet layer-order regression and a truthy cast in the legacy enablement fallback. A host pause interrupted one browser-startup attempt; it was not counted as passed. Local smoke checks use rendered controls rather than network-idle on polling pages. Provider-disabled state and local diagnostics are verified separately from external-client interoperability.
 
 [Sprint overview](sprint-overview.md) · [Iteration overview](../iteration-overview.md)

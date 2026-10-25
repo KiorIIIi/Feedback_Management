@@ -1,6 +1,8 @@
 # CLSU Feedback Management System — Database Normalization
 
 Status: Logical design assessment; full 3NF has not been established  
+
+The [25 October admin setup extension](../project/assistant-admin-setup.md#physical-schema-and-runtime) uses standard OAuth structures and relational client/tool memberships. Each MCP authorization references exactly one Sanctum or Passport credential; audit identity continues to derive from that authorization. The client user/office/resource binding is immutable authorization context, while the current account is rechecked at token use. Encrypted integration secrets are configuration facts, and update/audit consistency is transactional. These physical refinements do not establish 3NF for the entire proposed design.
 Last updated: 19 October 2026.
 
 Related documents: [System Architecture](system-architecture.md) and [Database Design](database-design.md).

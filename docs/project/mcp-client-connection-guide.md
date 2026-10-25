@@ -10,7 +10,7 @@ The model application is the MCP client. Laravel is the MCP server. Connecting a
 | --- | --- | --- |
 | Claude web / Desktop remote connector | HTTPS endpoint plus a fixed Authorization header, if the account has Request headers access | Conditional pilot path; see [Claude](#claude-web-and-desktop). |
 | Claude Code | Local HTTP endpoint plus a bearer header | Documented local pilot path; see [Claude Code](#claude-code-local-alternative). |
-| ChatGPT web | Authenticated custom MCP plugin | OAuth must be implemented first; see [ChatGPT](#chatgpt-web). |
+| ChatGPT web | Pre-registered public OAuth client with S256 PKCE | Admin setup and OAuth implemented on 25 October; an authorized reachable endpoint and actual client verification remain required. See [ChatGPT](#chatgpt-web). |
 | Gemini web / mobile | Custom Connected App | Account/region restrictions and an unverified authentication fit; see [Gemini Apps](#gemini-apps-web-and-mobile). |
 | Gemini CLI | Local HTTP endpoint plus a bearer header | Documented local pilot path; see [Gemini CLI](#gemini-cli-local-alternative). |
 
@@ -101,11 +101,11 @@ The single quotes preserve `${CLSU_MCP_TOKEN}` for expansion by Claude Code when
 
 ## ChatGPT web
 
-**Current blocker: this repository has scoped bearer tokens but no OAuth authorization server or discovery flow.** ChatGPT's authenticated custom-MCP path uses OAuth; it cannot supply the pilot token as a custom API-key header. OAuth Client ID/secret fields identify an OAuth client, not a user token. Keep Laravel authentication enabled. [Official OpenAI authentication requirements](https://developers.openai.com/plugins/build/auth).
+**25 October update:** The [admin setup interface](assistant-admin-setup.md) now registers a public ChatGPT OAuth client, selected read tools, S256 PKCE, discovery, sign-in/consent and revocation. An actual ChatGPT account connection has not been verified. The fixed pilot bearer token is still not an OAuth Client ID or a custom ChatGPT API-key header. [Official OpenAI authentication requirements](https://developers.openai.com/plugins/build/auth).
 
-The backend must first add OAuth authorization-code/PKCE, discovery metadata and token validation that maps each user/client to CLSU office and tool permissions. These are implementation prerequisites, not settings available in the current pilot. A tunnel solves reachability only.
+The administrator registers the exact callback shown by ChatGPT, then copies the generated Client ID into ChatGPT and leaves the client secret empty. Token exchange and tool execution retain the registered resource, account, handling-office and tool bindings. A tunnel supplies reachability; it does not finish sign-in or establish successful tool execution.
 
-After that work is implemented and verified:
+Follow the [current setup steps](assistant-admin-setup.md#connect-chatgpt-web):
 
 1. On ChatGPT web, open **Plugins → + → Add custom MCP server**. Workspace permissions determine whether this entry is available.
 2. Enter **CLSU MISO Pilot**, the authorized HTTPS endpoint or supported secure tunnel, and **OAuth**.

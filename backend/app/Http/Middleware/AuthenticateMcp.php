@@ -21,9 +21,16 @@ class AuthenticateMcp
         }
         $auth = app(McpAuthorization::class);
         $bearer = $request->bearerToken();
-        $grant = $bearer && substr_count($bearer, '.') === 2
-            ? app(\App\Integrations\Mcp\OAuthConnections::class)->authenticate($request)
-            : $auth->authenticate($bearer);
+        try {
+            $grant = $bearer && substr_count($bearer, '.') === 2
+                ? app(\App\Integrations\Mcp\OAuthConnections::class)->authenticate($request)
+                : $auth->authenticate($bearer);
+        } catch (HttpExceptionInterface $exception) {
+            if ($exception->getStatusCode() !== 401) throw $exception;
+            return response()->json(['message' => 'An authorized MCP bearer credential is required.'], 401)
+                ->header('Cache-Control', 'private, no-store')
+                ->header('WWW-Authenticate', 'Bearer realm="mcp", resource_metadata="'.rtrim(config('app.url'), '/').'/.well-known/oauth-protected-resource/api/mcp"');
+        }
         $request->setUserResolver(fn () => $grant->user);
         $request->attributes->set('mcp_authorization', $grant);
         $invocation = null;

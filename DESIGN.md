@@ -184,7 +184,7 @@ For requester dashboard controls, use `RequesterIcon` with the exact exported na
 
 ### Badges and operational exceptions
 
-`Badge` derives its CSS class from the record value and falls back to Unreviewed. Keep color, text, and dot together. Figma's sample people, numbers, and dates are content examples, not fixed design tokens. The header intentionally says “MCP not connected”; reserved assistant content explains that no provider, key, MCP server, or chat execution is enabled. Do not restore the exported “MCP connected” label to imitate the mockup.
+`Badge` derives its CSS class from the record value and falls back to Unreviewed. Keep color, text, and dot together. Figma's sample people, numbers, and dates are content examples, not fixed design tokens. The header links to admin setup and reports actual server readiness (MCP disabled/ready), without claiming a live client connection. The assistant and settings tabs explain the local-only mode and disabled provider calls and separate ChatGPT OAuth setup. Do not restore the exported “MCP connected” label without evidence.
 
 ## Do's and Don'ts
 

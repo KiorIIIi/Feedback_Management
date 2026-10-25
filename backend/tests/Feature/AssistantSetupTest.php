@@ -38,8 +38,9 @@ class AssistantSetupTest extends TestCase
         $this->assertStringNotContainsString($body['api_key'], DB::table('audit_entries')->get()->toJson());
         $this->putJson('/api/assistant/settings', $body)->assertConflict();
         $body['expected_version'] = 2; $body['assistant_enabled'] = true;
+        config(['security.demo_seed' => false]);
         $this->putJson('/api/assistant/settings', $body)->assertUnprocessable()->assertJsonValidationErrors('assistant_enabled');
-        $body['assistant_enabled'] = false;
+        config(['security.demo_seed' => true]); $body['assistant_enabled'] = false;
         config(['mcp.admin_setup_allowed' => false, 'mcp.enabled' => false]);
         $this->assertFalse(app(AssistantSettings::class)->enabled());
         $body['expected_version'] = 2;
@@ -57,7 +58,15 @@ class AssistantSetupTest extends TestCase
         parse_str(parse_url($approved->headers->get('Location'), PHP_URL_QUERY), $query);
         $this->assertSame('synthetic-state', $query['state']);
         $exchange = ['grant_type' => 'authorization_code', 'client_id' => $client['id'], 'redirect_uri' => $client['redirect_uri'], 'resource' => rtrim(config('app.url'), '/').'/api/mcp', 'code' => $query['code'], 'code_verifier' => $verifier];
-        $token = $this->postJson('/oauth/token', $exchange)->assertOk()->json('access_token');
+        $this->postJson('/oauth/token', [...$exchange, 'code_verifier' => str_repeat('b', 64)])->assertStatus(400);
+        $tokens = $this->postJson('/oauth/token', $exchange)->assertOk()->json();
+        $token = $tokens['access_token'];
+        $this->postJson('/oauth/token', $exchange)->assertStatus(400); // A code is single-use.
+        $refresh = ['grant_type' => 'refresh_token', 'client_id' => $client['id'], 'resource' => $exchange['resource'], 'refresh_token' => $tokens['refresh_token']];
+        $this->postJson('/oauth/token', [...$refresh, 'resource' => 'https://other.example/api/mcp'])->assertStatus(400);
+        $rotated = $this->postJson('/oauth/token', $refresh)->assertOk()->json();
+        $this->assertNotSame($token, $rotated['access_token']);
+        $token = $rotated['access_token'];
         $rpc = ['jsonrpc' => '2.0', 'id' => 1, 'method' => 'tools/list'];
         $this->withHeaders(['Authorization' => 'Bearer '.$token, 'MCP-Protocol-Version' => '2025-11-25'])->postJson('/api/mcp', $rpc)->assertOk()->assertJsonPath('result.tools.0.name', 'search_requests')->assertJsonCount(1, 'result.tools');
         $rpc['method'] = 'tools/call'; $rpc['params'] = ['name' => 'search_requests', 'arguments' => (object) []];

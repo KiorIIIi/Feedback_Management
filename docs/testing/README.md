@@ -23,6 +23,8 @@ Public-demo checks are separately described in the [repository README](../../REA
 
 The [live notification change record](../changes/iteration-03/sprint-03/005-live-notifications.md) tracks cross-session updates, office/privacy restrictions, unread totals, transactional rollback and editing/connection regressions.
 
+The [admin assistant setup record](../changes/iteration-03/sprint-03/006-admin-assistant-setup.md) tracks password/version/secret controls, ChatGPT OAuth/client revocation and local-only read-tool/provider-denial checks. Provider endpoints are disabled; local diagnostics make no provider requests.
+
 - [Bug audit and fixes](audits/bug-audit.md)
 - [Security review and findings disposition](audits/security-review.md)
 - [Supplied security audit](audits/security-audit.md), preserved as evidence

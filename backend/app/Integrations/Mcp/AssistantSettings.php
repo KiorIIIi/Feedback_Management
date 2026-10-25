@@ -13,10 +13,26 @@ class AssistantSettings
 
     public function editable(): bool { return config('mcp.admin_setup_allowed') === true; }
 
+    public function syntheticEnvironment(): bool
+    {
+        if (!app()->environment(['local', 'testing']) || !config('security.demo_seed')) return false;
+        $db = DB::connection()->getConfig(); $driver = $db['driver'] ?? '';
+        if ($driver === 'mysql') return ($db['host'] ?? '') === '127.0.0.1' && (int) ($db['port'] ?? 0) === 3307
+            && ($db['database'] ?? '') === (app()->environment('testing') ? 'clsu_feedback_test' : 'clsu_feedback');
+        if (!app()->environment('testing') || $driver !== 'sqlite') return false;
+        if (($db['database'] ?? '') === ':memory:') return true;
+        $resolved = realpath($db['database'] ?? '');
+        if (!$resolved) return false;
+        $path = str_replace('\\', '/', $resolved);
+        $testRoot = realpath(base_path('../.local/e2e'));
+        return $testRoot && str_starts_with($path, rtrim(str_replace('\\', '/', $testRoot), '/').'/');
+    }
+
     public function enabled(): bool
     {
         if (!$this->editable()) return config('mcp.enabled') === true;
-        return (bool) ($this->row()->mcp_enabled ?? config('mcp.enabled'));
+        $choice = $this->row()->mcp_enabled;
+        return $choice === null ? config('mcp.enabled') === true : in_array($choice, [true, 1, '1'], true);
     }
 
     public function confirm(User $user, string $password): void
@@ -31,13 +47,14 @@ class AssistantSettings
         app(McpAuthorization::class)->assertAdministrator($user);
         $row = $this->row();
         $last = DB::table('mcp_invocations')->join('mcp_authorizations', 'mcp_authorizations.id', '=', 'mcp_invocations.authorization_id')
-            ->where('mcp_authorizations.user_id', $user->id)->where('client_kind', '!=', 'embedded')
+            ->where('mcp_authorizations.user_id', $user->id)->whereIn('client_kind', ['pilot', 'oauth'])
             ->where('outcome', 'successful')->orderByDesc('finished_at')->value('finished_at');
         return ['record_version' => $row->record_version, 'editable' => $this->editable(),
             'mcp_enabled' => $this->enabled(), 'endpoint' => rtrim(config('app.url'), '/').'/api/mcp',
             'remote_ready' => $this->enabled() && str_starts_with(config('app.url'), 'https://'),
-            'assistant_available' => false,
-            'assistant_enabled' => (bool) $row->assistant_enabled, 'key_configured' => $row->provider_api_key !== null,
+            'assistant_available' => false, 'provider_calls_enabled' => false, 'data_mode' => 'local_only',
+            'local_tools_available' => $this->syntheticEnvironment() && str_ends_with($user->email, '@clsu.demo'),
+            'assistant_enabled' => false, 'key_configured' => $row->provider_api_key !== null,
             'model' => $row->model ?? '', 'provider_checked_at' => $row->provider_checked_at,
             'last_external_call_at' => $last, 'tools' => McpAuthorization::TOOLS];
     }
@@ -45,7 +62,7 @@ class AssistantSettings
     public function save(User $user, array $data): array
     {
         $this->confirm($user, $data['password']);
-        if ($data['assistant_enabled']) throw ValidationException::withMessages(['assistant_enabled' => 'Embedded model execution is awaiting approval for provider data sharing. You can save the key and model with execution disabled.']);
+        if ($data['assistant_enabled']) throw ValidationException::withMessages(['assistant_enabled' => 'Provider calls are disabled by the current local-only data policy.']);
         DB::transaction(function () use ($user, $data) {
             $row = DB::table('assistant_settings')->where('id', 1)->lockForUpdate()->first();
             abort_unless((int) $row->record_version === $data['expected_version'], 409, 'Integration settings changed. Reload and review the latest settings.');

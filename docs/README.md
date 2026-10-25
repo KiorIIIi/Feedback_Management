@@ -15,7 +15,7 @@ Start here for the CLSU Feedback Management System and Service Tracker. The fold
 
 For the original reporting delivery, read [Iteration 1](changes/iteration-01/iteration-overview.md), then the [EPIC-002 sprint record](agile/sprints/EPIC-002/sprint-01/sprint-01.md). Those records organize existing implementation evidence retrospectively; they do not claim earlier sprint ceremonies or MISO approval.
 
-The latest backend addition is the [MCP read-only foundation](architecture/mcp-implementation.md), recorded in [Iteration 03 / Sprint 03 — Implementation of major feature](changes/iteration-03/iteration-overview.md). It is opt-in and does not connect the embedded assistant or expose operational writes. The [EPIC-003 sprint record](agile/sprints/EPIC-003/sprint-03/sprint-03.md) links the implementation plan and story verification.
+The [MCP implementation](architecture/mcp-implementation.md) includes the read-only foundation and [admin setup, ChatGPT OAuth and local-only demo assistant](project/assistant-admin-setup.md), recorded in [Iteration 03 / Sprint 03 — Implementation of major feature](changes/iteration-03/iteration-overview.md). Live account/provider connection requires external setup; operational writes remain deferred. The [EPIC-003 sprint record](agile/sprints/EPIC-003/sprint-03/sprint-03.md) links the implementation plan and story verification.
 
 To connect an external client, follow the [Claude, ChatGPT and Gemini how-to guide](project/mcp-client-connection-guide.md), including its current OAuth, feature-access and region restrictions.
 

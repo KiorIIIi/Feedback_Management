@@ -207,6 +207,8 @@ MySQL holds file metadata. Attachments and generated exports remain in private s
 
 **Implementation status, 23 October 2026:** the [read-only pilot](mcp-implementation.md) implements authenticated request search/details, personnel workload, service-feedback metrics and report-job status. It is disabled by default and uses scoped expiring credentials plus invocation auditing. The full catalog below remains the release plan; attention ranking, operational writes, operation-result retrieval, embedded AI runtime and external multi-user OAuth are not implemented by this milestone.
 
+**25 October extension:** [Admin assistant setup](../project/assistant-admin-setup.md) adds password-confirmed integration settings, encrypted signing/key storage, per-administrator ChatGPT OAuth registration with S256 PKCE and read scopes, and local synthetic read-tool checks using shared services. The latest user instruction keeps data local: outbound model transport is removed and provider endpoints cannot be enabled. Local checks enforce environment, database, role and record/office scope. Actual ChatGPT-account connection is not established by local tests, and no reachable external endpoint is deployed. Configuration remains human-administered through the ordinary authenticated API, never an MCP tool.
+
 MCP exposes application capabilities to a compatible agent host. The host runs the agent/model interaction; Laravel authenticates calls and enforces application rules. An embedded React assistant additionally needs a server-side AI runtime and configured provider.
 
 The first release enables authorized MISO administrators to analyze records and perform explicitly requested operational updates.

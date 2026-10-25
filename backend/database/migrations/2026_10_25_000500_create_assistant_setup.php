@@ -65,12 +65,14 @@ return new class extends Migration {
 
     public function down(): void
     {
+        if (DB::table('mcp_authorizations')->whereNotNull('oauth_access_token_id')->exists()) throw new RuntimeException('OAuth audit identities must be retained. Plan their migration before rolling back this schema.');
         if (DB::getDriverName() === 'sqlite') {
             DB::unprepared('DROP TRIGGER IF EXISTS mcp_credential_insert');
             DB::unprepared('DROP TRIGGER IF EXISTS mcp_credential_update');
         } else DB::statement('ALTER TABLE mcp_authorizations DROP CHECK mcp_one_credential');
         Schema::table('mcp_authorizations', function (Blueprint $t) {
             $t->dropForeign(['oauth_access_token_id']); $t->dropColumn(['oauth_access_token_id', 'client_kind']);
+            $t->foreignId('personal_access_token_id')->nullable(false)->change();
         });
         foreach (['mcp_oauth_client_scopes', 'mcp_oauth_clients', 'assistant_settings', 'oauth_refresh_tokens', 'oauth_access_tokens', 'oauth_auth_codes', 'oauth_clients'] as $table) Schema::dropIfExists($table);
     }

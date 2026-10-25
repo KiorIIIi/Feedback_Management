@@ -3,6 +3,8 @@
 Status: Proposed logical database design  
 Last updated: 19 October 2026.
 
+Physical implementation follow-up, 25 October: [admin assistant setup](../project/assistant-admin-setup.md#physical-schema-and-runtime) adds encrypted integration configuration, standard Passport OAuth structures, client/tool memberships and an exclusive credential reference on MCP grants. This does not revise or certify the proposed logical ERD below.
+
 Source: [System Architecture](system-architecture.md). This is a logical data-model proposal, not an implemented database schema. The core diagram is an overview; the full model is split into four connected diagrams for readability. Repeated entities refer to the same table. See [Database Normalization](database-normalization.md) for the normalization assessment and outstanding refinements.
 
 ## Design rationale
