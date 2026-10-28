@@ -1,8 +1,19 @@
 # CLSU Feedback Management System and Service Tracker
 
-Working rough version of the CLSU Feedback Management System and Service Tracker. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An authenticated read-only MCP pilot, [admin setup](docs/project/assistant-admin-setup.md), ChatGPT OAuth and local synthetic demo tools are implemented. Outbound model calls are disabled. Operational MCP writes remain deferred.
+The CLSU Feedback Management System and Service Tracker is a working prototype for authenticated service submission, request tracking, staff handling, service evaluation and scoped reporting. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An authenticated read-only MCP pilot, [admin setup](docs/project/assistant-admin-setup.md), ChatGPT OAuth and local synthetic demo tools are implemented. Outbound model calls are disabled. Operational MCP writes remain deferred.
 
 The implementation follows the supplied Figma layouts and uses locally exported Figma assets. Requesters can submit, track, clarify, and evaluate services. MISO can review, prioritize, assign, and export scoped reports; personnel can update their assigned work. The user delegated configurable demo workflow rules for this prototype.
+
+## Development branch
+
+Use **`front-main`** for ongoing development. Keep `main` as the final integration target until the user approves a final merge. See the [development workflow](docs/project/development-workflow.md).
+
+```bash
+git clone --branch front-main https://github.com/KiorIIIi/Feedback_Management.git
+cd Feedback_Management
+```
+
+Follow **Fresh installation** for a new checkout. The Windows restart commands below apply to an already configured installation; replace machine-specific paths with your own.
 
 ## Open the local system
 
