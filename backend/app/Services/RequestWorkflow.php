@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class RequestWorkflow {
- public function __construct(private RequestAccess $access){}
+ public function __construct(private RequestAccess $access,private PortalNotifications $notifications){}
  private function fail(string $field,string $message):never {throw ValidationException::withMessages([$field=>$message]);}
  public function event(ServiceRequest $r,User $actor,string $kind,string $message,string $visibility='requester',array $metadata=[]):void {
   DB::table('request_events')->insert(['service_request_id'=>$r->id,'actor_id'=>$actor->id,'kind'=>$kind,'message'=>$message,'visibility'=>$visibility,'metadata'=>json_encode($metadata),'created_at'=>now()]);
@@ -23,12 +23,13 @@ class RequestWorkflow {
    abort_if($actor->role==='admin'&&(int)$actor->office_id!==(int)$handling,403,'Only administrators of the handling office can submit requests from the staff workspace.');
    $r=new ServiceRequest();$r->fill($data);$r->forceFill(['requester_id'=>$actor->id,'handling_office_id'=>$handling,'job_number'=>'FMS-'.now()->format('Y').'-'.strtoupper((string)Str::ulid()),'status'=>'Pending','record_version'=>1]);$r->save();
    $this->event($r,$actor,'Request submitted',$r->description);$this->audit($r,$actor,'request.created',null);
-   $this->notify($r,'Your request has been received.');return $r->refresh();
+   $this->notify($r,'Your request has been received.');
+   $this->notify($r,'New service request received.',$this->notifications->officeAdministrators($handling,$actor->id));
+   return $r->refresh();
   });
  }
  private function notify(ServiceRequest $r,string $message,?array $recipients=null):void {
-  foreach(array_unique($recipients??[$r->requester_id]) as $recipient)
-   DB::table('portal_notifications')->insert(['user_id'=>$recipient,'service_request_id'=>$r->id,'message'=>$message,'created_at'=>now()]);
+  $this->notifications->request($r,$message,$recipients??[$r->requester_id]);
  }
  public function update(User $actor,int $id,array $data):ServiceRequest {
   return DB::transaction(function()use($actor,$id,$data){
@@ -110,6 +111,7 @@ class RequestWorkflow {
    if(DB::table('service_evaluations')->where('request_id',$id)->exists())$this->fail('rating','You already evaluated this service.');
    DB::table('service_evaluations')->insert(['request_id'=>$id,...$data,'created_at'=>now()]);
    $this->audit($r,$actor,'request.evaluated',null);
+   $this->notifications->request($r,'New service evaluation received.',$this->notifications->officeAdministrators($r->handling_office_id,$actor->id),'evaluation');
   });
  }
 }

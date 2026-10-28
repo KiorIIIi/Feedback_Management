@@ -9,5 +9,5 @@ return [
  'report_per_minute'=>5,
  'active_reports_per_user'=>2,
  'mutations_per_minute'=>60,
- 'reads_per_minute'=>240,
+ 'reads_per_minute'=>env('APP_ENV')==='testing'?(int)env('PORTAL_TEST_READ_LIMIT',240):240,
 ];

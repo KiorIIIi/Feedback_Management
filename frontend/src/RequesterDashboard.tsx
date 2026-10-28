@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./App";
-import { api, date, parseDate, type RequestRecord } from "./api";
+import { date, parseDate, type RequestRecord } from "./api";
+import { useLoad } from "./useLoad";
 import { Asset, Empty, ErrorNotice, Loading, Panel } from "./components";
 
 export function RequesterIcon({ name }: { name: string }) {
@@ -52,25 +52,12 @@ function Status({ value }: { value: string }) {
 
 export default function RequesterDashboard() {
   const { user } = useAuth();
-  const [data, setData] = useState<DashboardData>(),
-    [error, setError] = useState<unknown>(),
-    [attempt, setAttempt] = useState(0);
-  useEffect(() => {
-    const controller = new AbortController();
-    setData(undefined);
-    setError(null);
-    api<DashboardData>("/requester-dashboard", { signal: controller.signal })
-      .then(setData)
-      .catch((e) => {
-        if (!controller.signal.aborted) setError(e);
-      });
-    return () => controller.abort();
-  }, [user?.id, attempt]);
+  const { data, error, reload } = useLoad<DashboardData>("/requester-dashboard", { live: true });
   if (error)
     return (
       <>
         <ErrorNotice error={error} />
-        <button className="button" onClick={() => setAttempt((n) => n + 1)}>
+        <button className="button" onClick={reload}>
           Retry dashboard
         </button>
       </>

@@ -205,6 +205,10 @@ MySQL holds file metadata. Attachments and generated exports remain in private s
 
 ## MCP connection and agent capabilities
 
+**Implementation status, 23 October 2026:** the [read-only pilot](mcp-implementation.md) implements authenticated request search/details, personnel workload, service-feedback metrics and report-job status. It is disabled by default and uses scoped expiring credentials plus invocation auditing. The full catalog below remains the release plan; attention ranking, operational writes, operation-result retrieval, embedded AI runtime and external multi-user OAuth are not implemented by this milestone.
+
+**25 October extension:** [Admin assistant setup](../project/assistant-admin-setup.md) adds password-confirmed integration settings, encrypted signing/key storage, per-administrator ChatGPT OAuth registration with S256 PKCE and read scopes, and local synthetic read-tool checks using shared services. The latest user instruction keeps data local: outbound model transport is removed and provider endpoints cannot be enabled. Local checks enforce environment, database, role and record/office scope. Actual ChatGPT-account connection is not established by local tests, and no reachable external endpoint is deployed. Configuration remains human-administered through the ordinary authenticated API, never an MCP tool.
+
 MCP exposes application capabilities to a compatible agent host. The host runs the agent/model interaction; Laravel authenticates calls and enforces application rules. An embedded React assistant additionally needs a server-side AI runtime and configured provider.
 
 The first release enables authorized MISO administrators to analyze records and perform explicitly requested operational updates.
@@ -274,7 +278,7 @@ Deploy the React build and Laravel application under one HTTPS domain where prac
 
 External agents need network access to the MCP endpoint. A campus-only server requires an approved network path from the chosen agent host. Provider calls require outbound connectivity. Connecting a client does not create an always-running monitoring agent.
 
-React refetches affected records after successful actions. Initial cross-session updates can use polling; broadcasting can be introduced when needed. Database changes do not automatically update an open browser.
+React refetches affected records after successful actions. The [24 October implemented synchronization](../project/live-updates.md) checks notifications, lists, dashboards and report summaries about every five seconds while visible/online, pauses detail replacement during editing, and retries temporary failures with backoff. Broadcast infrastructure remains a future option; these are periodic authenticated reads rather than instantaneous server push.
 
 | Failure | Required behavior |
 | --- | --- |

@@ -2,9 +2,11 @@
 
 ## Implemented
 
+The [24 October automatic workspace updates](live-updates.md) add live in-app badges/alerts and periodic synchronization of requests, feedback, dashboards and reports. The guide records the additive migration, scope enforcement and editing/connection behavior.
+
 The project now contains a React/TypeScript/Vite frontend and Laravel 12 API backed by MySQL. The saved architecture and logical database documents remain the planning baseline. This document records the narrower, implemented prototype and its provisional decisions.
 
-Implemented flows: session sign-in/out; public independent feedback; authenticated service submission; own-request tracking; office-scoped MISO review; eligibility-checked assignment; priority review; clarification with preserved original statements and revision history; personnel progress; human completion with actions and outcome; one optional verified evaluation; private in-app notices; scoped metrics; and queued private PDF, Excel and CSV exports. MCP has a disabled UI slot and documented adapter boundary only.
+Implemented flows: session sign-in/out; public independent feedback; authenticated service submission; own-request tracking; office-scoped MISO review; eligibility-checked assignment; priority review; clarification with preserved original statements and revision history; personnel progress; human completion with actions and outcome; one optional verified evaluation; private in-app notices; scoped metrics; and queued private PDF, Excel and CSV exports. The [MCP read-only pilot](../architecture/mcp-implementation.md) adds five scoped authenticated read tools, expiring/revocable credentials and invocation auditing on 23 October. The [25 October admin setup](assistant-admin-setup.md) adds encrypted configuration, pre-registered ChatGPT OAuth and local synthetic read tools. Actual client/provider connection requires the corresponding account/key setup and is distinct from mocked verification.
 
 ## User-delegated prototype policy
 
@@ -33,7 +35,7 @@ Report definitions are visible in the screen, PDF and Excel Summary sheet:
 - Empty averages display an em dash, never a misleading zero. PDF and Excel include summaries, definitions, breakdowns, recurrence and a request register; CSV contains the register. Internal notes and contact details are omitted. Excel strings are explicitly text cells and CSV formula prefixes are neutralized.
 - Report jobs remain pending/processing until the private file is stored successfully. Job status/download recheck requester identity, active administrator role and handling office. Failed or missing files provide no download link. Completed job retries reuse the stored result.
 
-Reports are generated on demand through the queue. Automatic scheduled delivery, outbound email, MCP report tools and ARTA certification are not implemented. The paper does not establish the final campus reporting policies; current definitions remain explicit prototype choices.
+Reports are generated on demand through the queue. Automatic scheduled delivery, outbound email, MCP report creation and ARTA certification are not implemented. MCP can read an owned report job's authorized status; private downloads require the portal session. The paper does not establish the final campus reporting policies; current definitions remain explicit prototype choices.
 
 ## Physical schema refinements and intentional summaries
 
@@ -41,13 +43,13 @@ Reports are generated on demand through the queue. Automatic scheduled delivery,
 
 For this rough version, operational roles use a controlled `users.role` field and a primary `office_id`; office memberships and service eligibility use relational junctions. This is a smaller access model than the proposed full roles/permissions schema. Fine-grained grants, multi-office administrative scope, availability history and complete configuration administration are deferred. There is no claim of fully verified 3NF for the entire schema.
 
-Future agent authorization and scope tables are intentionally not created without an active integration. Their required relational design and provenance/idempotency rules are recorded at `backend/app/Integrations/Mcp/README.md`.
+The MCP foundation now creates relational authorization/tool scopes and invocation audits around Sanctum tokens. The [implementation guide](../architecture/mcp-implementation.md) records their consistency rules and the operation-id/approval prerequisites still required before writes.
 
 ## Figma implementation
 
 Design file: PeQN6nVBQbPNXWoTU32Mhm. High-fidelity source responses are retained in `design-reference/*.tsx.txt`; original asset exports and provenance are cataloged in `design-reference/assets.json`. All 262 exported assets are local under `frontend/public/assets/figma/`. Plus Jakarta Sans is installed and self-hosted by the build.
 
-The implementation follows the green/gold admin workspace, split campus welcome/sign-in, requester navigation, dashboard, forms, detail/timeline and rating layouts. Data-driven text, dates, job numbers, counts, and charts come from the API rather than copying hard-coded Figma metrics. The assistant status is intentionally disconnected. The supplied admin design does not define every narrow-screen layout; these adapt its components for mobile. Pixel-perfect equivalence across every Figma frame has not been certified.
+The implementation follows the green/gold admin workspace, split campus welcome/sign-in, requester navigation, dashboard, forms, detail/timeline and rating layouts. Data-driven text, dates, job numbers, counts, and charts come from the API rather than copying hard-coded Figma metrics. The assistant header reports server readiness without claiming a connected external client. The supplied admin design does not define every narrow-screen layout; these adapt its components for mobile. Pixel-perfect equivalence across every Figma frame has not been certified.
 
 ## Role workspaces
 
@@ -61,12 +63,16 @@ The [20 October bug audit](../testing/audits/bug-audit.md) records implemented c
 
 The final Gemini review added explicit safe model field lists, response headers, configurable production session encryption/secure-cookie defaults, and an isolated Playwright app. Signed-in feedback remains account-linked with an explicit notice; guest feedback is unlinked. An anonymous signed-in mode has not been approved or added. See [security review](../testing/audits/security-review.md) for the final report dispositions and deployment boundaries.
 
+## Feedback UI revamp · Iteration 02 / Sprint 02
+
+The user selected Figma Option A (list and separate detail pages). Feedback now opens on General feedback, with separate tab counts, real server-side search/rating/date/category filtering, compact readable rows and a responsive full-message reader. Source pills sit at the top right beside numeric/star ratings. Detail links preserve URL filters/pages; session-only per-account scroll offsets restore browsing position. Verified details expose authorized service/office/final-assignee/completion/request-category context. General contact fields remain as supplied and typed references remain unverified text. No schema, workflow or deployment changes were made. See the [Iteration 02 change and verification record](../changes/iteration-02/sprint-02/001-feedback-ui-revamp.md).
+
 ## Deferred scope
 
 The [Iteration 1 log](../changes/iteration-01/sprint-01/001-reporting-and-feedback.md) records the reporting and feedback-reading additions. Feedback history now paginates both independent submissions and verified evaluations. Shared `FeedbackReader` queries enforce the same MISO-only routing, requester ownership and administrative handling-office scope for the list and full-message detail routes. General-feedback detail includes optional contact fields as supplied, without treating a typed job number as verified or granting private request access. Personnel access remains denied. Messages are rendered as escaped text with preserved line breaks; they cannot authorize application actions.
 
 The [latest security audit follow-up](../testing/audits/security-audit-follow-up.md) adds non-development startup validation, explicit CORS/proxy configuration, environment-aware logging, Unicode CSV hardening and read throttling. Remembered sign-in is now opt-in. Transactional in-app notification rows remain atomic with their workflow; no external notification worker is dispatched before commit.
 
-Attachments and private file uploads; email delivery; password recovery/provisioning; runtime settings and system evaluation; production retention and restoration; background maintenance; response and resolution SLA metrics; advanced role/permission administration; provider/model integration and MCP execution. In-app notifications and report queue jobs work without any AI integration.
+Attachments and private file uploads; email delivery; password recovery/provisioning; service-policy settings and system evaluation; production retention and restoration; background maintenance; response and resolution SLA metrics; advanced role/permission administration; real-campus-data provider integration and operational MCP writes remain deferred. Admin assistant configuration and local synthetic read tools are implemented separately. In-app notifications and report queue jobs work without any AI integration.
 
 This is a local prototype with synthetic demo accounts, not a production deployment. Do not load personal or operational campus data until identity provisioning, final policies, hosting, retention, backups, and security hardening are approved.

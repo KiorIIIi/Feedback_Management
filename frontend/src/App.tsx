@@ -23,9 +23,13 @@ import {
   SESSION_EXPIRED_EVENT,
   type User,
   type Catalog,
+  type PortalNotification,
+  type NotificationFeed,
 } from "./api";
+import { useLoad } from "./useLoad";
 import { roleHome } from "./routing";
 import RequesterDashboard, { RequesterIcon } from "./RequesterDashboard";
+import AssistantWorkspace, { AssistantConnection } from "./AssistantWorkspace";
 import {
   Asset,
   Identity,
@@ -61,6 +65,10 @@ const AuthContext = createContext<AuthState>({
   refresh: async () => {},
 });
 export const useAuth = () => useContext(AuthContext);
+const NotificationsContext = createContext<{
+  data?: PortalNotification[]; error?: unknown; loading: boolean; reload: () => void;
+}>({ loading: true, reload: () => {} });
+export const useNotifications = () => useContext(NotificationsContext);
 export default function App() {
   const [user, setUser] = useState<User | null>(null),
     [catalog, setCatalog] = useState<Catalog | null>(null),
@@ -157,7 +165,7 @@ export default function App() {
         />
         <Route
           path="/app"
-          element={user ? <Shell /> : <Navigate to="/login" replace />}
+          element={user ? <Shell key={`${user.id}:${user.role}:${user.office_id}`} /> : <Navigate to="/login" replace />}
         >
           <Route index element={<HomeRedirect />} />
           <Route
@@ -201,7 +209,8 @@ export default function App() {
           <Route path="personnel" element={<Personnel />} />
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="assistant" element={<Reserved kind="assistant" />} />
+          <Route path="assistant" element={<AssistantWorkspace />} />
+          <Route path="assistant/settings" element={<AssistantWorkspace />} />
           <Route path="settings" element={<Reserved kind="settings" />} />
           <Route path="evaluation" element={<Reserved kind="evaluation" />} />
           <Route path="help" element={<HelpPage />} />
@@ -290,7 +299,9 @@ function Welcome({ login = false }: { login?: boolean }) {
         }),
       });
       await refresh();
-      nav(roleHome(signedIn.role), { replace: true });
+      const returnTo = new URLSearchParams(loc.search).get("return_to");
+      if (signedIn.role === "admin" && returnTo?.startsWith("/oauth/authorize?")) window.location.assign(returnTo);
+      else nav(roleHome(signedIn.role), { replace: true });
     } catch (e) {
       setError(e);
     } finally {
@@ -530,24 +541,27 @@ function Shell() {
   const [menu, setMenu] = useState(false);
   const [logoutBusy, setLogoutBusy] = useState(false);
   const [logoutError, setLogoutError] = useState<unknown>();
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [notificationRevision, setNotificationRevision] = useState(0);
+  // Retain array compatibility while an existing server is updated to the feed response.
+  const feed = useLoad<NotificationFeed | PortalNotification[]>("/notifications?feed=1", { live: true });
+  const notifications = Array.isArray(feed.data) ? feed.data : feed.data?.notifications;
+  const unreadCount = Array.isArray(feed.data) ? feed.data.filter(n => !n.read_at).length : feed.data?.unread_count ?? 0;
+  const [latestNotice, setLatestNotice] = useState<PortalNotification>();
+  const newestSeen = useRef<number | undefined>(undefined);
   useEffect(() => {
-    const changed = () => setNotificationRevision((revision) => revision + 1);
+    const changed = () => feed.reload();
     window.addEventListener("portal-notifications-changed", changed);
     return () =>
       window.removeEventListener("portal-notifications-changed", changed);
-  }, []);
+  }, [feed.reload]);
   useEffect(() => {
-    if (user?.role !== "requester") return;
-    const controller = new AbortController();
-    api<{ read_at: string | null }[]>("/notifications", {
-      signal: controller.signal,
-    })
-      .then((rows) => setUnreadCount(rows.filter((n) => !n.read_at).length))
-      .catch(() => {});
-    return () => controller.abort();
-  }, [user?.id, user?.role, loc.pathname, notificationRevision]);
+    if (!notifications) return;
+    const newest = notifications.reduce((id, n) => Math.max(id, n.id), 0);
+    if (newestSeen.current !== undefined) {
+      const next = notifications.find(n => n.id > newestSeen.current! && !n.read_at);
+      if (next) setLatestNotice(next);
+    }
+    newestSeen.current = Math.max(newestSeen.current ?? 0, newest);
+  }, [notifications]);
   const admin = user?.role === "admin";
   const personnel = user?.role === "personnel";
   useEffect(() => {
@@ -608,7 +622,7 @@ function Shell() {
     <NavLink
       key={path}
       to={path ? "/app/" + path : roleHome(user!.role)}
-      end={!path}
+      end={!path || path === "assistant"}
     >
       {user?.role === "requester" ? (
         <RequesterIcon
@@ -627,12 +641,10 @@ function Shell() {
         <Icon name={icon} />
       )}
       {label}
-      {user?.role === "requester" &&
-        path === "notifications" &&
+      {path === "notifications" &&
         unreadCount > 0 && (
           <small className="requester-notification-count">{unreadCount}</small>
         )}
-      {path === "assistant" && <small className="soon">Soon</small>}
     </NavLink>
   );
   return (
@@ -667,6 +679,7 @@ function Shell() {
             <nav>
               {[
                 ["settings", "Service settings", "settings"],
+                ["assistant/settings", "Assistant settings", "assistant"],
                 ["evaluation", "System evaluation", "evaluation"],
               ].map(navLink)}
             </nav>
@@ -690,16 +703,14 @@ function Shell() {
               <strong>{label}</strong>
             </span>
             <div className="header-right">
-              <span className="connection">
-                <i />
-                MCP not connected
-              </span>
+              <AssistantConnection />
               <Link
                 className="icon-button"
                 to="/app/notifications"
                 aria-label="Notifications"
               >
                 <Icon name="bell" />
+                {unreadCount > 0 && <small className="notification-count">{unreadCount > 99 ? "99+" : unreadCount}</small>}
               </Link>
               {userbox}
             </div>
@@ -774,8 +785,17 @@ function Shell() {
       )}
       <main id="main" className="main-content">
         <ErrorNotice error={logoutError} />
-        <Outlet />
+        {!!feed.refreshError && <p className="live-update-status" role="status">Live updates interrupted. Reconnecting…</p>}
+        <NotificationsContext.Provider value={{ data: notifications, error: feed.error, loading: feed.loading, reload: feed.reload }}>
+          <Outlet />
+        </NotificationsContext.Provider>
       </main>
+      {latestNotice && <aside className="live-notification" aria-label="New notification">
+        <div role="status"><strong>{latestNotice.message}</strong>
+          <Link to={latestNotice.url || `/app/requests/${latestNotice.service_request_id}`} onClick={() => setLatestNotice(undefined)}>View update <Icon name="arrow" /></Link>
+        </div>
+        <button type="button" className="button" onClick={() => setLatestNotice(undefined)} aria-label="Dismiss notification">Dismiss</button>
+      </aside>}
       {!admin && (
         <footer className="portal-footer">
           Only your authorized records are shown. · Privacy & data use

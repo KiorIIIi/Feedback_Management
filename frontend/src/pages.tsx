@@ -16,7 +16,7 @@ import {
   YAxis,
 } from "recharts";
 import { api, ApiError, date, type RequestRecord, type Catalog } from "./api";
-import { useAuth } from "./App";
+import { useAuth, useNotifications } from "./App";
 import { ReportControls, ReportWorkspace } from "./reports";
 import {
   Asset,
@@ -30,41 +30,8 @@ import {
   Panel,
 } from "./components";
 
-function useLoad<T>(path: string) {
-  const [result, setResult] = useState<{
-      path: string;
-      data?: T;
-      error?: unknown;
-      loading: boolean;
-    }>({ path, loading: true }),
-    [tick, setTick] = useState(0);
-  useEffect(() => {
-    const controller = new AbortController();
-    setResult((previous) => ({
-      path,
-      data: previous.path === path ? previous.data : undefined,
-      loading: true,
-    }));
-    api<T>(path, { signal: controller.signal })
-      .then((d) => {
-        if (!controller.signal.aborted) {
-          setResult({ path, data: d, loading: false });
-        }
-      })
-      .catch((e) => {
-        if (!controller.signal.aborted) {
-          setResult({ path, error: e, loading: false });
-        }
-      });
-    return () => controller.abort();
-  }, [path, tick]);
-  return {
-    data: result.path === path ? result.data : undefined,
-    error: result.path === path ? result.error : undefined,
-    loading: result.path !== path || result.loading,
-    reload: () => setTick((t) => t + 1),
-  };
-}
+import { useLoad } from "./useLoad";
+
 function PageTitle({
   title,
   description,
@@ -269,8 +236,8 @@ export function Dashboard() {
   const { user } = useAuth();
   const admin = user?.role === "admin";
   const [days, setDays] = useState(30);
-  const metrics = useLoad<Metrics>("/metrics?days=" + days),
-    requests = useLoad<{ data: RequestRecord[]; total: number }>("/requests");
+  const metrics = useLoad<Metrics>("/metrics?days=" + days, { live: true }),
+    requests = useLoad<{ data: RequestRecord[]; total: number }>("/requests", { live: true });
   const rows = requests.data?.data || [];
   const needsClarification = rows.find((r) => r.status === "For Clarification");
   const unrated = rows.find((r) => r.status === "Completed" && !r.evaluation);
@@ -423,7 +390,7 @@ export function Dashboard() {
 }
 export function PersonnelDashboard() {
   const { user } = useAuth();
-  const { data, error, loading } = useLoad<Metrics>("/metrics?days=30");
+  const { data, error, loading } = useLoad<Metrics>("/metrics?days=30", { live: true });
   if (loading) return <Loading />;
   if (error) return <ErrorNotice error={error} />;
   return (
@@ -566,7 +533,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
     data: RequestRecord[];
     total: number;
     last_page: number;
-  }>("/requests?" + qs.toString());
+  }>("/requests?" + qs.toString(), { live: true });
   return (
     <Panel
       title={
@@ -1013,18 +980,20 @@ export function NewRequest() {
 export function RequestDetail() {
   const { id } = useParams();
   const { user, catalog, refresh } = useAuth();
+  const [editing, setEditing] = useState(false);
+  const [saveError, setSaveError] = useState<unknown>(),
+    [busy, setBusy] = useState(false),
+    [success, setSuccess] = useState("");
   const {
     data: r,
     error,
     loading,
     reload,
-  } = useLoad<RequestRecord>("/requests/" + id);
-  const [saveError, setSaveError] = useState<unknown>(),
-    [busy, setBusy] = useState(false),
-    [success, setSuccess] = useState("");
+  } = useLoad<RequestRecord>("/requests/" + id, { live: true, paused: editing || busy });
   useEffect(() => {
     setSaveError(null);
     setSuccess("");
+    setEditing(false);
   }, [id]);
   if (loading) return <Loading />;
   if (error)
@@ -1065,6 +1034,7 @@ export function RequestDetail() {
           ? "Your clarification has been sent for review."
           : "The request was updated.",
       );
+      setEditing(false);
       reload();
       try {
         await refresh();
@@ -1077,7 +1047,7 @@ export function RequestDetail() {
       }
     } catch (e) {
       setSaveError(e);
-      if (e instanceof ApiError && e.status === 409) reload();
+      // Keep the draft and the version it was based on until the user reviews current state.
     } finally {
       setBusy(false);
     }
@@ -1099,6 +1069,10 @@ export function RequestDetail() {
         </div>
       )}
       <ErrorNotice error={saveError} />
+      {saveError instanceof ApiError && saveError.status === 409 && <div className="notice">
+        <p>Review the latest request before saving. Loading it will clear this draft.</p>
+        <button className="button" onClick={() => { setEditing(false); reload(); }}>Load latest request</button>
+      </div>}
       <Panel className="request-summary">
         <div className="summary-title">
           <div>
@@ -1165,7 +1139,7 @@ export function RequestDetail() {
               title="A few more details will help us move forward"
               subtitle="Respond below. Your original request and job number will be preserved."
             >
-              <form className="panel-body" onSubmit={(e) => save(e, "reply")}>
+              <form className="panel-body" onChangeCapture={() => setEditing(true)} onSubmit={(e) => save(e, "reply")}>
                 <div className="notice gold">
                   {
                     r.events?.find(
@@ -1267,6 +1241,7 @@ export function RequestDetail() {
                   className="panel-body"
                   key={r.record_version}
                   onSubmit={(e) => save(e, "manage")}
+                  onChangeCapture={() => setEditing(true)}
                 >
                   <Field label="Status">
                     <select name="status" defaultValue={r.status}>
@@ -1366,6 +1341,7 @@ export function RequestDetail() {
                   <form
                     className="panel-body"
                     onSubmit={(e) => save(e, "clarify")}
+                    onChangeCapture={() => setEditing(true)}
                   >
                     <Field label="What information is needed? *">
                       <textarea
@@ -1710,153 +1686,12 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
     </>
   );
 }
-type FeedbackData = {
-  general: {
-    id: number;
-    subject: string;
-    message: string;
-    category: string;
-    rating: number | null;
-    created_at: string;
-  }[];
-  evaluations: {
-    request_id: number;
-    subject: string;
-    remarks: string;
-    rating: number;
-    job_number: string;
-    created_at: string;
-  }[];
-  pagination?: {
-    general: FeedbackPagination;
-    evaluations: FeedbackPagination;
-  };
-};
-type FeedbackPagination = { current_page: number; last_page: number; total: number };
-function FeedbackPager({ pagination, onPage }: { pagination?: FeedbackPagination; onPage: (n: number) => void }) {
-  if (!pagination || pagination.last_page <= 1) return null;
-  return <div className="feedback-pagination">
-    <span>Page {pagination.current_page} of {pagination.last_page} · {pagination.total} records</span>
-    <button className="button" disabled={pagination.current_page <= 1} onClick={() => onPage(pagination.current_page - 1)}>Previous</button>
-    <button className="button" disabled={pagination.current_page >= pagination.last_page} onClick={() => onPage(pagination.current_page + 1)}>Next</button>
-  </div>;
-}
-export function FeedbackHistory() {
-  const { user } = useAuth();
-  const [params, setParams] = useSearchParams();
-  const { data, error, loading, reload } = useLoad<FeedbackData>("/feedback?" + params.toString());
-  function changePage(key: string, page: number) {
-    setParams(previous => { const next = new URLSearchParams(previous); next.set(key, String(page)); return next; });
-  }
-  if (user?.role === "personnel") return <Navigate to="/app" replace />;
-  if (loading) return <Loading />;
-  return (
-    <>
-      <PageTitle
-        title={
-          user?.role === "admin" ? "Feedback & ratings" : "Feedback history"
-        }
-        description="Private feedback and verified completed-service evaluations."
-        actions={
-          user?.role !== "admin" && (
-            <Link className="button primary" to="/app/feedback/new">
-              Share feedback
-            </Link>
-          )
-        }
-      />
-      <ErrorNotice error={error} />
-      {!!error && <button className="button" onClick={reload}>Retry loading feedback</button>}
-      <Panel
-        title="Service evaluations"
-        subtitle="One optional verified rating per completed request"
-      >
-        {data?.evaluations.length ? (
-          data.evaluations.map((e) => (
-            <div className="feedback-row" key={e.request_id}>
-              <span className="rating-square">{e.rating}/5</span>
-              <div>
-                <Link to={"/app/feedback/evaluation/" + e.request_id}>
-                  <h3>{e.subject}</h3>
-                </Link>
-                <small>
-                  {e.job_number} · {date(e.created_at)}
-                </small>
-                <p>{e.remarks ? e.remarks.slice(0,240) + (e.remarks.length > 240 ? "…" : "") : "No additional remarks."}</p>
-                <Link className="feedback-read-link" to={"/app/feedback/evaluation/" + e.request_id}>View full evaluation <Icon name="arrow" /></Link>
-              </div>
-            </div>
-          ))
-        ) : (
-          <Empty title="No service evaluations yet" />
-        )}
-      </Panel>
-      <FeedbackPager pagination={data?.pagination?.evaluations} onPage={n => changePage("evaluation_page", n)} />
-      <Panel
-        title="General feedback"
-        subtitle="Independent feedback. Entered job numbers remain unverified references."
-      >
-        {data?.general.length ? (
-          data.general.map((f) => (
-            <div className="feedback-row" key={f.id}>
-              <Icon name="feedback" />
-              <div>
-                <Link to={"/app/feedback/general/" + f.id}><h3>{f.subject}</h3></Link>
-                <small>
-                  {f.category} · {date(f.created_at)}
-                  {f.rating ? ` · ${f.rating}/5` : ""}
-                </small>
-                <p>{f.message.slice(0,240)}{f.message.length > 240 ? "…" : ""}</p>
-                <Link className="feedback-read-link" to={"/app/feedback/general/" + f.id}>View full feedback <Icon name="arrow" /></Link>
-              </div>
-            </div>
-          ))
-        ) : (
-          <Empty title="No general feedback yet" />
-        )}
-      </Panel>
-      <FeedbackPager pagination={data?.pagination?.general} onPage={n => changePage("general_page", n)} />
-    </>
-  );
-}
-export function FeedbackDetail() {
-  const { user } = useAuth();
-  const { kind, id } = useParams();
-  const { data, error, loading, reload } = useLoad<{
-    kind: string;
-    record: {
-      id?: number; request_id?: number; subject: string; message?: string; remarks?: string;
-      category?: string; rating: number | null; created_at: string; job_number?: string;
-      unverified_job_number?: string | null; contact_name?: string | null; contact_email?: string | null;
-    };
-  }>(`/feedback/${kind}/${id}`);
-  if (user?.role === "personnel") return <Navigate to="/app" replace />;
-  const record = data?.record;
-  return <>
-    <Link className="back" to="/app/feedback">← Back to feedback & ratings</Link>
-    <PageTitle title={kind === "evaluation" ? "Service evaluation" : "Feedback details"} description="Private submission for authorized review." />
-    <ErrorNotice error={error} />
-    {!!error && <button className="button" onClick={reload}>Retry loading feedback</button>}
-    {loading ? <Loading /> : record && <div className="feedback-detail">
-      <Panel title={record.subject} subtitle={`${record.category || "Verified service evaluation"} · ${date(record.created_at)}`}>
-        <div className="panel-body">
-          <p className="feedback-rating">{record.rating === null ? "No rating supplied" : `${record.rating} of 5`} · {data.kind === "evaluation" ? "Verified completed service" : "Independent general feedback"}</p>
-          <h3>{data.kind === "evaluation" ? "Evaluation remarks" : "Full feedback message"}</h3>
-          <p className="feedback-full-message">{record.message || record.remarks || "No additional remarks."}</p>
-        </div>
-      </Panel>
-      {data.kind === "evaluation" ? <Panel title="Related service"><div className="panel-body">
-        <Link className="feedback-read-link" to={`/app/requests/${record.request_id}`}>Open service request {record.job_number} <Icon name="arrow" /></Link>
-      </div></Panel> : <Panel title="Submission details"><div className="panel-body info-list">
-        <div><small>Related job number · unverified reference</small><span>{record.unverified_job_number || "Not supplied"}</span></div>
-        <div><small>Contact name supplied</small><span>{record.contact_name || "Not supplied"}</span></div>
-        <div><small>Contact email supplied</small><span>{record.contact_email || "Not supplied"}</span></div>
-      </div></Panel>}
-    </div>}
-  </>;
-}
+export { FeedbackHistory, FeedbackDetail } from "./feedback";
+
 export function Personnel() {
-  const { user, catalog } = useAuth();
+  const { user, catalog: initialCatalog } = useAuth();
+  const current = useLoad<Catalog>("/catalog", { live: user?.role === "admin" });
+  const catalog = current.data || initialCatalog;
   if (user?.role !== "admin") return <Navigate to="/app" replace />;
   return (
     <>
@@ -1919,15 +1754,7 @@ export function Reports() {
   return <><PageTitle title="Reports & analytics" description="Service evaluation, request activity and office performance." /><ReportWorkspace /></>;
 }
 export function Notifications() {
-  const { data, error, loading, reload } = useLoad<
-    {
-      id: number;
-      service_request_id: number;
-      message: string;
-      read_at: string | null;
-      created_at: string;
-    }[]
-  >("/notifications");
+  const { data, error, loading, reload } = useNotifications();
   const [readError, setReadError] = useState<unknown>(),
     [readingId, setReadingId] = useState<number | null>(null);
   async function markRead(id: number) {
@@ -1950,7 +1777,7 @@ export function Notifications() {
     <>
       <PageTitle
         title="Your notifications"
-        description="Updates and next steps for your service requests."
+        description="New submissions, service updates and next steps."
       />
       <ErrorNotice error={error} />
       <ErrorNotice error={readError} />
@@ -1965,7 +1792,7 @@ export function Notifications() {
             >
               <Icon name="bell" />
               <div>
-                <Link to={"/app/requests/" + n.service_request_id}>
+                <Link to={n.url || "/app/requests/" + n.service_request_id}>
                   {n.message}
                 </Link>
                 <small>{date(n.created_at)}</small>

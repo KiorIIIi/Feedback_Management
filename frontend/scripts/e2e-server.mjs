@@ -13,7 +13,7 @@ const root = path.resolve(
 const backend = path.join(root, "backend");
 const php =
   process.env.PORTAL_TEST_PHP ||
-  "C:/laragon/bin/php/php-8.5.10-Win32-vs17-x64/php.exe";
+  "C:/laragon/bin/php/php-8.5.12-Win32-vs17-x64/php.exe";
 const runRoot = path.join(
   root,
   ".local",
@@ -130,6 +130,9 @@ try {
     PORTAL_API_TARGET: "http://127.0.0.1:8001",
     // Production/local login limits remain 10. Limiter behavior has separate feature tests.
     PORTAL_TEST_LOGIN_LIMIT: "120",
+    // Many full-page viewport/auth checks reuse the same synthetic account in under a minute.
+    // Backend feature tests exercise read throttling; local/production keep their 240 budget.
+    PORTAL_TEST_READ_LIMIT: "1200",
   };
   for (const args of [
     ["migrate", "--force", "--no-interaction"],

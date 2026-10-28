@@ -1,8 +1,19 @@
 # CLSU Feedback Management System and Service Tracker
 
-Working rough version of the CLSU Feedback Management System and Service Tracker. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. MCP is disabled, with a reserved interface and documented future adapter boundary.
+The CLSU Feedback Management System and Service Tracker is a working prototype for authenticated service submission, request tracking, staff handling, service evaluation and scoped reporting. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An authenticated read-only MCP pilot, [admin setup](docs/project/assistant-admin-setup.md), ChatGPT OAuth and local synthetic demo tools are implemented. Outbound model calls are disabled. Operational MCP writes remain deferred.
 
 The implementation follows the supplied Figma layouts and uses locally exported Figma assets. Requesters can submit, track, clarify, and evaluate services. MISO can review, prioritize, assign, and export scoped reports; personnel can update their assigned work. The user delegated configurable demo workflow rules for this prototype.
+
+## Development branch
+
+Use **`front-main`** for ongoing development. Keep `main` as the final integration target until the user approves a final merge. See the [development workflow](docs/project/development-workflow.md).
+
+```bash
+git clone --branch front-main https://github.com/KiorIIIi/Feedback_Management.git
+cd Feedback_Management
+```
+
+Follow **Fresh installation** for a new checkout. The Windows restart commands below apply to an already configured installation; replace machine-specific paths with your own.
 
 ## Open the local system
 
@@ -21,6 +32,10 @@ All accounts and service records are synthetic. These credentials are for the lo
 
 **Remember me** is off by default; enable it when you want persistent sign-in on a trusted device. Refreshing, returning to the app, and browser Back preserve a valid normal session. Temporary connection failures offer a retry instead of treating you as signed out. Signing out clears the session and remembered login.
 
+[Live workspace updates](docs/project/live-updates.md) check for new requests, feedback and notifications about every five seconds while visible/online. Badges, open lists and dashboards update automatically; request editing drafts are preserved. Existing installations must apply the additive migration with `php backend/artisan migrate` before using the updated notification feed.
+
+Administrators can open **MCP Assistant → Connection settings** or **Assistant settings** in the management menu to enable MCP, register/revoke their own ChatGPT clients, select read permissions and inspect provider-disabled status. Existing installations need the additive 25 October migration and PHP Sodium. The [setup guide](docs/project/assistant-admin-setup.md) distinguishes local readiness, HTTPS/ChatGPT sign-in and the local-only assistant mode and disabled provider calls.
+
 Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/architecture/system-architecture.md#login-routing-implemented-prototype).
 
 ## Start again on this Windows machine
@@ -33,13 +48,13 @@ cd D:\Projects_26\Feedback_Management
 .\scripts\start.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe'
 ```
 
-The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. This main-branch documentation update does not change launcher code. Pass -PhpPath explicitly because the older script defaults refer to a retired runtime. The patched path is `C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
+The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. The launchers explicitly select the patched PHP 8.5.12 runtime. The Windows user PATH also selects this version after reopening the terminal. The default path is `C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
 
-See the [22 October PHP security update](docs/project/php-runtime-security.md) for the advisory, runtime verification and branch-specific instructions.
+See the [22 October PHP security update](docs/project/php-runtime-security.md) for the advisory, verified versions, and retired-runtime details.
 
 ## Fresh installation
 
-Requirements: PHP 8.5.12 or a newer patched PHP 8.5 release with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo and zip; Composer; Node 20.19+ or 22.12+; MySQL 8. The development checkout was verified with PHP 8.5.12; this documentation update does not claim a separate main-branch test run. Existing host tools are Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
+Requirements: PHP 8.5.12 or a newer patched PHP 8.5 release with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo, zip and Sodium; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.12, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
 
 ```powershell
 $env:PATH='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64;'+$env:PATH
@@ -77,6 +92,8 @@ The frontend build is copied into `.local/public-host/site`; a loopback-only PHP
 
 The public URL is saved in `.local/public-host/url.txt`. Sign-in credentials are in **`.local/public-host/access.json`**; keep that file private. `.local/public-host/runtime.json` contains deployment secrets and must also stay private. These files are ignored by Git. Share only the generated HTTPS URL and the demo account access intended for each tester.
 
+Initialization restricts the runtime directory and credential files to the launching Windows user (0700/0600 on POSIX) and writes complete JSON files atomically. The Windows helper uses a process-scoped `RemoteSigned` execution policy; it does not change the machine policy. Run web/worker processes under the same identity. New runtime database accounts receive only SELECT/INSERT/UPDATE/DELETE from creation; migrations/seeding use trusted operator credentials only inside initialization. Recoverable provisioning failures clean up resources created by that attempt; interrupted or incomplete cleanup requires operator inspection. Existing demo data is retained on reuse, and MCP remains explicitly disabled. See the [security remediation record](docs/changes/iteration-03/sprint-03/004-security-audit-remediation.md).
+
 After starting, run `npm --prefix frontend run test:public` for browser verification through the public URL with installed Chrome. This intentionally creates a clearly labeled synthetic request, progresses it using synthetic staff accounts, evaluates it, and generates a private report in the isolated public demo. It does not target the ordinary local demo. Evidence is written to `.local/public-host/verification.json` and `verified-desktop.png`. Do not report those checks as passed unless that run succeeds.
 
 Quick Tunnels have no uptime guarantee. The PHP built-in server is used for this temporary, low-volume demo; this launcher does not establish continuous hosting, automatic boot recovery, backups, final MISO policy approval, or production readiness. See [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).
@@ -111,19 +128,25 @@ Shared window-size and zoom reflow rules live in `frontend/src/responsive.css`, 
 
 ## Prototype boundaries
 
+See the [Claude, ChatGPT and Gemini connection guide](docs/project/mcp-client-connection-guide.md) for client setup, supported pilot paths and OAuth/account prerequisites.
+
 The [latest security audit follow-up](docs/testing/audits/security-audit-follow-up.md) records the new hardening and remaining deployment decisions. Non-development startup rejects unsafe configuration; additional origins and trusted proxy IPs/CIDRs must be explicitly configured. Local/testing defaults remain usable. Real hosting/TLS/static-SPA header configuration is still a deployment responsibility.
 
-Settings, system evaluation, password recovery, attachments, outbound email, and MCP execution are reserved for later work. Priority policies and status transitions are configurable demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for the physical-schema refinements, access-model simplifications, report definitions, implemented workflows, and deferred scope. This rough build is not a production deployment.
+The [24 October independent audit](docs/testing/audits/deepseek-security-review-2026-10-24.md) and [remediation record](docs/changes/iteration-03/sprint-03/004-security-audit-remediation.md) cover the subsequent CI, MCP flag/audit recovery and demo-provisioning findings. Automated verification now targets `front-main` and `main`; configured jobs and observed passing runs are distinct evidence.
+
+Service-policy settings, system evaluation, password recovery, attachments, outbound email and operational MCP writes remain future work. [Assistant settings](docs/project/assistant-admin-setup.md) and local synthetic read tools are implemented separately. Provider calls are disabled under the current data policy; no key or working model connection is bundled. No public MCP deployment is enabled. Priority policies and status transitions remain demo choices pending MISO validation. See [implementation notes](docs/project/implementation-notes.md) for implementation boundaries. This rough build is not a production deployment.
 
 ## Documentation
 
 Start with the [documentation index](docs/README.md). The [documentation map](docs/project/documentation-map.md) records relocated files.
 
+Current major-feature work is documented as [Iteration 03 / Sprint 03 — Implementation of major feature](docs/changes/iteration-03/iteration-overview.md), covering the MCP foundation and external-client connection guide.
+
 | Area | Contents |
 | --- | --- |
 | [Agile](docs/agile/README.md) | Epics, product backlog, sprint records, implementation plans and story tests |
 | [Architecture](docs/architecture/README.md) | System architecture, database design/normalization and historical exports |
-| [Changes](docs/changes/README.md) | Iteration 1 and documentation change records |
+| [Changes](docs/changes/README.md) | Iteration and sprint change records |
 | [Project](docs/project/README.md) | Implementation decisions and project guidance |
 | [Requirements](docs/requirements/README.md) | Original research paper and requirement traceability |
 | [Testing](docs/testing/README.md) | Verification evidence, test commands and audit records |

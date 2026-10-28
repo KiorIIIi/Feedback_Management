@@ -247,33 +247,9 @@
     white-space: nowrap;
     color: #617169;
   }
-  .dashboard-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    line-height: 1.5;
-    padding: 5px 8px;
-    background: #faf4e4;
-    color: #795b16;
-    border-radius: 6px;
-    white-space: nowrap;
-  }
   .dashboard-status .icon {
     width: 12px;
     height: 12px;
-  }
-  .dashboard-status.in-progress {
-    background: #edf3fa;
-    color: #295e8f;
-  }
-  .dashboard-status.completed {
-    background: #eaf3ed;
-    color: #12553d;
-  }
-  .dashboard-status.for-clarification {
-    background: #fff2dc;
-    color: #8c4d00;
   }
   .dashboard-row-action {
     display: block;
@@ -620,9 +596,6 @@
       font-size: 10px;
     }
     .dashboard-recent td:last-child {
-      font-size: 10px;
-    }
-    .dashboard-status {
       font-size: 10px;
     }
     .dashboard-row-action {

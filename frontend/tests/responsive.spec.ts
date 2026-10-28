@@ -117,7 +117,11 @@ for (const [role, email, routes] of [
         await fits(page, route, size.width);
       }
     }
-    await page.goto(routes[0]);
+    // Return through the real mobile navigation instead of restarting session restoration.
+    await page.getByRole("button", { name: "Toggle navigation" }).click();
+    await page.getByRole("link", { name: "Dashboard", exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(routes[0] + "$"));
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await settled(page);
     for (const size of [sizes[4], sizes[8]]) {
       await page.setViewportSize(size);

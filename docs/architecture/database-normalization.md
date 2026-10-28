@@ -1,6 +1,8 @@
 # CLSU Feedback Management System — Database Normalization
 
 Status: Logical design assessment; full 3NF has not been established  
+
+The [25 October admin setup extension](../project/assistant-admin-setup.md#physical-schema-and-runtime) uses standard OAuth structures and relational client/tool memberships. Each MCP authorization references exactly one Sanctum or Passport credential; audit identity continues to derive from that authorization. The client user/office/resource binding is immutable authorization context, while the current account is rechecked at token use. Encrypted integration secrets are configuration facts, and update/audit consistency is transactional. These physical refinements do not establish 3NF for the entire proposed design.
 Last updated: 19 October 2026.
 
 Related documents: [System Architecture](system-architecture.md) and [Database Design](database-design.md).
@@ -67,6 +69,14 @@ Before claiming the implemented schema satisfies its normalization target:
 5. Validate insert, update, and deletion behavior for unintended anomalies. Test the workflow, ownership, office scope, and concurrency rules separately from normalization.
 
 No implemented database has been certified by this assessment. The [Database Design acceptance scenarios](database-design.md#verification-scenarios-before-implementation-acceptance) describe further verification required before implementation acceptance.
+
+## Implemented notification refinement · 24 October 2026
+
+The [24 October notification extension](../project/live-updates.md#schema-and-rollout) uses typed foreign keys and a routing discriminator rather than copying requester/contact/office facts into notifications. Notification text is an intentional delivery-time presentation snapshot; `read_at` is the mutable acknowledgement. Writes commit with their source transaction, and reads recompute current record/office access. This scoped refinement does not certify the complete schema as 3NF.
+
+## Implemented MCP refinement · 23 October 2026
+
+The [read-only pilot](mcp-implementation.md#authorization-storage-and-audit-consistency) reuses Sanctum credential storage and adds a tool catalog plus a composite-key authorization/scope junction. JSON token abilities are empty; relational memberships grant tools. Invocation audit identity is derived through the authorization, avoiding independent actor/client copies. The authorization/token user bridge intentionally overlaps the framework's polymorphic owner and is checked for equality during authentication; issuance is transactional. Revocation retains identity rows for audit provenance. These physical refinements resolve the affected scope/audit proposals for this read-only milestone; operation/outcome and approval tables await operational writes. Existing physical `priority_rule_versions` already separates version-wide effective dates. The proposed ERD and complete schema remain uncertified.
 
 ## Implemented category and report refinement · 20 October 2026
 

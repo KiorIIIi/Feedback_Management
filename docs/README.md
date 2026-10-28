@@ -1,17 +1,23 @@
 # Documentation
 
+Active development branch: **`front-main`**. Follow the user's [development and publishing workflow](project/development-workflow.md) until final merge approval.
+
 Start here for the CLSU Feedback Management System and Service Tracker. The folders follow the supplied reference: agile work records, architecture, changes, project guidance, requirements and testing.
 
 | Folder | What belongs here | Start with |
 | --- | --- | --- |
 | [agile](agile/README.md) | Epics, backlog, sprint records, implementation plans and story verification | [Product backlog](agile/product-backlog.md) |
 | [architecture](architecture/README.md) | Architecture, database design, normalization and historical exports | [System architecture](architecture/system-architecture.md) |
-| [changes](changes/README.md) | Iteration logs and documentation changes | [Iteration 1](changes/iteration-01/iteration-overview.md) |
+| [changes](changes/README.md) | Iteration logs and documentation changes | [Iteration 03](changes/iteration-03/iteration-overview.md) |
 | [project](project/README.md) | Setup references, implementation decisions and documentation conventions | [Implementation notes](project/implementation-notes.md) |
 | [requirements](requirements/README.md) | Research source, requirements and traceability | [Requirements](requirements/system-requirements.md) |
 | [testing](testing/README.md) | Test commands, recorded results, bug reviews and security audits | [Verification history](testing/verification.md) |
 
-For the work just completed, read [Iteration 1](changes/iteration-01/iteration-overview.md), then the [EPIC-002 sprint record](agile/sprints/EPIC-002/sprint-01/sprint-01.md). The sprint documents organize existing implementation evidence retrospectively; they do not claim earlier sprint ceremonies or MISO approval.
+For the original reporting delivery, read [Iteration 1](changes/iteration-01/iteration-overview.md), then the [EPIC-002 sprint record](agile/sprints/EPIC-002/sprint-01/sprint-01.md). Those records organize existing implementation evidence retrospectively; they do not claim earlier sprint ceremonies or MISO approval.
+
+The [MCP implementation](architecture/mcp-implementation.md) includes the read-only foundation and [admin setup, ChatGPT OAuth and local-only demo assistant](project/assistant-admin-setup.md), recorded in [Iteration 03 / Sprint 03 — Implementation of major feature](changes/iteration-03/iteration-overview.md). Live account/provider connection requires external setup; operational writes remain deferred. The [EPIC-003 sprint record](agile/sprints/EPIC-003/sprint-03/sprint-03.md) links the implementation plan and story verification.
+
+To connect an external client, follow the [Claude, ChatGPT and Gemini how-to guide](project/mcp-client-connection-guide.md), including its current OAuth, feature-access and region restrictions.
 
 The original paper is preserved under [requirements/source](requirements/source/itrm-3100.md). Word/PDF architecture exports and their rendered review pages are under [architecture/exports](architecture/README.md#historical-exports). Current implementation status is recorded in Markdown; historical exports can lag behind it.
 

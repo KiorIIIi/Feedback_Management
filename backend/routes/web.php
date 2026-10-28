@@ -7,6 +7,15 @@ Route::prefix('api')->group(function(){
  Route::post('login',[PortalController::class,'login'])->middleware('throttle:portal-login');
  Route::post('feedback',[PortalController::class,'feedback'])->middleware('throttle:portal-feedback');
  Route::middleware(['auth','throttle:portal-reads'])->group(function(){
+  Route::get('assistant/settings',[\App\Http\Controllers\AssistantController::class,'status']);
+  Route::middleware('throttle:assistant-admin')->group(function(){
+   Route::put('assistant/settings',[\App\Http\Controllers\AssistantController::class,'save']);
+   Route::post('assistant/clients',[\App\Http\Controllers\AssistantController::class,'createClient']);
+   Route::delete('assistant/clients/{id}',[\App\Http\Controllers\AssistantController::class,'revokeClient']);
+   Route::post('assistant/test',[\App\Http\Controllers\AssistantController::class,'test']);
+  });
+  Route::post('assistant/chat',[\App\Http\Controllers\AssistantController::class,'chat'])->middleware('throttle:assistant-chat');
+  Route::post('assistant/local-read',[\App\Http\Controllers\AssistantController::class,'localRead'])->middleware('throttle:assistant-chat');
   Route::get('me',fn(Request $r)=>$r->user());Route::post('logout',[PortalController::class,'logout']);
   Route::get('catalog',[PortalController::class,'catalog']);
   Route::post('request-categories',[PortalController::class,'createCategory'])->middleware('throttle:portal-mutations');

@@ -1,35 +1,139 @@
-name: Laravel
+name: Project verification
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [front-main, main]
   pull_request:
-    branches: [ "main" ]
+    branches: [front-main, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  laravel-tests:
-
+  backend:
+    name: Backend (${{ matrix.database }})
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        database: [sqlite, mysql]
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: clsu_feedback_test
+          MYSQL_USER: portal_test
+          MYSQL_PASSWORD: synthetic-ci-password
+          MYSQL_ROOT_PASSWORD: synthetic-ci-root-password
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 127.0.0.1:3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping --host=127.0.0.1 --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      APP_ENV: testing
+      APP_DEBUG: 'false'
+      MCP_ENABLED: 'false'
+      DB_CONNECTION: ${{ matrix.database }}
+      DB_DATABASE: ${{ matrix.database == 'mysql' && 'clsu_feedback_test' || ':memory:' }}
+      DB_HOST: 127.0.0.1
+      DB_PORT: '3307'
+      DB_USERNAME: portal_test
+      DB_PASSWORD: synthetic-ci-password
+      PORTAL_TEST_PROVISIONING: ${{ matrix.database == 'mysql' && '1' || '0' }}
+      PORTAL_TEST_MYSQL_ADMIN_USERNAME: root
+      PORTAL_TEST_MYSQL_ADMIN_PASSWORD: synthetic-ci-root-password
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      with:
-        php-version: '8.0'
-    - uses: actions/checkout@v4
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+        with:
+          php-version: '8.5'
+          extensions: pdo_mysql, pdo_sqlite, mbstring, gd, dom, xml, curl, fileinfo, zip, sodium
+          tools: composer:v2
+          coverage: none
+      - run: mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs storage/app/private
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: composer audit --locked --no-interaction
+      - run: vendor/bin/phpunit --configuration phpunit.xml
+        env:
+          PORTAL_TEST_MYSQL_CONTAINER: ${{ job.services.mysql.id }}
+
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm audit --package-lock-only
+      - run: npm run build
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PORTAL_TEST_PHP: /usr/bin/php
+      MCP_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+        with:
+          php-version: '8.5'
+          extensions: pdo_sqlite, mbstring, gd, dom, xml, curl, fileinfo, zip, sodium
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: mkdir -p backend/bootstrap/cache backend/storage/framework/cache/data backend/storage/framework/sessions backend/storage/framework/views backend/storage/logs backend/storage/app/private
+      - run: composer install --working-dir=backend --no-interaction --prefer-dist --no-progress
+      - run: npm --prefix frontend ci
+      - run: npx playwright install --with-deps chrome
+        working-directory: frontend
+      - run: npm --prefix frontend run test:e2e
+      - name: Show browser failure context
+        if: failure()
+        run: |
+          for context in frontend/test-results/*/error-context.md; do
+            if [ -f "$context" ]; then cat "$context"; fi
+          done
+
+  documentation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: python3 scripts/check-docs.py
+
+  windows-runtime:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: ./scripts/test-local-runtime.ps1
+      - run: ./scripts/test-public-secret-acl.ps1

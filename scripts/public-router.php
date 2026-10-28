@@ -16,11 +16,12 @@ if ($host === $expectedHost && ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') !== 'h
 $clientIp = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '127.0.0.1';
 $_SERVER['HTTP_X_FORWARDED_FOR'] = filter_var($clientIp, FILTER_VALIDATE_IP) ? $clientIp : '127.0.0.1';
 $path = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/');
-if (str_contains($path, "\0") || str_contains($path, '\\') || preg_match('~(?:^|/)\.~', $path)) {
+$oauthMetadata = in_array($path, ['/.well-known/oauth-authorization-server', '/.well-known/oauth-protected-resource', '/.well-known/oauth-protected-resource/api/mcp', '/.well-known/oauth-authorization-server/api/mcp'], true);
+if (str_contains($path, "\0") || str_contains($path, '\\') || (!$oauthMetadata && preg_match('~(?:^|/)\.~', $path))) {
     http_response_code(404);
     exit('Not found.');
 }
-if ($path === '/up' || $path === '/api' || str_starts_with($path, '/api/')) {
+if ($path === '/up' || $path === '/api' || str_starts_with($path, '/api/') || str_starts_with($path, '/oauth/') || str_starts_with($path, '/.well-known/')) {
     require dirname(__DIR__).'/backend/public/index.php';
     return;
 }

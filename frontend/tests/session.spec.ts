@@ -94,6 +94,7 @@ test("remembered login restores a new browser context after session cookie loss;
     ).toBeVisible();
     tab.once("dialog", (dialog) => dialog.accept());
     await tab.getByRole("button", { name: "Sign out" }).click();
+    await expect(tab).toHaveURL("/");
     await tab.goto("/app/requests");
     await expect(tab).toHaveURL(/\/login$/);
     await expect(

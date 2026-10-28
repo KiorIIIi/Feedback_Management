@@ -3,6 +3,8 @@
 | Iteration | Scope |
 | --- | --- |
 | [Iteration 01](iteration-01/iteration-overview.md) | Reporting, categories, full feedback review and subsequent documentation changes, grouped by sprint |
+| [Iteration 02](iteration-02/iteration-overview.md) | Reviewed Figma Option A feedback revamp, working filters, authorized service context and runtime/development support; Sprint 02 |
+| [Iteration 03](iteration-03/iteration-overview.md) | Implementation of major feature — authenticated MCP read foundation and Claude/ChatGPT/Gemini connection guide; Sprint 03 |
 
 Every iteration has its own `iteration-NN/` folder. Its `iteration-overview.md` indexes the sprint folders; each sprint's `sprint-overview.md` indexes its separate change records. Add another numbered change file when more work happens in the same sprint. Start a new iteration folder only when a new iteration cycle is identified.
 

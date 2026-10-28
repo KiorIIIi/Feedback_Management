@@ -10,6 +10,7 @@ import "./styles.css";
 import "./requester-dashboard.css";
 import "./responsive.css";
 import "./reports.css";
+import "./feedback.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>

@@ -65,6 +65,20 @@
     --white: #fff;
     --radius: 6px;
     --sidebar: 247px;
+    --badge-neutral-bg: #eef2ef;
+    --badge-neutral-ink: #526158;
+    --badge-red-bg: #f8e9e7;
+    --badge-red-ink: #9e3b32;
+    --badge-amber-bg: #f6efdf;
+    --badge-amber-ink: #795919;
+    --badge-green-bg: #e8f2eb;
+    --badge-green-ink: #286341;
+    --badge-blue-bg: #e9f0f6;
+    --badge-blue-ink: #315f83;
+    --badge-purple-bg: #f0ebf5;
+    --badge-purple-ink: #67507e;
+    --badge-orange-bg: #f8eee4;
+    --badge-orange-ink: #86532b;
   }
 }
 @layer base {
@@ -1224,59 +1238,65 @@
     font-size: 7px;
     color: #879168;
   }
-  .badge {
-    font-size: 10px;
-    padding: 4px 7px;
-    border-radius: 4px;
+  .badge,
+  .dashboard-status {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    border: 1px solid #dce5df;
+    gap: 6px;
+    border: 0;
     white-space: nowrap;
     line-height: 1.5;
-    background: #f5f8f6;
-    color: #617169;
+    background: var(--badge-neutral-bg);
+    color: var(--badge-neutral-ink);
   }
   .badge i {
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     background: currentColor;
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .badge.critical {
-    background: #ffe1e1;
-    border-color: #ffa7a7;
-    color: #b40000;
+  .badge.critical,
+  .dashboard-status.critical {
+    background: var(--badge-red-bg);
+    color: var(--badge-red-ink);
   }
   .badge.high,
   .badge.pending,
-  .badge.on-hold {
-    background: #fff0b3;
-    border-color: #f0c347;
-    color: #805100;
+  .badge.on-hold,
+  .dashboard-status.high,
+  .dashboard-status.pending,
+  .dashboard-status.on-hold {
+    background: var(--badge-amber-bg);
+    color: var(--badge-amber-ink);
   }
   .badge.medium,
-  .badge.completed {
-    background: #d5f8e1;
-    border-color: #8cddb0;
-    color: #00672f;
+  .badge.completed,
+  .dashboard-status.medium,
+  .dashboard-status.completed {
+    background: var(--badge-green-bg);
+    color: var(--badge-green-ink);
   }
   .badge.low,
-  .badge.in-progress {
-    background: #dff1ff;
-    border-color: #9bd0f5;
-    color: #00599b;
+  .badge.in-progress,
+  .dashboard-status.low,
+  .dashboard-status.in-progress {
+    background: var(--badge-blue-bg);
+    color: var(--badge-blue-ink);
   }
-  .badge.assigned {
-    background: #ede1ff;
-    border-color: #cba6ff;
-    color: #5b21b6;
+  .badge.assigned,
+  .dashboard-status.assigned {
+    background: var(--badge-purple-bg);
+    color: var(--badge-purple-ink);
   }
-  .badge.for-clarification {
-    background: #fff2dc;
-    color: #8c4d00;
-    border-color: #efd6a4;
+  .badge.for-clarification,
+  .dashboard-status.for-clarification {
+    background: var(--badge-orange-bg);
+    color: var(--badge-orange-ink);
   }
   .pagination {
     display: flex;
@@ -1441,10 +1461,6 @@
     font-weight: 600;
     display: block;
     overflow-wrap: anywhere;
-  }
-  .simple-table .badge {
-    border: 0;
-    font-size: 10px;
   }
   .table-action {
     display: block;
@@ -2900,5 +2916,27 @@
   .sidebar nav .icon {
     width: 20px;
     height: 20px;
+  }
+  .admin-header .icon-button { position: relative; }
+  .notification-count {
+    position: absolute; inset-block-start: -3px; inset-inline-end: -5px;
+    min-width: 18px; padding: 2px 4px; border-radius: 4px;
+    background: var(--deep); color: white; font-size: 11px; line-height: 1.2;
+    text-align: center; font-variant-numeric: tabular-nums;
+  }
+  .live-update-status { color: var(--deep); font-size: 14px; margin-block-end: 16px; }
+  .live-notification {
+    position: fixed; inset-inline-end: 24px; inset-block-end: 24px; z-index: 45;
+    display: flex; align-items: center; gap: 16px; padding: 16px;
+    width: min(440px, calc(100vw - 32px)); border: 1px solid var(--line);
+    border-radius: 8px; background: white; color: var(--deep);
+    box-shadow: 0 4px 16px #123e2a14; overflow-wrap: anywhere;
+  }
+  .live-notification > div { min-width: 0; flex: 1; }
+  .live-notification strong { display: block; font-size: 14px; line-height: 1.5; }
+  .live-notification a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; text-decoration: underline; }
+  .live-notification button { min-height: 44px; flex-shrink: 0; }
+  @media (max-width: 760px) {
+    .live-notification { inset-inline-end: 16px; inset-block-end: 16px; }
   }
 }

@@ -2,6 +2,8 @@
 
 Read [system architecture](system-architecture.md), then [database design](database-design.md) and [database normalization](database-normalization.md). These retain their proposed-baseline status and explicitly labeled implemented additions. Current prototype decisions are in [implementation notes](../project/implementation-notes.md).
 
+Current integration: [MCP read-only pilot](mcp-implementation.md), including setup, relational scopes, audit consistency and deferred write boundaries.
+
 ## Historical exports
 
 - [Word architecture export](exports/CLSU_System_Architecture.docx)

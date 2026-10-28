@@ -1,9 +1,9 @@
-# Future MCP adapter boundary
+# MCP adapter boundary
 
-No MCP server, client, provider, credential, or chat execution is installed or enabled in this prototype. `config/workflow.php` marks MCP disabled. The admin navigation preserves the Figma assistant slot and displays an honest disconnected state.
+The opt-in read-only pilot is implemented with Laravel MCP and Sanctum. `config/mcp.php` keeps it disabled by default. The embedded assistant remains disconnected; no provider or chat runtime is configured.
 
-Implement a future authenticated transport here. Resolve caller identity from authentication, then invoke `RequestAccess`, `RequestWorkflow`, and `ReportingService`; never duplicate rules in tool handlers or allow arbitrary SQL.
+The canonical [implementation guide](../../../../docs/architecture/mcp-implementation.md) documents setup, the five read tools, relational scopes, credential issuance/revocation and invocation auditing. All new integration documentation belongs under `docs/`.
 
-Before exposing tools, implement revocable authorization and relational tool scopes, caller/tool-scoped operation IDs with input fingerprints and persisted outcomes, read/write invocation audit provenance, and bound approvals where configured. These are not implemented by the disabled placeholder. Persist operation outcomes in the same transaction as the domain change. Enforce expected record versions and office scope through the existing services.
+Before exposing operational writes, implement caller/tool-scoped operation IDs with input fingerprints and persisted outcomes, atomic operation/domain/history/audit commits, permission-checked result retrieval and bound approvals where configured. Resolve identity from server authentication and share `RequestWorkflow` rules. Never allow arbitrary SQL/shell or MCP account/configuration administration.
 
-Start with the catalog in `docs/architecture/system-architecture.md`. Do not expose completion through MCP: only authenticated human API callers may currently complete services. A future transport must reject agent completion even if it internally delegates to `RequestWorkflow`.
+The full catalog in [system architecture](../../../../docs/architecture/system-architecture.md#mcp-connection-and-agent-capabilities) remains the plan. No operational write, report creation or completion tool is registered. Completion remains human-only, even when future handlers delegate to `RequestWorkflow`.
