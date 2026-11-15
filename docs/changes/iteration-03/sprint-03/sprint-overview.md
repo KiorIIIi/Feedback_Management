@@ -4,6 +4,15 @@ User-designated grouping: **23 October 2026, Asia/Manila**. Major feature: authe
 
 | Record | Scope |
 | --- | --- |
+| [015 — Settings and status colors](015-settings-status-colors.md) | MCP settings location, feedback accents and clearer indicators |
+| [014 — Dashboard and navigation](014-dashboard-navigation.md) | Combined control/date column, sidebar sign-out and relocated MCP status |
+| [013 — Public pages and sidebar](013-public-pages-sidebar.md) | Welcome/login styling and restored collapsed icon rail |
+| [012 — Shared workspace finish](012-shared-workspace-finish.md) | Requester/personnel styling, softer corners and green interaction accents |
+| [011 — Admin visual layer](011-admin-visual-layer.md) | Warm neutrals, compact tables, humanist typography and mobile refinements |
+| [010 — Assistant and sidebar](010-assistant-sidebar.md) | Unified MCP page and desktop sidebar collapse |
+| [009 — Combined service workspace](009-service-workspace.md) | Requests and Personnel tabs, legacy redirect and assignment navigation |
+| [008 — Admin workspace refinement](008-admin-workspace-refinement.md) | Shared admin density, request-first dashboard and connection settings hierarchy |
+| [007 — Agent API keys](007-agent-api-keys.md) | Password-confirmed generation, scoped bearer access and revocation for compatible agents |
 | [001 — MCP read foundation](001-mcp-read-foundation.md) | Official Laravel MCP/Sanctum packages, five read tools, scoped credentials, shared services, auditing and original SQLite/MySQL evidence |
 | [002 — MCP client connection guide](002-mcp-client-connection-guide.md) | Claude, ChatGPT and Gemini setup paths, OAuth/account prerequisites, troubleshooting and original documentation checks |
 | [003 — Iteration and sprint classification](003-iteration-and-sprint-classification.md) | User-requested Iteration 03 / Sprint 03 grouping, preserved record history, updated navigation and documentation verification |

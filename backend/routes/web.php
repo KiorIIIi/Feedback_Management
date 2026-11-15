@@ -9,6 +9,9 @@ Route::prefix('api')->group(function(){
  Route::middleware(['auth','throttle:portal-reads'])->group(function(){
   Route::get('assistant/settings',[\App\Http\Controllers\AssistantController::class,'status']);
   Route::middleware('throttle:assistant-admin')->group(function(){
+   Route::get('assistant/keys',[\App\Http\Controllers\AssistantController::class,'keys']);
+   Route::post('assistant/keys',[\App\Http\Controllers\AssistantController::class,'createKey']);
+   Route::delete('assistant/keys/{id}',[\App\Http\Controllers\AssistantController::class,'revokeKey'])->whereNumber('id');
    Route::put('assistant/settings',[\App\Http\Controllers\AssistantController::class,'save']);
    Route::post('assistant/clients',[\App\Http\Controllers\AssistantController::class,'createClient']);
    Route::delete('assistant/clients/{id}',[\App\Http\Controllers\AssistantController::class,'revokeClient']);

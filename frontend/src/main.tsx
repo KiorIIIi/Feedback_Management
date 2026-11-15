@@ -11,6 +11,8 @@ import "./requester-dashboard.css";
 import "./responsive.css";
 import "./reports.css";
 import "./feedback.css";
+import "./admin-workspace.css";
+import "./workspace-finish.css";
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>

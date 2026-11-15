@@ -29,7 +29,7 @@ import {
 import { useLoad } from "./useLoad";
 import { roleHome } from "./routing";
 import RequesterDashboard, { RequesterIcon } from "./RequesterDashboard";
-import AssistantWorkspace, { AssistantConnection } from "./AssistantWorkspace";
+import AssistantWorkspace from "./AssistantWorkspace";
 import {
   Asset,
   Identity,
@@ -209,9 +209,9 @@ export default function App() {
           <Route path="personnel" element={<Personnel />} />
           <Route path="reports" element={<Reports />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="assistant" element={<AssistantWorkspace />} />
-          <Route path="assistant/settings" element={<AssistantWorkspace />} />
-          <Route path="settings" element={<Reserved kind="settings" />} />
+          <Route path="assistant" element={<Navigate to="/app/settings?section=assistant" replace />} />
+          <Route path="assistant/settings" element={<Navigate to="/app/settings?section=assistant" replace />} />
+          <Route path="settings" element={<SettingsWorkspace />} />
           <Route path="evaluation" element={<Reserved kind="evaluation" />} />
           <Route path="help" element={<HelpPage />} />
         </Route>
@@ -526,19 +526,32 @@ function Welcome({ login = false }: { login?: boolean }) {
     </>
   );
 }
+function SettingsWorkspace() {
+  const { user } = useAuth();
+  const location = useLocation();
+  if (user?.role !== "admin") return <Navigate to="/app" replace />;
+  const assistant = new URLSearchParams(location.search).get("section") === "assistant";
+  return <><nav className="service-workspace-tabs" aria-label="Settings sections"><Link to="/app/settings" aria-current={!assistant ? "page" : undefined}>Service settings</Link><Link to="/app/settings?section=assistant" aria-current={assistant ? "page" : undefined}>MCP Assistant</Link></nav>{assistant ? <AssistantWorkspace /> : <Reserved kind="settings" />}</>;
+}
 const adminLinks = [
   ["", "Dashboard", "dashboard"],
   ["requests", "Service requests", "requests"],
-  ["personnel", "Personnel", "personnel"],
   ["feedback", "Feedback & ratings", "feedback"],
   ["reports", "Reports & analytics", "reports"],
-  ["assistant", "MCP Assistant", "assistant"],
 ];
 function Shell() {
   const { user } = useAuth();
   const nav = useNavigate();
   const loc = useLocation();
   const [menu, setMenu] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    try { return localStorage.getItem("clsu.admin.sidebarCollapsed") === "true"; }
+    catch { return false; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem("clsu.admin.sidebarCollapsed", String(sidebarCollapsed)); }
+    catch { /* Navigation still works when browser storage is unavailable. */ }
+  }, [sidebarCollapsed]);
   const [logoutBusy, setLogoutBusy] = useState(false);
   const [logoutError, setLogoutError] = useState<unknown>();
   // Retain array compatibility while an existing server is updated to the feed response.
@@ -608,14 +621,14 @@ function Shell() {
               : user?.classification + " · CLSU"}
         </small>
       </span>
-      <button
+      {!admin && <button
         className="icon-button"
         onClick={logout}
         aria-label="Sign out"
         disabled={logoutBusy}
       >
         {user?.role === "requester" ? <RequesterIcon name="imgLogOut" /> : "↪"}
-      </button>
+      </button>}
     </div>
   );
   const navLink = ([path, label, icon]: string[]) => (
@@ -623,6 +636,7 @@ function Shell() {
       key={path}
       to={path ? "/app/" + path : roleHome(user!.role)}
       end={!path || path === "assistant"}
+      title={label}
     >
       {user?.role === "requester" ? (
         <RequesterIcon
@@ -640,7 +654,7 @@ function Shell() {
       ) : (
         <Icon name={icon} />
       )}
-      {label}
+      <span className="nav-link-label">{label}</span>
       {path === "notifications" &&
         unreadCount > 0 && (
           <small className="requester-notification-count">{unreadCount}</small>
@@ -651,7 +665,7 @@ function Shell() {
     <div
       className={
         admin
-          ? "admin-shell"
+          ? `admin-shell${sidebarCollapsed ? " sidebar-collapsed" : ""}`
           : `requester-shell${user?.role === "requester" && loc.pathname === "/app/requester" ? " requester-dashboard-shell" : ""}`
       }
     >
@@ -660,7 +674,7 @@ function Shell() {
       </a>
       {admin ? (
         <>
-          <aside className={`sidebar ${menu ? "open" : ""}`}>
+          <aside id="admin-navigation" className={`sidebar ${menu ? "open" : ""}`}>
             <Link to="/app" className="sidebar-title">
               Feedback
               <br />
@@ -678,18 +692,19 @@ function Shell() {
             <p className="nav-label">MANAGEMENT</p>
             <nav>
               {[
-                ["settings", "Service settings", "settings"],
-                ["assistant/settings", "Assistant settings", "assistant"],
+                ["settings", "Settings", "settings"],
                 ["evaluation", "System evaluation", "evaluation"],
               ].map(navLink)}
             </nav>
             <div className="sidebar-bottom">
-              Central Luzon State University
-              <br />
-              Prototype · Demo policies
+              <button className="button sidebar-logout" onClick={logout} disabled={logoutBusy}>{logoutBusy ? "Signing out…" : "Sign out"}</button>
+              <div className="sidebar-footer-copy">Central Luzon State University<br />Prototype · Demo policies</div>
             </div>
           </aside>
           <header className="admin-header">
+            <button className="desktop-sidebar-toggle icon-button" aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"} aria-expanded={!sidebarCollapsed} aria-controls="admin-navigation" onClick={() => setSidebarCollapsed(value => !value)}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+            </button>
             <button
               className="mobile-toggle"
               aria-label="Toggle navigation"
@@ -703,7 +718,6 @@ function Shell() {
               <strong>{label}</strong>
             </span>
             <div className="header-right">
-              <AssistantConnection />
               <Link
                 className="icon-button"
                 to="/app/notifications"
