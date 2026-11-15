@@ -25,7 +25,7 @@ class RequestReader
         }
         $page = $query->orderByDesc('id')->paginate(20, ['*'], 'page', $filters['page'] ?? 1);
         return [
-            'data' => $page->getCollection()->map(fn ($record) => $this->access->present($record, $user)),
+            'data' => collect($this->access->presentMany($page->getCollection(), $user)),
             'total' => $page->total(), 'current_page' => $page->currentPage(), 'last_page' => $page->lastPage(),
         ];
     }

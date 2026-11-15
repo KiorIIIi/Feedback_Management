@@ -18,8 +18,11 @@ class LocalAssistant
         abort_unless(isset($tools[$name]), 403, 'Only the listed read tools are available.');
         $issued = $auth->issue($user, 'Local synthetic tool check', [$name], 1);
         DB::table('mcp_authorizations')->where('id', $issued['id'])->update(['client_kind' => 'local']);
+        // Scope the credential to this in-request check: minutes, not the issue() minimum of one hour.
+        $tokenId = DB::table('mcp_authorizations')->where('id', $issued['id'])->value('personal_access_token_id');
+        if ($tokenId) DB::table('personal_access_tokens')->where('id', $tokenId)->update(['expires_at' => now()->addMinutes(5)]);
         $audit = DB::table('mcp_invocations')->insertGetId(['authorization_id' => $issued['id'], 'tool_name' => $name, 'outcome' => 'processing', 'started_at' => now()]);
-        $outcome = 'failed'; $code = 'invalid_input'; $refs = [];
+        $outcome = 'failed'; $code = 'temporary_failure'; $refs = [];
         try {
             $grant = $auth->authenticate($issued['token']); abort_unless($auth->permits($grant, $name), 403);
             abort_unless(!array_diff(array_keys($arguments), array_keys($tools[$name]->validationRules())), 422, 'Unknown tool arguments are not allowed.');

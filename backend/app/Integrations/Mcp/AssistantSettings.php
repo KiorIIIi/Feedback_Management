@@ -68,7 +68,6 @@ class AssistantSettings
             abort_unless((int) $row->record_version === $data['expected_version'], 409, 'Integration settings changed. Reload and review the latest settings.');
             $key = ($data['remove_key'] ?? false) ? null : $row->provider_api_key;
             if (!empty($data['api_key'])) $key = Crypt::encryptString($data['api_key']);
-            if ($data['assistant_enabled'] && (!$key || empty($data['model']))) throw ValidationException::withMessages(['assistant_enabled' => 'Add an API key and model before enabling the portal assistant.']);
             $private = $row->oauth_private_key;
             if ($data['mcp_enabled'] && !$private) {
                 $bundledConfig = dirname(PHP_BINARY).'/extras/ssl/openssl.cnf';

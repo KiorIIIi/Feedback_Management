@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 class GenerateReport implements ShouldQueue {
     use Queueable;
     public int $tries=3;
+    public int $timeout=600;
+    public array $backoff=[60,300];
     public function __construct(public int $reportId) {}
     public function handle(ServiceEvaluationReport $reports, ReportRenderer $renderer): void {
         $job=DB::table('report_jobs')->find($this->reportId);

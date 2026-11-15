@@ -8,7 +8,7 @@ $normalize=static function($value){
 };
 return [
  'paths'=>['api/*'],
- 'allowed_methods'=>['GET','HEAD','POST','PATCH','OPTIONS'],
+ 'allowed_methods'=>['GET','HEAD','POST','PUT','PATCH','DELETE','OPTIONS'],
  'allowed_origins'=>array_values(array_unique(array_filter(array_map($normalize,$origins)))),
  'allowed_origins_patterns'=>[],
  'allowed_headers'=>['Accept','Content-Type'],

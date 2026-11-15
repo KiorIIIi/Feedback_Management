@@ -12,7 +12,16 @@ class GeneralFeedback
     public function submit(?User $actor, array $data): void
     {
         DB::transaction(function () use ($actor, $data) {
-            $id = DB::table('general_feedback')->insertGetId([...$data, 'user_id' => $actor?->id, 'created_at' => now()]);
+            $id = DB::table('general_feedback')->insertGetId([
+                'category' => $data['category'],
+                'subject' => $data['subject'],
+                'message' => $data['message'],
+                'unverified_job_number' => $data['unverified_job_number'] ?? null,
+                'rating' => $data['rating'] ?? null,
+                'contact_name' => $data['contact_name'] ?? null,
+                'contact_email' => $data['contact_email'] ?? null,
+                'user_id' => $actor?->id, 'created_at' => now(),
+            ]);
             DB::table('audit_entries')->insert([
                 'actor_user_id' => $actor?->id, 'actor_kind' => $actor ? 'human' : 'anonymous',
                 'action' => 'feedback.submitted', 'occurred_at' => now(),

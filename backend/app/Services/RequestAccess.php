@@ -34,4 +34,33 @@ class RequestAccess {
   }
   return $data;
  }
+ // Batch presentation for lists already fetched through scope(): fixed number of queries per page.
+ public function presentMany($requests,User $user): array {
+  $requests=collect($requests)->values();
+  if($requests->isEmpty())return [];
+  $ids=$requests->pluck('id')->all();
+  $assignments=DB::table('assignments')->join('users','users.id','=','assignments.personnel_id')
+   ->whereIn('service_request_id',$ids)->orderByDesc('assignments.id')
+   ->get(['assignments.id','assignments.service_request_id','assignments.personnel_id','assignments.ended_at','users.name as personnel_name'])
+   ->groupBy('service_request_id');
+  $officeIds=$requests->pluck('requesting_office_id')->filter()->unique()->values()->all();
+  $offices=$officeIds?DB::table('offices')->whereIn('id',$officeIds)->pluck('name','id'):collect();
+  $typeIds=$requests->pluck('service_type_id')->filter()->unique()->values()->all();
+  $types=$typeIds?DB::table('service_types')->whereIn('id',$typeIds)->pluck('name','id'):collect();
+  $categoryIds=$requests->pluck('category_id')->filter()->unique()->values()->all();
+  $categories=$categoryIds?DB::table('request_categories')->whereIn('id',$categoryIds)
+   ->get(['id','handling_office_id','name'])->keyBy(fn($category)=>$category->id.'|'.$category->handling_office_id):collect();
+  $evaluations=$user->role==='personnel'?collect():DB::table('service_evaluations')->whereIn('request_id',$ids)->get()->keyBy('request_id');
+  return $requests->map(function($request)use($assignments,$offices,$types,$categories,$evaluations,$user){
+   $data=$request->toArray();
+   $history=$assignments->get($request->id,collect());
+   $assignment=$request->status==='Completed'?$history->first():$history->firstWhere('ended_at',null);
+   $data['office']=$offices[$request->requesting_office_id]??'No office affiliation';
+   $data['service_type']=$types[$request->service_type_id]??null;
+   $data['category']=$categories->get($request->category_id.'|'.$request->handling_office_id)?->name??'Uncategorized';
+   $data['assignee']=$assignment?->personnel_name;$data['assignee_id']=$assignment?->personnel_id;
+   $data['evaluation']=$user->role==='personnel'?null:$evaluations->get($request->id);
+   return $data;
+  })->all();
+ }
 }

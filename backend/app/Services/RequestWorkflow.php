@@ -17,8 +17,8 @@ class RequestWorkflow {
  }
  public function create(User $actor,array $data):ServiceRequest {
   abort_unless(in_array($actor->role,['requester','admin'],true),403);
-  if(isset($data['requesting_office_id'])&&!DB::table('office_memberships')->where('user_id',$actor->id)->where('office_id',$data['requesting_office_id'])->exists())$this->fail('requesting_office_id','Choose one of your office affiliations.');
   return DB::transaction(function()use($actor,$data){
+   if(isset($data['requesting_office_id'])&&!DB::table('office_memberships')->where('user_id',$actor->id)->where('office_id',$data['requesting_office_id'])->exists())$this->fail('requesting_office_id','Choose one of your office affiliations.');
    $handling=DB::table('offices')->where('office_code','MISO')->value('id');abort_unless($handling,503,'The handling office has not been configured.');
    abort_if($actor->role==='admin'&&(int)$actor->office_id!==(int)$handling,403,'Only administrators of the handling office can submit requests from the staff workspace.');
    $r=new ServiceRequest();$r->fill($data);$r->forceFill(['requester_id'=>$actor->id,'handling_office_id'=>$handling,'job_number'=>'FMS-'.now()->format('Y').'-'.strtoupper((string)Str::ulid()),'status'=>'Pending','record_version'=>1]);$r->save();
@@ -35,7 +35,7 @@ class RequestWorkflow {
   return DB::transaction(function()use($actor,$id,$data){
    $r=ServiceRequest::lockForUpdate()->findOrFail($id);$this->access->authorize($actor,$r);
    abort_if($r->record_version!==(int)$data['expected_version'],409,'This request changed in another session. Refresh it before saving.');
-   $before=$r->toArray();$action=$data['action'];$message=trim($data['message']??'');$publicUpdate=false;$changed=false;$newAssignee=null;
+   $before=$r->toArray();$action=$data['action'];$message=trim($data['message']??'');$publicUpdate=false;$changed=false;$newAssignee=null;$messageEmitted=false;
    if($action==='reply'){
     abort_unless($actor->id===$r->requester_id&&$r->status==='For Clarification',403,'Only the requester can reply to an open clarification.');
     if(!$message)$this->fail('message','Enter the clarification details.');
@@ -91,8 +91,9 @@ class RequestWorkflow {
      $changed=$publicUpdate=true;
      // The status remains public; an internal action note must not be copied into it.
      $this->event($r,$actor,$next,($data['visibility']??'requester')==='internal'?'Request '.$next:($message?:'Request '.$next));
+     if($message&&($data['visibility']??'requester')!=='internal')$messageEmitted=true;
     }
-    if($message){$this->event($r,$actor,$r->status==='Completed'?'Actions taken':'Progress update',$message,$data['visibility']??'requester');$changed=true;if(($data['visibility']??'requester')==='requester')$publicUpdate=true;}
+    if($message&&!$messageEmitted){$this->event($r,$actor,$r->status==='Completed'?'Actions taken':'Progress update',$message,$data['visibility']??'requester');$changed=true;if(($data['visibility']??'requester')==='requester')$publicUpdate=true;}
     if($r->status==='Completed')$this->event($r,$actor,'Service outcome',trim($data['outcome']));
     if(!$changed)$this->fail('action','There are no changes to save.');
     if($publicUpdate)$r->first_response_at??=now();
@@ -109,7 +110,7 @@ class RequestWorkflow {
    $r=ServiceRequest::lockForUpdate()->findOrFail($id);abort_unless($r->requester_id===$actor->id,404);
    if($r->status!=='Completed')$this->fail('rating','Only completed services can be evaluated.');
    if(DB::table('service_evaluations')->where('request_id',$id)->exists())$this->fail('rating','You already evaluated this service.');
-   DB::table('service_evaluations')->insert(['request_id'=>$id,...$data,'created_at'=>now()]);
+   DB::table('service_evaluations')->insert(['request_id'=>$id,'rating'=>$data['rating'],'category'=>$data['category']??null,'remarks'=>$data['remarks']??null,'created_at'=>now()]);
    $this->audit($r,$actor,'request.evaluated',null);
    $this->notifications->request($r,'New service evaluation received.',$this->notifications->officeAdministrators($r->handling_office_id,$actor->id),'evaluation');
   });

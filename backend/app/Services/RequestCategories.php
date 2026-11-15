@@ -11,6 +11,7 @@ class RequestCategories {
 
     public function create(User $actor, string $name): object {
         $this->access->admin($actor);
+        abort_unless($actor->office_id, 403, 'Your account has no handling office.');
         $name = trim(preg_replace('/\s+/u', ' ', $name));
         if ($name === '') throw ValidationException::withMessages(['name'=>'Enter a category name.']);
         try {

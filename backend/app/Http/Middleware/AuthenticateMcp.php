@@ -11,13 +11,25 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class AuthenticateMcp
 {
+    private function origin(string $url): ?string
+    {
+        $parts = parse_url(trim($url));
+        if (!$parts || !isset($parts['scheme'], $parts['host']) || isset($parts['user']) || isset($parts['pass'])) return null;
+        $scheme = strtolower($parts['scheme']);
+        if (!in_array($scheme, ['http', 'https'], true)) return null;
+        $port = $parts['port'] ?? ($scheme === 'https' ? 443 : 80);
+        return $scheme.'://'.strtolower($parts['host']).':'.$port;
+    }
+
     public function handle(Request $request, Closure $next)
     {
         abort_unless(app(\App\Integrations\Mcp\AssistantSettings::class)->enabled(), 404);
         abort_unless(app()->environment(['local', 'testing']) || $request->isSecure(), 403, 'HTTPS is required for MCP.');
         // Stateless bearer transport. Reject untrusted browser origins even with a token.
         if ($request->hasHeader('Origin')) {
-            abort_unless(in_array($request->header('Origin'), [rtrim(config('app.url'), '/'), ...config('security.trusted_origins', [])], true), 403);
+            // Compare canonical origins (scheme, lower-cased host, effective port), matching VerifyPortalOrigin and CORS.
+            $trusted = array_filter(array_map(fn ($url) => $this->origin((string) $url), [config('app.url'), ...config('security.trusted_origins', [])]));
+            abort_unless(in_array($this->origin($request->header('Origin')), $trusted, true), 403);
         }
         $auth = app(McpAuthorization::class);
         $bearer = $request->bearerToken();

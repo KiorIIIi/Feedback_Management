@@ -26,15 +26,17 @@ class RequesterDashboardService
                 'completed' => (clone $base)->where('status', 'Completed')->count(),
                 'awaiting_rating' => (clone $unrated)->count(),
             ],
-            'recent' => (clone $base)->latest('created_at')->orderByDesc('id')->limit(4)->get()
-                ->map(fn ($r) => $this->access->present($r, $user)),
+            'recent' => $this->access->presentMany(
+                (clone $base)->latest('created_at')->orderByDesc('id')->limit(4)->get(),
+                $user
+            ),
             'clarification' => $clarification ? [
                 'id' => $clarification->id, 'job_number' => $clarification->job_number,
                 'message' => DB::table('request_events')->where('service_request_id', $clarification->id)
                     ->where('kind', 'Clarification requested')->where('visibility', 'requester')
                     ->latest('id')->value('message'),
             ] : null,
-            'unrated' => $rating ? $this->access->present($rating, $user) : null,
+            'unrated' => $rating ? $this->access->presentMany([$rating], $user)[0] : null,
             'updates' => DB::table('portal_notifications as n')
                 ->join('service_requests as r', 'r.id', '=', 'n.service_request_id')
                 ->where('n.user_id', $user->id)->where('r.requester_id', $user->id)

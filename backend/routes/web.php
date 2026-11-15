@@ -30,6 +30,6 @@ Route::prefix('api')->group(function(){
   Route::get('feedback',[PortalController::class,'feedbackIndex']);Route::get('metrics',[PortalController::class,'metrics']);
   Route::get('feedback/{kind}/{id}',[PortalController::class,'feedbackShow'])->whereIn('kind',['general','evaluation'])->whereNumber('id');
   Route::get('notifications',[PortalController::class,'notifications']);Route::post('notifications/{id}/read',[PortalController::class,'readNotification'])->whereNumber('id')->middleware('throttle:portal-mutations');
-  Route::post('reports',[ReportController::class,'store'])->middleware('throttle:portal-reports');Route::get('reports/{id}',[ReportController::class,'show'])->whereNumber('id');Route::get('reports/{id}/download',[ReportController::class,'download'])->whereNumber('id');
+  Route::post('reports',[ReportController::class,'store'])->middleware('throttle:portal-reports');Route::get('reports/{id}',[ReportController::class,'show'])->whereNumber('id');Route::get('reports/{id}/download',[ReportController::class,'download'])->whereNumber('id')->middleware('throttle:portal-downloads');
  });
 });

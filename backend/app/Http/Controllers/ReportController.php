@@ -15,9 +15,7 @@ class ReportController {
     }
     public function summary(Request $request, RequestAccess $access, ServiceEvaluationReport $reports): array {
         $access->admin($request->user());
-        $summary=$reports->build($request->user(),$this->filters($request));
-        unset($summary['requests']);
-        return $summary;
+        return $reports->summary($request->user(),$this->filters($request));
     }
     public function store(Request $request, RequestAccess $access) {
         $access->admin($request->user());

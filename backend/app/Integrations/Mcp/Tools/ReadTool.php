@@ -55,8 +55,9 @@ abstract class ReadTool extends Tool
         } catch (ModelNotFoundException $exception) {
             return $this->failure('not_found', 'The record is unavailable within your authorized scope.');
         } catch (HttpExceptionInterface $exception) {
-            $code = $exception->getStatusCode() === 404 ? 'not_found' : 'permission_denied';
-            return $this->failure($code, 'The record is unavailable within your authorized scope.');
+            $status = $exception->getStatusCode();
+            $code = $status === 404 ? 'not_found' : ($status === 429 ? 'rate_limited' : ($status >= 500 ? 'temporary_failure' : 'permission_denied'));
+            return $this->failure($code, $code === 'rate_limited' ? 'The request was rate limited. Retry shortly.' : 'The record is unavailable within your authorized scope.');
         } catch (Throwable $exception) {
             // Do not log arguments, bearer credentials, SQL bindings, or record content.
             Log::error('MCP read failed.', ['exception_class' => $exception::class]);
