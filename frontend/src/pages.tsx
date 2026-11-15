@@ -104,7 +104,7 @@ function Stats({
     : [
         ["Total requests", metrics.total, "Submitted in this period", "total"],
         [
-          "Awaiting action",
+          "Open",
           metrics.awaiting,
           "Pending, clarification or on hold",
           "waiting",
@@ -125,7 +125,7 @@ function Stats({
   return (
     <div className="stats-grid">
       {items.map(([label, value, sub, icon]) => (
-        <div className="stat" key={label}>
+        <div className={`stat${!requester && icon === "waiting" ? " stat-primary" : ""}`} key={label}>
           <div>
             <span>{label}</span>
             <span className="stat-icon">
@@ -269,24 +269,6 @@ export function Dashboard() {
           </div>
         }
       />
-      {admin && rows[0] && (
-        <Link className="recent-highlight" to={"/app/requests/" + rows[0].id}>
-          <Icon name="requests" />
-          <div>
-            <small>MOST RECENT REQUEST</small>
-            <strong>{rows[0].subject}</strong>
-            <span>
-              {rows[0].job_number} · {rows[0].office} ·{" "}
-              {date(rows[0].created_at)}
-            </span>
-          </div>
-          <Badge value={rows[0].priority} />
-          <Badge value={rows[0].status} />
-          <span>
-            View details <Icon name="arrow" />
-          </span>
-        </Link>
-      )}
       {admin && <ReportControls days={days} setDays={setDays} />}
       {metrics.loading || requests.loading ? (
         <Loading />
@@ -297,8 +279,8 @@ export function Dashboard() {
           <Stats metrics={metrics.data} requester={!admin} />
           {admin ? (
             <>
-              <Charts metrics={metrics.data} />
               <RequestTable compact />
+              <details className="admin-trends"><summary>View request trends and priority breakdown</summary><Charts metrics={metrics.data} /></details>
             </>
           ) : (
             <>
@@ -480,6 +462,8 @@ function SimpleRequests({ rows }: { rows: RequestRecord[] }) {
 }
 export function RequestList() {
   const { user } = useAuth();
+  const [params] = useSearchParams();
+  const team = user?.role === "admin" && params.get("view") === "personnel";
   return (
     <>
       <PageTitle
@@ -500,7 +484,11 @@ export function RequestList() {
           )
         }
       />
-      <RequestTable />
+      {user?.role === "admin" && <nav className="service-workspace-tabs" aria-label="Service workspace">
+        <Link to="/app/requests" aria-current={!team ? "page" : undefined}>Requests</Link>
+        <Link to="/app/requests?view=personnel" aria-current={team ? "page" : undefined}>Personnel</Link>
+      </nav>}
+      {team ? <Personnel embedded /> : <RequestTable />}
       {user?.role !== "admin" && <Help />}
     </>
   );
@@ -540,7 +528,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
         user?.role === "personnel"
           ? "Assigned service requests"
           : compact
-            ? "Recent service requests"
+            ? "Requests"
             : "All service requests"
       }
       subtitle="Review submissions, assignments, and resolution status."
@@ -612,12 +600,12 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
           <table className="requests-table">
             <thead>
               <tr>
-                <th>CONTROL NO.</th>
+                <th>{compact ? "CONTROL NO. / SUBMITTED" : "CONTROL NO."}</th>
                 <th>REQUEST DETAILS</th>
                 <th>PRIORITY</th>
                 <th>STATUS</th>
                 {user?.role === "admin" && <th>ASSIGNED TO</th>}
-                <th>DATE SUBMITTED</th>
+                {!compact && <th>DATE SUBMITTED</th>}
                 <th>
                   <span className="sr-only">Details</span>
                 </th>
@@ -628,6 +616,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
                 <tr key={r.id}>
                   <td className="control-number">
                     <Link to={"/app/requests/" + r.id}>{r.job_number}</Link>
+                    {compact && <small className="request-submitted"><time dateTime={r.created_at}>{date(r.created_at)}</time></small>}
                   </td>
                   <td>
                     <Link
@@ -664,7 +653,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
                       )}
                     </td>
                   )}
-                  <td>{date(r.created_at)}</td>
+                  {!compact && <td className="request-date">{date(r.created_at)}</td>}
                   <td>
                     <Link
                       to={"/app/requests/" + r.id}
@@ -1688,28 +1677,15 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
 }
 export { FeedbackHistory, FeedbackDetail } from "./feedback";
 
-export function Personnel() {
+export function Personnel({ embedded = false }: { embedded?: boolean }) {
   const { user, catalog: initialCatalog } = useAuth();
   const current = useLoad<Catalog>("/catalog", { live: user?.role === "admin" });
   const catalog = current.data || initialCatalog;
   if (user?.role !== "admin") return <Navigate to="/app" replace />;
+  if (!embedded) return <Navigate to="/app/requests?view=personnel" replace />;
   return (
     <>
-      <PageTitle
-        title="Personnel"
-        description="University feedback management and service monitoring."
-        actions={
-          <Link className="button primary" to="/app/requests/new">
-            <Icon name="plus" />
-            New request
-          </Link>
-        }
-      />
-      <div className="insights-bar">
-        <span>
-          Workspace insights <em>Demo data</em>
-        </span>
-      </div>
+      <ErrorNotice error={current.error} />
       <Panel
         title="Service personnel"
         subtitle="Coordinate the people behind better campus services."

@@ -8,6 +8,41 @@ use Illuminate\Validation\Rule;
 
 class AssistantController
 {
+    public function keys(Request $r)
+    {
+        app(McpAuthorization::class)->assertAdministrator($r->user());
+        $keys = \Illuminate\Support\Facades\DB::table('mcp_authorizations as a')
+            ->join('personal_access_tokens as t', 't.id', '=', 'a.personal_access_token_id')
+            ->where('a.user_id', $r->user()->id)->where('a.handling_office_id', $r->user()->office_id)
+            ->get(['a.id', 'a.client_name', 'a.revoked_at', 't.expires_at']);
+        return $this->response(['keys' => $keys]);
+    }
+
+    public function createKey(Request $r, AssistantSettings $settings, McpAuthorization $auth)
+    {
+        $data = $r->validate(['password' => 'required|string|max:255', 'name' => 'required|string|max:100', 'hours' => 'required|integer|min:1|max:168', 'tools' => 'required|array|min:1|max:5', 'tools.*' => ['required', 'distinct', Rule::in(McpAuthorization::TOOLS)]]);
+        $settings->confirm($r->user(), $data['password']);
+        abort_unless($settings->enabled(), 422, 'Enable MCP before generating a key.');
+        $key = \Illuminate\Support\Facades\DB::transaction(function () use ($r, $settings, $auth, $data) {
+            $key = $auth->issue($r->user(), $data['name'], $data['tools'], $data['hours']);
+            $settings->audit($r->user(), 'assistant.key_created', ['authorization_id' => $key['id'], 'tools' => $data['tools']]);
+            return $key;
+        });
+        return $this->response($key);
+    }
+
+    public function revokeKey(Request $r, int $id, AssistantSettings $settings, McpAuthorization $auth)
+    {
+        $data = $r->validate(['password' => 'required|string|max:255']);
+        $settings->confirm($r->user(), $data['password']);
+        \Illuminate\Support\Facades\DB::transaction(function () use ($r, $id, $settings, $auth) {
+            abort_unless(\Illuminate\Support\Facades\DB::table('mcp_authorizations')->where('id', $id)->where('user_id', $r->user()->id)->where('handling_office_id', $r->user()->office_id)->whereNotNull('personal_access_token_id')->lockForUpdate()->exists(), 404);
+            $auth->revoke($id);
+            $settings->audit($r->user(), 'assistant.key_revoked', ['authorization_id' => $id]);
+        });
+        return $this->response(['message' => 'API key revoked.']);
+    }
+
     private function response(array $data) { return response()->json($data)->header('Cache-Control', 'private, no-store'); }
 
     public function status(Request $r, AssistantSettings $settings, OAuthConnections $oauth)

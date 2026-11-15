@@ -1,5 +1,7 @@
 # Admin assistant and MCP setup
 
+For compatible external agents, use the [Agent API key setup](../changes/iteration-03/sprint-03/007-agent-api-keys.md). Generated keys authorize scoped inbound MCP reads and are separate from provider API keys.
+
 Implemented setup interface, 25 October 2026, Asia/Manila. Open **MCP Assistant → Connection settings**, or **Management → Assistant settings** at `/app/assistant/settings`. Only active MISO administrators can use the page or its API. This supersedes the earlier reserved assistant screen.
 
 ## Admin controls

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "./App";
 import { api, date } from "./api";
 import { ErrorNotice, Field, Loading, Panel } from "./components";
@@ -24,23 +24,25 @@ export function AssistantConnection() {
 
 export default function AssistantWorkspace() {
   const { user } = useAuth();
-  const location = useLocation();
   if (user?.role !== "admin") return <Navigate to="/app" replace />;
-  return <AssistantContent settings={location.pathname.endsWith("/settings")} />;
+  return <AssistantContent />;
 }
 
-function AssistantContent({ settings }: { settings: boolean }) {
+function AssistantContent() {
   const loaded = useLoad<Setup>("/assistant/settings");
   return <div className="assistant-workspace">
     <div className="page-title"><div><h1>MCP Assistant</h1><p>Inspect local demo records and manage MCP connections.</p></div></div>
     <nav className="assistant-tabs" aria-label="Assistant navigation">
-      <Link to="/app/assistant" aria-current={!settings ? "page" : undefined}>Assistant</Link>
-      <Link to="/app/assistant/settings" aria-current={settings ? "page" : undefined}>Connection settings</Link>
+      <a href="#connections">Connections & API keys</a>
+      <a href="#local-tools">Local demo tools</a>
     </nav>
     <ErrorNotice error={loaded.error} />
     {!!loaded.error && <button className="button" onClick={loaded.reload}>Retry loading settings</button>}
     {loaded.loading && <Loading />}
-    {!loaded.loading && loaded.data && (settings ? <ConnectionSettings key={loaded.data.record_version} setup={loaded.data} reload={loaded.reload} /> : <LocalDemoTools setup={loaded.data} />)}
+    {!loaded.loading && loaded.data && <>
+      <section id="connections" aria-label="Connections and API keys"><p className="mcp-settings-status" role="status">MCP server: {loaded.data.mcp_enabled ? "Enabled" : "Disabled"}</p><ConnectionSettings key={loaded.data.record_version} setup={loaded.data} reload={loaded.reload} /></section>
+      <section id="local-tools" aria-label="Local demo tools"><LocalDemoTools setup={loaded.data} /></section>
+    </>}
   </div>;
 }
 
@@ -69,9 +71,9 @@ function ConnectionSettings({ setup, reload }: { setup: Setup; reload: () => voi
   return <>
     {!setup.editable && <div className="notice" role="status">Integration changes are locked by the hosting operator for this environment. Ask the operator to allow admin integration setup.</div>}
     <form className="assistant-settings-form" onSubmit={save}>
+      <details className="assistant-provider-details"><summary>Portal assistant · provider calls disabled</summary>
       <Panel title="Portal assistant" subtitle="Provider calls are disabled. Local demo tools remain available.">
         <div className="panel-body assistant-form-body">
-          <p className="notice">Synthetic demo data only. Model calls go to OpenAI’s API and are blocked outside the designated local demo environment.</p>
           {!setup.assistant_available && <p className="notice">The embedded AI chat and model test are disabled by the current data-sharing policy. Use the local demo tools on the Assistant tab.</p>}
           <label className="assistant-check"><input type="checkbox" checked={assistantEnabled} onChange={e => setAssistantEnabled(e.target.checked)} disabled={!setup.editable || !setup.assistant_available || busy} />Enable the portal assistant</label>
           <p>The saved configuration stays on this server. Enabling an external provider would require a separate approved change.</p>
@@ -85,7 +87,8 @@ function ConnectionSettings({ setup, reload }: { setup: Setup; reload: () => voi
           <small>{setup.provider_checked_at ? `Last successful model check: ${date(setup.provider_checked_at)}` : "The saved model connection has not been verified."}</small>
         </div>
       </Panel>
-      <Panel title="External ChatGPT connection" subtitle="Let ChatGPT read records using this system’s scoped MCP tools.">
+      </details>
+      <Panel title="MCP server connection" subtitle="Connect agents with scoped, read-only access to the feedback system.">
         <div className="panel-body assistant-form-body">
           <label className="assistant-check"><input type="checkbox" checked={mcpEnabled} onChange={e => setMcpEnabled(e.target.checked)} disabled={!setup.editable || busy} />Enable the MCP server</label>
           <p>Each registered client has its own read permissions. Turning off MCP blocks external tool calls. The portal assistant is configured separately.</p>
@@ -102,6 +105,7 @@ function ConnectionSettings({ setup, reload }: { setup: Setup; reload: () => voi
         <small>Model testing sends a short test message without campus records and may use API credits.</small>
       </div>
     </form>
+    <AgentKeys setup={setup} />
     <ChatGPTClients setup={setup} reload={reload} />
   </>;
 }
@@ -136,6 +140,44 @@ function ChatGPTClients({ setup, reload }: { setup: Setup; reload: () => void })
       {setup.clients.length > 0 && <div className="assistant-clients"><h3>Your registered clients</h3>{setup.clients.map(client => <div key={client.id} className="assistant-client-row"><div><strong>{client.name}</strong><small>{client.revoked ? "Revoked" : "Registered · awaiting or ready for use"}</small><code>{client.id}</code><p>{client.tools.map(tool => toolLabels[tool]).join(" · ")}</p></div><button type="button" className="button" disabled={client.revoked || busy || !setup.editable} onClick={() => {setRevoke(client.id); setPassword(""); setError(undefined);}}>Revoke access</button></div>)}</div>}
     </div>
   </Panel>;
+}
+
+function AgentKeys({ setup }: { setup: Setup }) {
+  const loaded = useLoad<{keys: {id: number; client_name: string; revoked_at: string | null; expires_at: string}[]}>("/assistant/keys");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [hours, setHours] = useState(24);
+  const [tools, setTools] = useState<string[]>(["search_requests"]);
+  const [secret, setSecret] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<unknown>();
+  async function act(id?: number) {
+    setBusy(true); setError(undefined); setSecret("");
+    try {
+      if (id !== undefined) await api(`/assistant/keys/${id}`, {method: "DELETE", body: JSON.stringify({password})});
+      else { const result = await api<{token: string}>("/assistant/keys", {method: "POST", body: JSON.stringify({password, name, hours, tools})}); setSecret(result.token); }
+      setPassword(""); loaded.reload();
+    } catch (e) {setError(e);} finally {setBusy(false);}
+  }
+  return <Panel title="Agent API keys" subtitle="Connect an MCP client that supports a custom Authorization header."><div className="panel-body assistant-form-body">
+    <p>Use {setup.endpoint} with Authorization: Bearer YOUR_API_KEY. Remote agents need a reachable HTTPS address. Authorized records are shared with the connected agent. Keys expire after at most seven days.</p>
+    <form className="assistant-key-form" onSubmit={e => {e.preventDefault(); void act();}}>
+      <div className="assistant-form-grid">
+      <Field label="Agent name"><input required maxLength={100} value={name} onChange={e => setName(e.target.value)} /></Field>
+      <Field label="Expires in hours"><input required type="number" min={1} max={168} value={hours} onChange={e => setHours(Number(e.target.value))} /></Field>
+      </div>
+      <fieldset><legend>Allowed read tools</legend>{setup.tools.map(tool => <label className="assistant-check" key={tool}><input type="checkbox" checked={tools.includes(tool)} onChange={e => setTools(previous => e.target.checked ? [...previous, tool] : previous.filter(t => t !== tool))} />{toolLabels[tool]}</label>)}</fieldset>
+      <Field label="Current password for API keys"><input required type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} /></Field>
+      {!setup.mcp_enabled && <p className="notice">Enable and save the MCP server above before generating a key.</p>}
+      <button className="button primary" disabled={busy || !setup.editable || !setup.mcp_enabled || !tools.length}>{busy ? "Working…" : "Generate API key"}</button>
+    </form>
+    <ErrorNotice error={error || loaded.error} />
+    {loaded.loading && <Loading />}
+    {!!loaded.error && <button className="button" onClick={loaded.reload}>Retry loading keys</button>}
+    {loaded.data?.keys.length === 0 && <p>No API keys yet. Generate a key to connect your first agent.</p>}
+    {secret && <Field label="Copy your API key now" hint="Shown once. Store it in your agent’s secret settings. Never put it in a URL or source control."><input readOnly value={secret} onFocus={e => e.currentTarget.select()} /><button className="button" onClick={() => setSecret("")}>Dismiss key</button></Field>}
+    {loaded.data?.keys.map(key => <div className="assistant-client-row" key={key.id}><span>{key.client_name} · {key.revoked_at ? "Revoked" : `Expires ${date(key.expires_at)}`}</span><button className="button" disabled={busy || !setup.editable || !password || !!key.revoked_at} onClick={() => void act(key.id)}>Revoke key</button></div>)}
+  </div></Panel>;
 }
 
 function LocalDemoTools({ setup }: { setup: Setup }) {

@@ -12,6 +12,24 @@ class AssistantSetupTest extends TestCase
     use RefreshDatabase;
     protected function setUp(): void { parent::setUp(); $this->seed(); }
     private function admin(): User { return User::where('email', 'admin@clsu.demo')->firstOrFail(); }
+    public function test_generated_api_keys_are_scoped_private_and_revocable(): void
+    {
+        $this->enable();
+        $body = ['password' => 'DemoPass!2026', 'name' => 'Test agent', 'hours' => 24, 'tools' => ['search_requests']];
+        $this->postJson('/api/assistant/keys', [...$body, 'password' => 'wrong'])->assertUnprocessable();
+        $this->postJson('/api/assistant/keys', [...$body, 'hours' => 169])->assertUnprocessable();
+        $key = $this->postJson('/api/assistant/keys', $body)->assertOk()->json();
+        $this->assertStringNotContainsString($key['token'], $this->getJson('/api/assistant/keys')->assertOk()->getContent());
+        $this->assertStringNotContainsString($key['token'], DB::table('audit_entries')->get()->toJson());
+        $rpc = ['jsonrpc' => '2.0', 'id' => 1, 'method' => 'tools/list'];
+        $this->withHeaders(['Authorization' => 'Bearer '.$key['token'], 'MCP-Protocol-Version' => '2025-11-25'])->postJson('/api/mcp', $rpc)->assertOk()->assertJsonCount(1, 'result.tools');
+        $this->postJson('/api/mcp', ['jsonrpc' => '2.0', 'id' => 2, 'method' => 'tools/call', 'params' => ['name' => 'get_personnel_workload', 'arguments' => (object) []]])->assertForbidden();
+        $this->deleteJson('/api/assistant/keys/'.$key['id'], ['password' => 'DemoPass!2026'])->assertOk();
+        $this->postJson('/api/mcp', $rpc)->assertUnauthorized();
+        $this->actingAs(User::where('email', 'andrea@clsu.demo')->firstOrFail());
+        $this->getJson('/api/assistant/keys')->assertForbidden();
+        $this->postJson('/api/assistant/keys', $body)->assertForbidden();
+    }
     private function enable(): void
     {
         $this->actingAs($this->admin())->putJson('/api/assistant/settings', ['password' => 'DemoPass!2026', 'expected_version' => 1, 'mcp_enabled' => true, 'assistant_enabled' => false, 'model' => ''])->assertOk()->assertJsonPath('mcp_enabled', true);
