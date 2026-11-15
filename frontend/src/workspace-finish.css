@@ -1,5 +1,6 @@
 /* Shared, softer workspace finish for staff and requesters. */
 @layer responsive {
+  .notifications-back { margin-bottom:16px; }
   .admin-shell .feedback-workspace { --deep:#006f3c; }
   .admin-shell .feedback-workspace .button.primary,.admin-shell .feedback-tabs button[aria-selected="true"] { background:#007c42; border-color:#007c42; color:#fff; }
   .admin-shell .feedback-workspace :is(.feedback-open,.feedback-back) { color:#006b39; }

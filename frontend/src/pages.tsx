@@ -3,6 +3,7 @@ import {
   Link,
   Navigate,
   useNavigate,
+  useLocation,
   useParams,
   useSearchParams,
 } from "react-router-dom";
@@ -352,7 +353,7 @@ export function Dashboard() {
                           </span>
                         </Link>
                       ))}
-                      <Link to="/app/notifications">
+                      <Link to="/app/notifications" state={{ returnTo: "/app" }}>
                         All notifications <Icon name="arrow" />
                       </Link>
                     </div>
@@ -1730,6 +1731,10 @@ export function Reports() {
   return <><PageTitle title="Reports & analytics" description="Service evaluation, request activity and office performance." /><ReportWorkspace /></>;
 }
 export function Notifications() {
+  const location = useLocation();
+  const { user } = useAuth();
+  const candidate = location.state?.returnTo;
+  const returnTo = typeof candidate === "string" && /^\/app(?:\/|\?|#|$)/.test(candidate) && !candidate.startsWith("/app/notifications") ? candidate : user?.role === "admin" ? "/app/admin" : user?.role === "personnel" ? "/app/work" : "/app/requester";
   const { data, error, loading, reload } = useNotifications();
   const [readError, setReadError] = useState<unknown>(),
     [readingId, setReadingId] = useState<number | null>(null);
@@ -1751,6 +1756,7 @@ export function Notifications() {
   }
   return (
     <>
+      <Link className="button notifications-back" to={returnTo}>← Back</Link>
       <PageTitle
         title="Your notifications"
         description="New submissions, service updates and next steps."

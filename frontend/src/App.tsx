@@ -637,6 +637,7 @@ function Shell() {
       to={path ? "/app/" + path : roleHome(user!.role)}
       end={!path || path === "assistant"}
       title={label}
+      state={path === "notifications" && loc.pathname !== "/app/notifications" ? { returnTo: loc.pathname + loc.search + loc.hash } : undefined}
     >
       {user?.role === "requester" ? (
         <RequesterIcon
@@ -721,6 +722,7 @@ function Shell() {
               <Link
                 className="icon-button"
                 to="/app/notifications"
+                state={loc.pathname !== "/app/notifications" ? { returnTo: loc.pathname + loc.search + loc.hash } : undefined}
                 aria-label="Notifications"
               >
                 <Icon name="bell" />

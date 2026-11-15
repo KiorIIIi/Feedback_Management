@@ -264,7 +264,7 @@ export default function RequesterDashboard() {
               ) : (
                 <p>No updates yet.</p>
               )}
-              <Link className="dashboard-all-updates" to="/app/notifications">
+              <Link className="dashboard-all-updates" to="/app/notifications" state={{ returnTo: "/app/requester" }}>
                 <RequesterIcon name="imgArrowRight" />
                 All notifications
               </Link>
