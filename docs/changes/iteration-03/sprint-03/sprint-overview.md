@@ -4,6 +4,7 @@ User-designated grouping: **23 October 2026, Asia/Manila**. Major feature: authe
 
 | Record | Scope |
 | --- | --- |
+| [016 — Notification return navigation](016-notification-return-navigation.md) | Back navigation to the originating page with role-dashboard fallback |
 | [015 — Settings and status colors](015-settings-status-colors.md) | MCP settings location, feedback accents and clearer indicators |
 | [014 — Dashboard and navigation](014-dashboard-navigation.md) | Combined control/date column, sidebar sign-out and relocated MCP status |
 | [013 — Public pages and sidebar](013-public-pages-sidebar.md) | Welcome/login styling and restored collapsed icon rail |
@@ -24,6 +25,6 @@ Status: the first implementation milestone is verified against the recorded back
 
 The [25 October setup follow-up](006-admin-assistant-setup.md) implements admin configuration, OAuth and local synthetic read tools; earlier dated verification and release boundaries remain historical evidence. Actual ChatGPT-account and live-provider interoperability remain unverified without the required account/key setup.
 
-Add subsequent work in this sprint as `007-<change-name>.md`; preserve the dated evidence in earlier records.
+Add subsequent work in this sprint as the next sequential change file; preserve the dated evidence in earlier records.
 
 [Iteration overview](../iteration-overview.md) · [All iterations](../../README.md) · [Agile sprint record](../../../agile/sprints/EPIC-003/sprint-03/sprint-03.md)
