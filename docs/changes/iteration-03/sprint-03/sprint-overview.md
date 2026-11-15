@@ -5,6 +5,8 @@ User-designated grouping: **23 October 2026, Asia/Manila**. Major feature: authe
 | Record | Scope |
 | --- | --- |
 | [019 — Backend error audit remediation](019-backend-error-audit-remediation.md) | Audit findings M01–M06 and L01–L12 fixed; policy dead-end documented, tests added |
+| [018 — Personnel workspace finish](018-personnel-workspace-finish.md) | Personnel dashboard and mobile visual consistency |
+| [017 — Shared staff login](017-shared-staff-login.md) | Shared staff sign-in and legacy link handling |
 | [016 — Notification return navigation](016-notification-return-navigation.md) | Back navigation to the originating page with role-dashboard fallback |
 | [015 — Settings and status colors](015-settings-status-colors.md) | MCP settings location, feedback accents and clearer indicators |
 | [014 — Dashboard and navigation](014-dashboard-navigation.md) | Combined control/date column, sidebar sign-out and relocated MCP status |
