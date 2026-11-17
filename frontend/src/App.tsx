@@ -273,13 +273,7 @@ function Welcome({ login = false }: { login?: boolean }) {
   const { user, refresh } = useAuth();
   const nav = useNavigate();
   const loc = useLocation();
-  const mode = new URLSearchParams(loc.search).get("role") || "requester";
-  const selectedRole = new URLSearchParams(loc.search).get("role");
-  const expectedRole = ["admin", "personnel", "requester", "staff"].includes(
-    selectedRole || "",
-  )
-    ? selectedRole
-    : null;
+  const expectedRole: null = null;
   const [error, setError] = useState<unknown>(),
     [busy, setBusy] = useState(false),
     [show, setShow] = useState(false);
@@ -295,7 +289,6 @@ function Welcome({ login = false }: { login?: boolean }) {
           email: f.get("email"),
           password: f.get("password"),
           remember: f.has("remember"),
-          ...(expectedRole ? { role: expectedRole } : {}),
         }),
       });
       await refresh();
@@ -389,26 +382,10 @@ function Welcome({ login = false }: { login?: boolean }) {
               <Link to="/" className="back">
                 ‹ Back to options
               </Link>
-              <p className="eyebrow">
-                {mode === "staff"
-                  ? "STAFF ACCESS"
-                  : mode === "admin"
-                    ? "ADMINISTRATOR ACCESS"
-                    : mode === "personnel"
-                      ? "PERSONNEL ACCESS"
-                      : "SERVICE REQUEST"}
-              </p>
               <h1>Sign in to continue</h1>
               <p>
-                {mode === "staff"
-                  ? "Sign in as an administrator or service personnel. Your account determines your workspace."
-                  : "Use your authorized account to submit a request and follow updates."}
+                Sign in with your university account. Your account determines your workspace.
               </p>
-              <div className="notice">
-                {mode === "requester"
-                  ? "You selected Request. After signing in, you’ll continue to your service workspace."
-                  : "Sign in with your assigned university account."}
-              </div>
               <form className="login-form" onSubmit={signIn}>
                 <h2>Welcome back</h2>
                 <ErrorNotice error={error} />
@@ -485,28 +462,15 @@ function Welcome({ login = false }: { login?: boolean }) {
                 </Link>
               </div>
               <div className="option">
-                <h2>Request a service</h2>
+                <h2>Sign in to your workspace</h2>
                 <p>
-                  Get help with equipment, facilities, connectivity, or
-                  technical support.
+                  Request and track services, or manage assigned work.
                 </p>
-                <p>Sign in is required to submit and track a request.</p>
                 <Link
                   className="button primary full"
-                  to={user ? roleHome(user.role) : "/login?role=requester"}
+                  to={user ? roleHome(user.role) : "/login"}
                 >
-                  Request
-                  <Asset screen="portal" name="imgArrowRight" />
-                </Link>
-              </div>
-              <div className="option">
-                <h2>Staff access</h2>
-                <p>
-                  Administrators and service personnel: manage requests and
-                  assigned work.
-                </p>
-                <Link className="button primary full" to="/login?role=staff">
-                  Staff login
+                  Sign in
                   <Asset screen="portal" name="imgArrowRight" />
                 </Link>
               </div>
@@ -667,7 +631,7 @@ function Shell() {
       className={
         admin
           ? `admin-shell${sidebarCollapsed ? " sidebar-collapsed" : ""}`
-          : `requester-shell${user?.role === "requester" && loc.pathname === "/app/requester" ? " requester-dashboard-shell" : ""}`
+          : `requester-shell${personnel ? " personnel-shell" : ""}${user?.role === "requester" && loc.pathname === "/app/requester" ? " requester-dashboard-shell" : ""}`
       }
     >
       <a className="skip-link" href="#main">

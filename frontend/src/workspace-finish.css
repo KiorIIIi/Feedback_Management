@@ -1,5 +1,22 @@
 /* Shared, softer workspace finish for staff and requesters. */
 @layer responsive {
+  .personnel-shell .main-content { max-width:1440px; }
+  .personnel-shell .page-title h1 { font-size:25px; color:var(--ink); }
+  .personnel-shell .stats-grid { gap:0; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .personnel-shell .stat { min-height:0; border:0; border-radius:0; padding:16px 18px; }
+  .personnel-shell .stat+.stat { border-left:1px solid var(--line); }
+  .personnel-shell .stat-primary { background:#eaf1e8; box-shadow:inset 0 3px #6e9274; }
+  .personnel-shell .stat-primary>strong { color:#29583a; }
+  .personnel-shell .requests-table { min-width:850px; table-layout:auto; }
+  .personnel-shell .control-number { min-width:245px; white-space:nowrap; }
+  .personnel-shell .request-submitted { display:block; margin-top:5px; color:var(--muted); }
+  .personnel-shell .notice:not(.error) { border-radius:10px; background:#eaf0e6; color:#36523d; }
+  @media(max-width:760px) {
+    .personnel-shell .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .personnel-shell .stat { padding:14px; }
+    .personnel-shell .stat:nth-child(odd) { border-left:0; }
+    .personnel-shell .stat:nth-child(n+3) { border-top:1px solid var(--line); }
+  }
   .notifications-back { margin-bottom:16px; }
   .admin-shell .feedback-workspace { --deep:#006f3c; }
   .admin-shell .feedback-workspace .button.primary,.admin-shell .feedback-tabs button[aria-selected="true"] { background:#007c42; border-color:#007c42; color:#fff; }

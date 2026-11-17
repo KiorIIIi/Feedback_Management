@@ -402,7 +402,7 @@ export function PersonnelDashboard() {
               "Pending clarification or on hold",
             ],
           ].map(([label, value, caption]) => (
-            <div className="stat" key={label}>
+            <div className={`stat${label === "Active work" ? " stat-primary" : ""}`} key={label}>
               <div>{label}</div>
               <strong>{value}</strong>
               <small>{caption}</small>
