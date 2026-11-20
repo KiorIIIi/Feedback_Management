@@ -16,6 +16,7 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useParams,
 } from "react-router-dom";
 import {
   api,
@@ -47,6 +48,7 @@ import {
   FeedbackPage,
   FeedbackHistory,
   FeedbackDetail,
+  EventFormPage,
   Personnel,
   Reports,
   Notifications,
@@ -164,6 +166,19 @@ export default function App() {
           }
         />
         <Route
+          path="/feedback/f/:token"
+          element={
+            <>
+              <header className="public-header">
+                <Identity />
+              </header>
+              <div className="public-feedback">
+                <EventFormRoute />
+              </div>
+            </>
+          }
+        />
+        <Route
           path="/app"
           element={user ? <Shell key={`${user.id}:${user.role}:${user.office_id}`} /> : <Navigate to="/login" replace />}
         >
@@ -231,6 +246,10 @@ export default function App() {
 function HomeRedirect() {
   const { user } = useAuth();
   return <Navigate to={user ? roleHome(user.role) : "/login"} replace />;
+}
+function EventFormRoute() {
+  const { token } = useParams();
+  return <EventFormPage token={token ?? ""} />;
 }
 function RolePage({
   role,

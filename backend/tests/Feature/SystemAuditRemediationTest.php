@@ -49,7 +49,11 @@ class SystemAuditRemediationTest extends TestCase {
         $id=DB::table('general_feedback')->max('id');
         $audit=DB::table('audit_entries')->where('action','feedback.submitted')->orderByDesc('id')->first();
         $this->assertNotNull($audit);
-        $this->assertSame(['general_feedback_id'=>$id],json_decode($audit->after,true));
+        // Additive audit fields (e.g. a feedback form id) must not break attribution.
+        $after=json_decode($audit->after,true);
+        $this->assertSame($id,$after['general_feedback_id'] ?? null);
+        $this->assertArrayNotHasKey('message',$after);
+        $this->assertArrayNotHasKey('contact_email',$after);
     }
 
     /** Row-based reference aggregation compared against the SQL-aggregate implementation. */

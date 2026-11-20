@@ -16,7 +16,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { api, ApiError, date, type RequestRecord, type Catalog } from "./api";
+import { api, ApiError, date, parseDate, type RequestRecord, type Catalog } from "./api";
 import { useAuth, useNotifications } from "./App";
 import { ReportControls, ReportWorkspace } from "./reports";
 import {
@@ -1556,9 +1556,59 @@ export function RateService() {
     </>
   );
 }
-export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
+export type FeedbackFormMeta = {
+  id: number;
+  title: string;
+  description: string | null;
+  opens_at: string | null;
+  closes_at: string | null;
+  status: "open" | "scheduled" | "expired" | "closed";
+};
+
+const manilaStamp = (value: string) =>
+  `${date(value)}, ${parseDate(value).toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Manila" })} (PHT)`;
+
+/** Public gate for a shareable event form: checks the token, then renders the
+ * form only while it is open. Closed/expired/scheduled states explain instead. */
+export function EventFormPage({ token }: { token: string }) {
+  const { data, error, loading, reload } = useLoad<FeedbackFormMeta>(`/feedback-forms/${token}`);
+  if (loading) return <Loading />;
+  if (error || !data)
+    return (
+      <>
+        <h1>This form link is not available</h1>
+        <p>
+          The feedback form could not be found. Check the link you were given, or
+          use the general feedback form instead.
+        </p>
+        <ErrorNotice error={error} />
+        <div className="actions">
+          <button className="button" onClick={reload}>Retry</button>
+          <Link className="button primary" to="/feedback">Use the general feedback form</Link>
+        </div>
+      </>
+    );
+  if (data.status !== "open")
+    return (
+      <div className="feedback-form-closed">
+        <Icon name="evaluation" />
+        <h1>{data.status === "scheduled" ? "This form has not opened yet" : "This form is no longer accepting responses"}</h1>
+        <p>
+          {data.status === "scheduled" && data.opens_at
+            ? `Feedback collection for ${data.title} opens ${manilaStamp(data.opens_at)}.`
+            : data.status === "expired"
+              ? `Feedback collection for ${data.title} ended${data.closes_at ? ` ${manilaStamp(data.closes_at)}` : ""}.`
+              : `Feedback collection for ${data.title} was closed by the administrators.`}
+        </p>
+        <Link className="button primary" to="/">Return to the portal</Link>
+      </div>
+    );
+  return <FeedbackPage publicPage eventForm={data} />;
+}
+
+export function FeedbackPage({ publicPage = false, eventForm }: { publicPage?: boolean; eventForm?: FeedbackFormMeta }) {
   const [searchParams] = useSearchParams();
-  const sourceLabel = (searchParams.get("event") ?? "").slice(0, 120).trim();
+  const sourceLabel = eventForm ? "" : (searchParams.get("event") ?? "").slice(0, 120).trim();
   const [error, setError] = useState<unknown>(),
     [done, setDone] = useState(false),
     [busy, setBusy] = useState(false);
@@ -1611,16 +1661,32 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
         Tell us about your experience with a CLSU service. Fields marked * are
         required.
       </p>
-      {sourceLabel && (
+      {eventForm ? (
+        <div className="feedback-source-note">
+          <p>
+            This form was shared for <strong>{eventForm.title}</strong>. Your
+            response is recorded against this event.
+          </p>
+          {eventForm.description && <p>{eventForm.description}</p>}
+          {eventForm.closes_at && (
+            <p className="feedback-form-window">
+              Accepting responses until {manilaStamp(eventForm.closes_at)}.
+            </p>
+          )}
+        </div>
+      ) : sourceLabel ? (
         <p className="feedback-source-note">
           This form was shared for <strong>{sourceLabel}</strong>. The collection
           label is recorded with your response for staff review.
         </p>
-      )}
+      ) : null}
       <form onSubmit={submit} className="feedback-form">
         <ErrorNotice error={error} />
         {sourceLabel && (
           <input type="hidden" name="source_label" value={sourceLabel} />
+        )}
+        {eventForm && (
+          <input type="hidden" name="feedback_form_id" value={eventForm.id} />
         )}
         <Panel
           title="Feedback details"

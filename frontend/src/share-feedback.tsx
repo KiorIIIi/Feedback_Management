@@ -1,9 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
 import { Asset, ErrorNotice } from "./components";
+import { api, date, parseDate } from "./api";
+import { useLoad } from "./useLoad";
 
 const BASE_KEY = "clsu.feedbackShareBase";
 const LABEL_KEY = "clsu.feedbackShareEvent";
+
+type FeedbackForm = {
+  id: number;
+  token: string;
+  title: string;
+  description: string | null;
+  opens_at: string | null;
+  closes_at: string | null;
+  is_active: boolean;
+  status: "open" | "scheduled" | "expired" | "closed";
+  responses: number;
+  created_at: string;
+};
 
 function readStored(key: string): string {
   try {
@@ -31,21 +46,44 @@ function slug(value: string): string {
   );
 }
 
+const stamp = (value: string) =>
+  `${date(value)} ${parseDate(value).toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Manila" })}`;
+
+function windowText(form: FeedbackForm): string {
+  if (form.opens_at && form.closes_at) return `${stamp(form.opens_at)} → ${stamp(form.closes_at)}`;
+  if (form.opens_at) return `from ${stamp(form.opens_at)}`;
+  if (form.closes_at) return `until ${stamp(form.closes_at)}`;
+  return "no expiration";
+}
+
+const statusLabel: Record<FeedbackForm["status"], string> = {
+  open: "Open",
+  scheduled: "Not open yet",
+  expired: "Expired",
+  closed: "Closed",
+};
+
 export default function ShareFeedbackPanel({ onClose }: { onClose: () => void }) {
   const [baseUrl, setBaseUrl] = useState(
     () => readStored(BASE_KEY) || window.location.origin,
   );
+  const [mode, setMode] = useState<"form" | "label">("form");
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   const [label, setLabel] = useState(() => readStored(LABEL_KEY));
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState<unknown>();
+  const [draft, setDraft] = useState({ title: "", description: "", opens_at: "", closes_at: "" });
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState<unknown>();
+  const [toggleError, setToggleError] = useState<unknown>();
+  const [busyId, setBusyId] = useState<number | null>(null);
   const qrWrap = useRef<HTMLDivElement>(null);
-  const posterWrap = useRef<HTMLDivElement>(null);
+  const forms = useLoad<{ forms: FeedbackForm[] }>("/feedback-forms", { live: true });
 
   useEffect(() => writeStored(BASE_KEY, baseUrl), [baseUrl]);
   useEffect(() => writeStored(LABEL_KEY, label), [label]);
 
   let valid = false;
-  let link = "";
   let origin = "";
   try {
     const parsed = new URL(baseUrl.trim().replace(/\/+$/, ""));
@@ -54,9 +92,14 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
   } catch {
     /* Invalid input is reported through the field message below. */
   }
-  const trimmedLabel = label.trim().slice(0, 120);
-  if (valid)
-    link = `${origin}feedback${trimmedLabel ? `?event=${encodeURIComponent(trimmedLabel)}` : ""}`;
+  const selected = forms.data?.forms.find((form) => form.id === selectedId) ?? null;
+  const trimmedLabel = mode === "label" ? label.trim().slice(0, 120) : "";
+  const formLink = valid && selected ? `${origin}feedback/f/${selected.token}` : "";
+  const labelLink = valid
+    ? `${origin}feedback${trimmedLabel ? `?event=${encodeURIComponent(trimmedLabel)}` : ""}`
+    : "";
+  const link = mode === "form" ? formLink : labelLink;
+  const posterTitle = mode === "form" ? selected?.title : trimmedLabel;
 
   useEffect(() => {
     if (!copied) return;
@@ -93,7 +136,7 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
     if (!canvas) return;
     const anchor = document.createElement("a");
     anchor.href = (canvas as HTMLCanvasElement).toDataURL("image/png");
-    anchor.download = `clsu-feedback-form-${slug(trimmedLabel)}.png`;
+    anchor.download = `clsu-feedback-form-${slug(posterTitle || "form")}.png`;
     anchor.click();
   }
 
@@ -104,9 +147,56 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
     const blob = new Blob([markup], { type: "image/svg+xml" });
     const anchor = document.createElement("a");
     anchor.href = URL.createObjectURL(blob);
-    anchor.download = `clsu-feedback-form-${slug(trimmedLabel)}.svg`;
+    anchor.download = `clsu-feedback-form-${slug(posterTitle || "form")}.svg`;
     anchor.click();
     setTimeout(() => URL.revokeObjectURL(anchor.href), 5000);
+  }
+
+  async function createForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!draft.title.trim()) {
+      setCreateError(new Error("Enter a form title."));
+      return;
+    }
+    if (draft.opens_at && draft.closes_at && draft.closes_at < draft.opens_at) {
+      setCreateError(new Error("The close time must not be before the open time."));
+      return;
+    }
+    setCreating(true);
+    setCreateError(undefined);
+    try {
+      const body: Record<string, string> = { title: draft.title.trim() };
+      if (draft.description.trim()) body.description = draft.description.trim();
+      if (draft.opens_at) body.opens_at = draft.opens_at;
+      if (draft.closes_at) body.closes_at = draft.closes_at;
+      const created = await api<{ id: number }>("/feedback-forms", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      setSelectedId(created.id);
+      setDraft({ title: "", description: "", opens_at: "", closes_at: "" });
+      forms.reload();
+    } catch (e) {
+      setCreateError(e);
+    } finally {
+      setCreating(false);
+    }
+  }
+
+  async function toggleActive(form: FeedbackForm) {
+    setToggleError(undefined);
+    setBusyId(form.id);
+    try {
+      await api(`/feedback-forms/${form.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ is_active: !form.is_active }),
+      });
+      forms.reload();
+    } catch (e) {
+      setToggleError(e);
+    } finally {
+      setBusyId(null);
+    }
   }
 
   return (
@@ -117,10 +207,10 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
     >
       <header className="feedback-share-header">
         <div>
-          <h2 id="feedback-share-title">Share the feedback form</h2>
+          <h2 id="feedback-share-title">Share feedback forms</h2>
           <p>
-            Generate a public link and QR code for events, posters and messages —
-            like sharing a Google Form.
+            Create an event form with its own link, QR code and collection
+            window — or share a quick labelled link to the general form.
           </p>
         </div>
         <button
@@ -152,26 +242,153 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
               Enter a full address starting with http:// or https://.
             </p>
           )}
-          <label className="feedback-share-field">
-            Event or collection label (optional)
-            <input
-              value={label}
-              maxLength={120}
-              placeholder="e.g. University Week 2026"
-              onChange={(e) => setLabel(e.target.value)}
-            />
-            <small>
-              Added to the link and recorded with every response so staff can
-              trace where feedback came from.
-            </small>
-          </label>
+          <div className="feedback-share-mode" role="tablist" aria-label="Link type">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === "form"}
+              className={mode === "form" ? "active" : ""}
+              onClick={() => setMode("form")}
+            >
+              Event form
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === "label"}
+              className={mode === "label" ? "active" : ""}
+              onClick={() => setMode("label")}
+            >
+              Quick label link
+            </button>
+          </div>
+          {mode === "label" ? (
+            <label className="feedback-share-field">
+              Event or collection label (optional)
+              <input
+                value={label}
+                maxLength={120}
+                placeholder="e.g. University Week 2026"
+                onChange={(e) => setLabel(e.target.value)}
+              />
+              <small>
+                Added to the general form link and recorded with every response.
+              </small>
+            </label>
+          ) : (
+            <>
+              <ErrorNotice error={forms.error} />
+              {!!forms.error && (
+                <button className="button" onClick={forms.reload}>
+                  Retry loading forms
+                </button>
+              )}
+              {!!toggleError && <ErrorNotice error={toggleError} />}
+              {forms.data && (
+                <ul className="feedback-form-list">
+                  {forms.data.forms.length ? (
+                    forms.data.forms.map((form) => (
+                      <li
+                        key={form.id}
+                        className={`feedback-form-row${selectedId === form.id ? " selected" : ""}`}
+                      >
+                        <div className="feedback-form-row-main">
+                          <strong>{form.title}</strong>
+                          <span className={`feedback-form-status is-${form.status}`}>
+                            {statusLabel[form.status]}
+                          </span>
+                          <small>
+                            {windowText(form)} · {form.responses}{" "}
+                            {form.responses === 1 ? "response" : "responses"}
+                          </small>
+                        </div>
+                        <div className="feedback-form-row-actions">
+                          <button
+                            type="button"
+                            className="button"
+                            onClick={() => setSelectedId(form.id)}
+                          >
+                            Share
+                          </button>
+                          <button
+                            type="button"
+                            className="button"
+                            disabled={busyId === form.id}
+                            onClick={() => void toggleActive(form)}
+                          >
+                            {form.is_active ? "Close" : "Reopen"}
+                          </button>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="feedback-form-empty">
+                      No event forms yet. Create the first one below.
+                    </li>
+                  )}
+                </ul>
+              )}
+              <form className="feedback-form-create" onSubmit={createForm}>
+                <h3>New event form</h3>
+                <ErrorNotice error={createError} />
+                <label className="feedback-share-field">
+                  Form title *
+                  <input
+                    value={draft.title}
+                    maxLength={200}
+                    placeholder="e.g. University Week 2026"
+                    onChange={(e) => setDraft({ ...draft, title: e.target.value })}
+                  />
+                </label>
+                <label className="feedback-share-field">
+                  Description (optional)
+                  <input
+                    value={draft.description}
+                    maxLength={1000}
+                    placeholder="Shown at the top of the form"
+                    onChange={(e) => setDraft({ ...draft, description: e.target.value })}
+                  />
+                </label>
+                <div className="feedback-form-window-inputs">
+                  <label className="feedback-share-field">
+                    Opens (optional)
+                    <input
+                      type="datetime-local"
+                      value={draft.opens_at}
+                      onChange={(e) => setDraft({ ...draft, opens_at: e.target.value })}
+                    />
+                  </label>
+                  <label className="feedback-share-field">
+                    Closes (optional)
+                    <input
+                      type="datetime-local"
+                      value={draft.closes_at}
+                      onChange={(e) => setDraft({ ...draft, closes_at: e.target.value })}
+                    />
+                  </label>
+                </div>
+                <small>
+                  Manila time. Leave both blank for a form that never expires;
+                  the form automatically stops accepting responses after the
+                  close time.
+                </small>
+                <button className="button primary" disabled={creating}>
+                  {creating ? "Creating…" : "Create form"}
+                </button>
+              </form>
+            </>
+          )}
           <div className="feedback-share-link">
             <input
               readOnly
               value={link}
               aria-label="Generated feedback form link"
               onFocus={(e) => e.currentTarget.select()}
-              placeholder="The link appears once the address is valid."
+              placeholder={
+                mode === "form"
+                  ? "Select or create an event form to generate its link."
+                  : "The link appears once the address is valid."
+              }
             />
             <button
               type="button"
@@ -204,11 +421,15 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
               </>
             ) : (
               <p className="feedback-share-qr-waiting">
-                The QR code appears once the address is valid.
+                {mode === "form"
+                  ? "Select or create an event form to see its QR code."
+                  : "The QR code appears once the address is valid."}
               </p>
             )}
           </div>
-          <figcaption>Scan to open the feedback form</figcaption>
+          <figcaption>
+            Scan to open {mode === "form" ? selected?.title ?? "the form" : "the feedback form"}
+          </figcaption>
           <div className="feedback-share-qr-actions">
             <button
               type="button"
@@ -238,15 +459,15 @@ export default function ShareFeedbackPanel({ onClose }: { onClose: () => void })
         </figure>
       </div>
       {valid && link && (
-        <div className="feedback-share-poster" aria-hidden="true" ref={posterWrap}>
+        <div className="feedback-share-poster" aria-hidden="true">
           <Asset name="imgClsuLogo" alt="" className="feedback-share-poster-logo" />
           <p className="feedback-share-poster-eyebrow">
             CENTRAL LUZON STATE UNIVERSITY
           </p>
           <h1 className="feedback-share-poster-title">Share your feedback</h1>
-          {trimmedLabel && (
+          {posterTitle && (
             <p className="feedback-share-poster-label">
-              Feedback collection · {trimmedLabel}
+              Feedback collection · {posterTitle}
             </p>
           )}
           <div className="feedback-share-poster-qr">

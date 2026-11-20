@@ -11,7 +11,8 @@ type FeedbackRecord = {
   id?: number; request_id?: number; subject: string; message?: string; remarks?: string;
   category?: string; rating: number | null; created_at: string; job_number?: string;
   unverified_job_number?: string | null; contact_name?: string | null; contact_email?: string | null;
-  source_label?: string | null; service_type?: string | null; requesting_office?: string | null;
+  source_label?: string | null; form_title?: string | null;
+  service_type?: string | null; requesting_office?: string | null;
   final_assigned_personnel?: string | null; completed_at?: string | null; request_category?: string | null;
 };
 type Pagination = { current_page: number; last_page: number; total: number };
@@ -201,7 +202,7 @@ export function FeedbackDetail() {
           <dl>{general ? <>
             <Meta label="Received" value={received(record.created_at)} /><Meta label="Feedback category" value={record.category} />
             <Meta label="Contact name · as supplied" value={record.contact_name} /><Meta label="Contact email · as supplied" value={record.contact_email} />
-            {record.source_label && <Meta label="Collection source · shared link" value={record.source_label} />}
+            {record.source_label || record.form_title ? <Meta label="Collection source · shared link" value={record.form_title ?? record.source_label} /> : null}
             <div className="feedback-reference"><Meta label="Related job number · unverified" value={record.unverified_job_number} />
               <p>An entered reference does not verify a service request or grant access to it.</p></div>
           </> : <>
