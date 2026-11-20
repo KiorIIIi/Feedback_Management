@@ -39,7 +39,7 @@ class PortalController {
  }
  public function evaluate(Request $request,int $id,RequestWorkflow $workflow){$data=$request->validate(['rating'=>'required|integer|min:1|max:5','category'=>['nullable',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'remarks'=>'nullable|string|max:5000']);$workflow->evaluate($request->user(),$id,$data);return response()->json(['message'=>'Thank you. Your service evaluation has been recorded.'],201);}
  public function feedback(Request $request){
-  $data=$request->validate(['category'=>['required',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'subject'=>'required|string|max:200','message'=>'required|string|min:10|max:10000','unverified_job_number'=>'nullable|string|max:100','rating'=>'nullable|integer|min:1|max:5','contact_name'=>'nullable|string|max:100','contact_email'=>'nullable|email|max:200']);
+  $data=$request->validate(['category'=>['required',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'subject'=>'required|string|max:200','message'=>'required|string|min:10|max:10000','unverified_job_number'=>'nullable|string|max:100','rating'=>'nullable|integer|min:1|max:5','contact_name'=>'nullable|string|max:100','contact_email'=>'nullable|email|max:200','source_label'=>'nullable|string|max:120']);
   app(\App\Services\GeneralFeedback::class)->submit($request->user(),$data);
   return response()->json(['message'=>'Thank you. Your feedback has been received for private review.'],201);
  }

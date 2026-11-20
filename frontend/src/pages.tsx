@@ -1544,6 +1544,8 @@ export function RateService() {
   );
 }
 export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
+  const [searchParams] = useSearchParams();
+  const sourceLabel = (searchParams.get("event") ?? "").slice(0, 120).trim();
   const [error, setError] = useState<unknown>(),
     [done, setDone] = useState(false),
     [busy, setBusy] = useState(false);
@@ -1596,8 +1598,17 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
         Tell us about your experience with a CLSU service. Fields marked * are
         required.
       </p>
+      {sourceLabel && (
+        <p className="feedback-source-note">
+          This form was shared for <strong>{sourceLabel}</strong>. The collection
+          label is recorded with your response for staff review.
+        </p>
+      )}
       <form onSubmit={submit} className="feedback-form">
         <ErrorNotice error={error} />
+        {sourceLabel && (
+          <input type="hidden" name="source_label" value={sourceLabel} />
+        )}
         <Panel
           title="Feedback details"
           subtitle="Complaint · Suggestion · Compliment · Other"

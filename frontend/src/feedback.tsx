@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useParams, useSearchParams } from "react-r
 import { useAuth } from "./App";
 import { date, parseDate } from "./api";
 import { Empty, ErrorNotice, Icon, Loading } from "./components";
+import ShareFeedbackPanel from "./share-feedback";
 import { useLoad } from "./useLoad";
 
 type Kind = "general" | "evaluation";
@@ -10,7 +11,7 @@ type FeedbackRecord = {
   id?: number; request_id?: number; subject: string; message?: string; remarks?: string;
   category?: string; rating: number | null; created_at: string; job_number?: string;
   unverified_job_number?: string | null; contact_name?: string | null; contact_email?: string | null;
-  service_type?: string | null; requesting_office?: string | null;
+  source_label?: string | null; service_type?: string | null; requesting_office?: string | null;
   final_assigned_personnel?: string | null; completed_at?: string | null; request_category?: string | null;
 };
 type Pagination = { current_page: number; last_page: number; total: number };
@@ -45,6 +46,7 @@ function savePosition(key: string) {
 export function FeedbackHistory() {
   const { user } = useAuth();
   const [params, setParams] = useSearchParams();
+  const [shareOpen, setShareOpen] = useState(false);
   const query = params.toString();
   const kind: Kind = params.get("tab") === "evaluation" ? "evaluation" : "general";
   const [draft, setDraft] = useState(() => Object.fromEntries(filterKeys.map(key => [key, params.get(key) || ""])));
@@ -108,8 +110,13 @@ export function FeedbackHistory() {
     <header className="feedback-page-heading">
       <div><h1>{user?.role === "admin" ? "Feedback & ratings" : "Feedback history"}</h1>
         <p>Read independent feedback and verified service evaluations.</p></div>
-      {user?.role === "requester" && <Link className="button primary" to="/app/feedback/new">Share feedback</Link>}
+      <div className="feedback-heading-actions">
+        {user?.role === "admin" && <button type="button" className={`button${shareOpen ? "" : " primary"}`}
+          onClick={() => setShareOpen(open => !open)} aria-expanded={shareOpen} aria-controls="feedback-share">Share feedback form</button>}
+        {user?.role === "requester" && <Link className="button primary" to="/app/feedback/new">Share feedback</Link>}
+      </div>
     </header>
+    {user?.role === "admin" && shareOpen && <ShareFeedbackPanel onClose={() => setShareOpen(false)} />}
     <div className="feedback-tabs" role="tablist" aria-label="Feedback type">
       {(["general", "evaluation"] as Kind[]).map(type => <button key={type} id={`feedback-tab-${type}`} type="button" role="tab"
         aria-selected={kind === type} aria-controls="feedback-results" tabIndex={kind === type ? 0 : -1}
@@ -194,6 +201,7 @@ export function FeedbackDetail() {
           <dl>{general ? <>
             <Meta label="Received" value={received(record.created_at)} /><Meta label="Feedback category" value={record.category} />
             <Meta label="Contact name · as supplied" value={record.contact_name} /><Meta label="Contact email · as supplied" value={record.contact_email} />
+            {record.source_label && <Meta label="Collection source · shared link" value={record.source_label} />}
             <div className="feedback-reference"><Meta label="Related job number · unverified" value={record.unverified_job_number} />
               <p>An entered reference does not verify a service request or grant access to it.</p></div>
           </> : <>

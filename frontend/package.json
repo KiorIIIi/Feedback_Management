@@ -12,18 +12,19 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@fontsource/plus-jakarta-sans": "^5.2.0",
+    "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.0.0",
-    "@fontsource/plus-jakarta-sans": "^5.2.0",
     "recharts": "^3.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "^5.8.0",
-    "vite": "^7.0.0",
-    "@playwright/test": "^1.56.0"
+    "vite": "^7.0.0"
   }
 }

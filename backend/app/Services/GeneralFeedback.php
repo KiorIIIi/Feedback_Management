@@ -20,6 +20,7 @@ class GeneralFeedback
                 'rating' => $data['rating'] ?? null,
                 'contact_name' => $data['contact_name'] ?? null,
                 'contact_email' => $data['contact_email'] ?? null,
+                'source_label' => $data['source_label'] ?? null,
                 'user_id' => $actor?->id, 'created_at' => now(),
             ]);
             DB::table('audit_entries')->insert([
