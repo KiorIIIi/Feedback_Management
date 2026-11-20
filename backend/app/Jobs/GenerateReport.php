@@ -29,6 +29,8 @@ class GenerateReport implements ShouldQueue {
         DB::table('report_jobs')->where('id',$job->id)->update(['status'=>'completed','path'=>$path,'error'=>null,'updated_at'=>now()]);
     }
     public function failed(?\Throwable $exception): void {
-        DB::table('report_jobs')->where('id',$this->reportId)->update(['status'=>'failed','error'=>'The export failed. Please request a new report.','updated_at'=>now()]);
+        // Never downgrade a report another attempt has completed (A4).
+        DB::table('report_jobs')->where('id',$this->reportId)->where('status','!=','completed')
+            ->update(['status'=>'failed','error'=>'The export failed. Please request a new report.','updated_at'=>now()]);
     }
 }

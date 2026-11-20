@@ -7,11 +7,22 @@ if (($runtime['DB_HOST'] ?? '') !== '127.0.0.1' || ($runtime['DB_PORT'] ?? '') !
 }
 require dirname(__DIR__).'/backend/vendor/autoload.php';
 $app = require dirname(__DIR__).'/backend/bootstrap/app.php';
+// A cached configuration would override the validated public runtime environment (A15);
+// the same guard the public provisioning script applies.
+if ($app->configurationIsCached()) {
+    throw new RuntimeException('Cached configuration is present. Remove backend/bootstrap/cache/config.php so the validated public demo configuration is used.');
+}
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 $local = Dotenv\Dotenv::parse(file_get_contents(dirname(__DIR__).'/backend/.env'));
 if (($local['DB_HOST'] ?? '') !== '127.0.0.1' || ($local['DB_PORT'] ?? '') !== '3307') {
     throw new RuntimeException('Expected the project-owned MySQL instance.');
+}
+// Verify the effective connection target, not just the validated runtime metadata (A15).
+$connection = config('database.connections.mysql');
+if (($connection['host'] ?? '') !== '127.0.0.1' || (int) ($connection['port'] ?? 0) !== 3307
+    || ($connection['database'] ?? '') !== ($runtime['DB_DATABASE'] ?? '')) {
+    throw new RuntimeException('The effective database target does not match the isolated public demo database; refusing to migrate.');
 }
 // The app guard first validates the actual production runtime. Migration credentials
 // are then used only by this CLI process and never saved to public runtime.json.

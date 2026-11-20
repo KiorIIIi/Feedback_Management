@@ -21,7 +21,7 @@ The landing page has one **Staff login** for administrators and service personne
 | Service personnel (`personnel`) | Staff login | `/app/work` — assigned work |
 | Requester (`requester`) | Request a service | `/app/requester` — personal dashboard |
 
-The server verifies credentials, active-account status, and eligibility for the selected entry. Staff login accepts only administrator or personnel accounts. The role comes from the account record; a URL parameter or a faculty/student classification cannot grant permissions. The shared `/app` route also forwards an existing session to its role's home. Opening an incompatible sign-in entry offers an explicit account switch with logout confirmation. Existing role-specific sign-in URLs remain compatible.
+The server verifies credentials, active-account status, and eligibility for the selected entry when a role is requested. Staff login accepts only administrator or personnel accounts. The role comes from the account record; a URL parameter or a faculty/student classification cannot grant permissions. The shared `/app` route also forwards an existing session to its role's home. Since the 16 November shared sign-in change, an existing session on any sign-in entry returns to its own workspace; switching accounts is a plain sign-out. Existing role-specific sign-in URLs remain compatible.
 
 ## Technology and architectural approach
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   Link,
   Navigate,
@@ -523,6 +523,11 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
     total: number;
     last_page: number;
   }>("/requests?" + qs.toString(), { live: true });
+  // A live reload can shrink the result below the current page; clamp instead of
+  // showing an empty out-of-range page with no way back (audit finding A7).
+  useEffect(() => {
+    if (data && data.last_page < page) setPage(Math.max(1, data.last_page));
+  }, [data?.last_page]);
   return (
     <Panel
       title={
@@ -693,7 +698,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
               </button>
               <span>Page {page}</span>
               <button
-                disabled={page === data?.last_page}
+                disabled={!data?.last_page || page >= data.last_page}
                 onClick={() => setPage(page + 1)}
               >
                 Next
@@ -970,6 +975,10 @@ export function NewRequest() {
 export function RequestDetail() {
   const { id } = useParams();
   const { user, catalog, refresh } = useAuth();
+  // Tracks the currently displayed record so a response for a previously
+  // opened request cannot reset this one's state (audit finding A6).
+  const currentId = useRef(id);
+  currentId.current = id;
   const [editing, setEditing] = useState(false);
   const [saveError, setSaveError] = useState<unknown>(),
     [busy, setBusy] = useState(false),
@@ -1007,9 +1016,10 @@ export function RequestDetail() {
     setSaveError(null);
     setSuccess("");
     setBusy(true);
+    const savedId = id;
     const f = Object.fromEntries(new FormData(e.currentTarget));
     try {
-      await api("/requests/" + id, {
+      await api("/requests/" + savedId, {
         method: "PATCH",
         body: JSON.stringify({
           ...f,
@@ -1019,6 +1029,9 @@ export function RequestDetail() {
           ...("category_id" in f ? { category_id: f.category_id ? Number(f.category_id) : null } : {}),
         }),
       });
+      // The save targeted a previously opened record; do not reset the editor
+      // now showing a different request (audit finding A6).
+      if (currentId.current !== savedId) return;
       setSuccess(
         action === "reply"
           ? "Your clarification has been sent for review."
@@ -1036,8 +1049,8 @@ export function RequestDetail() {
         );
       }
     } catch (e) {
-      setSaveError(e);
       // Keep the draft and the version it was based on until the user reviews current state.
+      if (currentId.current === savedId) setSaveError(e);
     } finally {
       setBusy(false);
     }

@@ -26,6 +26,8 @@ class GeneralFeedback
             DB::table('audit_entries')->insert([
                 'actor_user_id' => $actor?->id, 'actor_kind' => $actor ? 'human' : 'anonymous',
                 'action' => 'feedback.submitted', 'occurred_at' => now(),
+                // Identify the submitted record so anonymous feedback remains attributable (A14).
+                'after' => json_encode(['general_feedback_id' => $id]),
             ]);
             $this->notifications->feedback($id, $actor?->id);
         });

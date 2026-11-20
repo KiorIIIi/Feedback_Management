@@ -27,7 +27,9 @@ $workerRunning=$false
 $workerProcessId=Get-LocalRuntimePid "$runtimeDir\queue.pid"
 if($workerProcessId){
  $existingWorker=Get-CimInstance Win32_Process -Filter "ProcessId=$workerProcessId" -ErrorAction SilentlyContinue
- $workerRunning=$existingWorker -and $existingWorker.CommandLine -like '*artisan*queue:work*' -and $existingWorker.ExecutablePath -eq $PhpPath
+ # Match this project's artisan path too: another project's worker using the same
+ # PHP executable must not suppress starting this project's queue worker (A10).
+ $workerRunning=$existingWorker -and $existingWorker.CommandLine -like "*$projectRoot\backend\artisan*queue:work*" -and $existingWorker.ExecutablePath -eq $PhpPath
 }
 if(-not $workerRunning){
  $worker=Start-Process -FilePath $PhpPath -ArgumentList @("`"$projectRoot\backend\artisan`"",'queue:work','--sleep=1','--tries=3','--timeout=90') -WorkingDirectory "$projectRoot\backend" -WindowStyle Hidden -PassThru -RedirectStandardOutput "$runtimeDir\queue.out.log" -RedirectStandardError "$runtimeDir\queue.err.log"
