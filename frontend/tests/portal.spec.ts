@@ -96,6 +96,9 @@ test("desktop and mobile visual evidence uses original local Figma assets", asyn
     fullPage: true,
     animations: "disabled",
   });
+  // Admin sign-out lives in the sidebar (sprint 014); at mobile width the
+  // sidebar is off-canvas, so return to desktop before signing out.
+  await page.setViewportSize({ width: 1440, height: 1124 });
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "Sign out" }).click();
   await expect(page).toHaveURL("/");

@@ -8,8 +8,12 @@ Route::prefix('api')->group(function(){
  Route::post('feedback',[PortalController::class,'feedback'])->middleware('throttle:portal-feedback');
  Route::middleware(['auth','throttle:portal-reads'])->group(function(){
   Route::get('assistant/settings',[\App\Http\Controllers\AssistantController::class,'status']);
+  // Key listing is a read: it stays under the portal-reads budget (safe methods)
+  // instead of the assistant-admin write limiter. The unified assistant page
+  // refetches this list on every visit and after each settings save, so
+  // counting it against the 6/min write budget starved ordinary admin use.
+  Route::get('assistant/keys',[\App\Http\Controllers\AssistantController::class,'keys']);
   Route::middleware('throttle:assistant-admin')->group(function(){
-   Route::get('assistant/keys',[\App\Http\Controllers\AssistantController::class,'keys']);
    Route::post('assistant/keys',[\App\Http\Controllers\AssistantController::class,'createKey']);
    Route::delete('assistant/keys/{id}',[\App\Http\Controllers\AssistantController::class,'revokeKey'])->whereNumber('id');
    Route::put('assistant/settings',[\App\Http\Controllers\AssistantController::class,'save']);
