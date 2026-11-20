@@ -1576,6 +1576,7 @@ export function EventFormPage({ token }: { token: string }) {
   if (error || !data)
     return (
       <>
+        <Link className="back" to="/">‹ Back to options</Link>
         <h1>This form link is not available</h1>
         <p>
           The feedback form could not be found. Check the link you were given, or
@@ -1591,6 +1592,7 @@ export function EventFormPage({ token }: { token: string }) {
   if (data.status !== "open")
     return (
       <div className="feedback-form-closed">
+        <Link className="back" to="/">‹ Back to options</Link>
         <Icon name="evaluation" />
         <h1>{data.status === "scheduled" ? "This form has not opened yet" : "This form is no longer accepting responses"}</h1>
         <p>

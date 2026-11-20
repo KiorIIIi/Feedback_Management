@@ -95,6 +95,7 @@ test("event form accepts responses within its window and closes on demand", asyn
     page.getByRole("heading", { name: "This form is no longer accepting responses" }),
   ).toBeVisible();
   await expect(page.locator(".feedback-form-closed")).toContainText(title);
+  await expect(page.getByRole("link", { name: "‹ Back to options" })).toBeVisible();
 
   // The submitted response is attributed to the event form.
   await page.goto("/app/feedback");
