@@ -4,7 +4,7 @@
 
 The [24 October automatic workspace updates](live-updates.md) add live in-app badges/alerts and periodic synchronization of requests, feedback, dashboards and reports. The guide records the additive migration, scope enforcement and editing/connection behavior.
 
-The project now contains a React/TypeScript/Vite frontend and Laravel 12 API backed by MySQL. The saved architecture and logical database documents remain the planning baseline. This document records the narrower, implemented prototype and its provisional decisions.
+The project now contains a React/TypeScript/Vite frontend and Laravel 13 API backed by MySQL. The saved architecture and logical database documents remain the planning baseline. This document records the narrower, implemented prototype and its provisional decisions.
 
 Implemented flows: session sign-in/out; public independent feedback; authenticated service submission; own-request tracking; office-scoped MISO review; eligibility-checked assignment; priority review; clarification with preserved original statements and revision history; personnel progress; human completion with actions and outcome; one optional verified evaluation; private in-app notices; scoped metrics; and queued private PDF, Excel and CSV exports. The [MCP read-only pilot](../architecture/mcp-implementation.md) adds five scoped authenticated read tools, expiring/revocable credentials and invocation auditing on 23 October. The [25 October admin setup](assistant-admin-setup.md) adds encrypted configuration, pre-registered ChatGPT OAuth and local synthetic read tools. Actual client/provider connection requires the corresponding account/key setup and is distinct from mocked verification.
 

@@ -1,11 +1,11 @@
-param([string]$PhpPath='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe')
+param([string]$PhpPath='C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe')
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'local-runtime.ps1')
 $projectRoot=Split-Path -Parent $PSScriptRoot
 $runtimeDir=Join-Path $projectRoot '.local'
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
 if(-not (Test-Path "$projectRoot\backend\.env")){throw 'Run the setup steps in README.md first.'}
-if(-not (Test-Path -LiteralPath $PhpPath -PathType Leaf)){throw 'PHP was not found. Pass the installed PHP 8.5 executable with -PhpPath.'}
+if(-not (Test-Path -LiteralPath $PhpPath -PathType Leaf)){throw 'PHP was not found. Pass the installed PHP executable with -PhpPath.'}
 if(-not (Test-Path "$projectRoot\backend\vendor\autoload.php")){throw 'Backend dependencies are missing. Run composer install --working-dir=backend.'}
 if(-not (Test-Path "$projectRoot\frontend\node_modules\vite\bin\vite.js")){throw 'Frontend dependencies are missing. Run npm --prefix frontend ci.'}
 $PhpPath=(Resolve-Path -LiteralPath $PhpPath).Path

@@ -25,7 +25,7 @@ The server verifies credentials, active-account status, and eligibility for the 
 
 ## Technology and architectural approach
 
-For the implemented local Windows prototype, Laravel runs with PHP 8.5 supplied by **Laragon**, and **Composer** installs PHP/Laravel dependencies from `backend/composer.lock`. The React/TypeScript frontend uses Node.js and npm, with dependencies installed from `frontend/package-lock.json`. The project launcher starts Laravel, Vite, and the report queue worker; the local database runs separately on port 3307. This setup opens at `http://127.0.0.1:5173` and does not currently use a Laragon `.test` virtual host. See the README for installation and startup commands.
+For the implemented local Windows prototype, Laravel runs with PHP 8.6 supplied by **Laragon**, and **Composer** installs PHP/Laravel dependencies from `backend/composer.lock`. The React/TypeScript frontend uses Node.js and npm, with dependencies installed from `frontend/package-lock.json`. The project launcher starts Laravel, Vite, and the report queue worker; the local database runs separately on port 3307. This setup opens at `http://127.0.0.1:5173` and does not currently use a Laragon `.test` virtual host. See the README for installation and startup commands.
 
 | Area | Proposed choice | Responsibility |
 | --- | --- | --- |
@@ -45,7 +45,7 @@ Exact Laravel, PHP, MCP package, and AI runtime versions must be pinned after co
 
 The repository includes a Windows launcher for a temporary public synthetic demo, separate from the normal local instance. It builds the React app in `hosted-demo` mode, serves the built SPA and Laravel API on one loopback origin, and connects that origin to an HTTPS Cloudflare Quick Tunnel. A separate queue worker handles exports. It provisions a new MySQL demo database and scoped runtime user, replaces the seed passwords, isolates sessions/cache/private files, and enforces the existing production configuration guard. It does not publish to GitHub Pages or copy the working local database. See [public-demo startup and limits](../../README.md#temporary-public-demo-hosted-on-this-pc).
 
-This path uses PHP 8.5 and cloudflared 2026.10.2, including an optional Windows DNS workaround. It is intended for low-volume demonstrations with synthetic data while the PC remains on. A successful tunnel health check is distinct from full browser/workflow verification; evidence for the latter is recorded locally only after the dedicated check succeeds. Continuous hosting, production capacity, final campus policies, and MISO approval remain outside this temporary setup.
+This path uses PHP 8.6 and cloudflared 2026.10.2, including an optional Windows DNS workaround. It is intended for low-volume demonstrations with synthetic data while the PC remains on. A successful tunnel health check is distinct from full browser/workflow verification; evidence for the latter is recorded locally only after the dedicated check succeeds. Continuous hosting, production capacity, final campus policies, and MISO approval remain outside this temporary setup.
 
 ## Architecture diagram
 

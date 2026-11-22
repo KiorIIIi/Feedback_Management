@@ -36,7 +36,7 @@ Clear stale development configuration, then start or restart the local applicati
 
 ```powershell
 php backend/artisan config:clear
-.\scripts\start.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe'
+.\scripts\start.ps1 -PhpPath 'C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe'
 ```
 
 Use the project's established database configuration before running migrations; do not point it at an unrelated MySQL database. This guide does not change any live settings or start services automatically.
