@@ -6,7 +6,7 @@ for (const [role, email, home, heading] of [
   ["requester", "andrea@clsu.demo", "/app/requester", "Good morning, Andrea."],
 ])
   test(`${role} login opens the correct workspace and survives refresh`, async ({
-    page,
+    page, baseURL,
   }, testInfo) => {
     await page.goto("/login?role=" + role);
     if (role === "admin") {
@@ -21,6 +21,7 @@ for (const [role, email, home, heading] of [
       await expect(page).toHaveURL(/\/app\/work$/);
       page.once("dialog", (dialog) => dialog.accept());
       await page.getByRole("button", { name: "Sign out" }).click();
+      await expect(page).toHaveURL(baseURL + "/");
       await page.goto("/login?role=admin");
     }
     await page.getByLabel("Email address", { exact: true }).fill(email);

@@ -73,7 +73,9 @@ class FeedbackFormsTest extends TestCase {
         $detail=$this->actingAs($admin)->getJson('/api/feedback/general/'.$newest->id)->assertOk()->json('record');
         $this->assertSame('Alumni Homecoming',$detail['form_title']);
         $audit=DB::table('audit_entries')->where('action','feedback.submitted')->orderByDesc('id')->first();
-        $this->assertSame(['general_feedback_id'=>$newest->id,'feedback_form_id'=>$b['id']],json_decode($audit->after,true));
+        $payload = json_decode($audit->after, true, flags: JSON_THROW_ON_ERROR);
+        ksort($payload);
+        $this->assertSame(['feedback_form_id' => $b['id'], 'general_feedback_id' => $newest->id], $payload);
     }
 
     public function test_forms_refuse_submissions_outside_their_window(): void {
