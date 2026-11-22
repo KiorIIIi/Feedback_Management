@@ -61,9 +61,61 @@
   .feedback-workspace .empty h3 { font-size: 18px; }
   .feedback-workspace .empty p { font-size: 16px; color: var(--feedback-muted); }
   .feedback-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .feedback-heading-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .feedback-source-note { border: 1px solid var(--line); border-radius: var(--radius); background: var(--soft); padding: 12px 16px; font-size: 14px; line-height: 21px; color: var(--ink); margin: 0 0 20px; }
+  .feedback-share { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); padding: 16px 24px 24px; margin-bottom: 24px; }
+  .feedback-share-header { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+  .feedback-share-header h2 { font-size: 18px; font-weight: 600; line-height: 26px; color: var(--ink); }
+  .feedback-share-header p { color: var(--feedback-muted); font-size: 13px; line-height: 19px; margin-top: 4px; }
+  .feedback-share-grid { display: grid; grid-template-columns: minmax(0, 1fr) 248px; gap: 24px; }
+  .feedback-share-fields { display: grid; gap: 14px; align-content: start; }
+  .feedback-share-field { display: grid; gap: 6px; font-size: 14px; font-weight: 600; line-height: 20px; color: var(--ink); }
+  .feedback-share-field small { font-weight: 500; color: var(--feedback-muted); font-size: 12.5px; line-height: 18px; }
+  .feedback-share-field input { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; font-size: 14px; line-height: 20px; color: var(--ink); background: var(--white); }
+  .feedback-share-error { color: #9b2525; font-size: 13px; line-height: 19px; margin: 0; }
+  .feedback-share-link { display: flex; gap: 8px; }
+  .feedback-share-link input { flex: 1 1 auto; min-width: 0; border: 1px dashed var(--line); border-radius: var(--radius); padding: 10px 12px; font-size: 13px; color: var(--feedback-muted); background: var(--white); }
+  .feedback-share-link .button { flex-shrink: 0; }
+  .feedback-share-hint { color: var(--feedback-muted); font-size: 12.5px; line-height: 18px; }
+  .feedback-share-qr { display: grid; justify-items: center; gap: 12px; margin: 0; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; background: var(--white); }
+  .feedback-share-qr-frame { width: 176px; height: 176px; display: grid; place-items: center; }
+  .feedback-share-qr-frame svg { width: 100%; height: 100%; display: block; }
+  .feedback-share-qr-source { display: none; }
+  .feedback-share-qr-waiting { color: var(--feedback-muted); font-size: 13px; line-height: 19px; text-align: center; margin: 0; }
+  .feedback-share-qr figcaption { color: var(--feedback-muted); font-size: 12.5px; line-height: 18px; }
+  .feedback-share-qr-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .feedback-share-poster { display: none; }
+  .feedback-share-mode { display: flex; gap: 8px; }
+  .feedback-share-mode button { flex: 1; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; min-height: 40px; color: var(--feedback-muted); font-size: 13px; font-weight: 600; }
+  .feedback-share-mode button.active { background: var(--deep); border-color: var(--deep); color: var(--white); }
+  .feedback-form-list { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; max-height: 320px; overflow-y: auto; }
+  .feedback-form-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); padding: 10px 12px; }
+  .feedback-form-row.selected { border-color: var(--deep); box-shadow: 0 0 0 1px var(--deep); }
+  .feedback-form-row-main { display: grid; gap: 2px; min-width: 0; }
+  .feedback-form-row-main strong { font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
+  .feedback-form-row-main small { color: var(--feedback-muted); font-size: 12px; line-height: 16px; }
+  .feedback-form-row-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .feedback-form-row-actions .button { min-height: 34px; padding: 6px 10px; font-size: 12.5px; }
+  .feedback-form-empty { border: 1px dashed var(--line); border-radius: var(--radius); color: var(--feedback-muted); font-size: 13px; padding: 12px; text-align: center; }
+  .feedback-form-status { justify-self: start; display: inline-block; border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 600; line-height: 17px; }
+  .feedback-form-status.is-open { background: var(--badge-green-bg); color: var(--badge-green-ink); }
+  .feedback-form-status.is-scheduled { background: #fff4d6; color: #7a5600; }
+  .feedback-form-status.is-expired, .feedback-form-status.is-closed { background: #f0efec; color: #6b6b66; }
+  .feedback-form-create { display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; margin-top: 4px; }
+  .feedback-form-create h3 { font-size: 15px; font-weight: 600; }
+  .feedback-form-create > small { color: var(--feedback-muted); font-size: 12.5px; line-height: 18px; }
+  .feedback-form-create .button { justify-self: start; }
+  .feedback-form-window-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .feedback-source-note { display: grid; gap: 6px; }
+  .feedback-source-note .feedback-form-window { margin: 0; font-weight: 600; }
+  .feedback-form-closed { display: grid; gap: 12px; justify-items: start; }
+  .feedback-form-closed img { width: 56px; height: 56px; }
+  .feedback-form-closed h1 { font-size: 24px; }
+  .feedback-form-closed p { color: var(--feedback-muted); font-size: 15px; }
 }
 @layer responsive {
   @media (max-width: 1100px) { .feedback-reading-grid { grid-template-columns: minmax(0, 1fr); } .feedback-jump { display: flex; justify-content: center; margin-bottom: 24px; } }
+  @media (max-width: 900px) { .feedback-share-grid { grid-template-columns: minmax(0, 1fr); } .feedback-share-qr { max-width: 360px; } }
   @media (max-width: 600px) {
     .feedback-page-heading { flex-wrap: wrap; margin-bottom: 16px; }
     .feedback-page-heading h1 { font-size: 20px; line-height: 28px; }
@@ -88,5 +140,21 @@
   @media (max-width: 360px) {
     .feedback-message-card, .feedback-context-card { padding: 16px; }
     .feedback-source-pill { font-size: 11px; padding-inline: 6px; }
+    .feedback-share { padding: 14px 16px 16px; }
+    .feedback-share-qr-frame { width: 148px; height: 148px; }
   }
+}
+/* Event poster printing: only the poster prints, and only while the share
+   panel renders it. Browsers without :has() fall back to normal printing. */
+@media print {
+  body:has(.feedback-share-poster) :not(.feedback-share-poster, .feedback-share-poster *) { visibility: hidden; }
+  .feedback-share-poster, .feedback-share-poster * { visibility: visible; }
+  .feedback-share-poster { display: flex; position: fixed; inset: 0; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 12mm; background: #fff; color: #111; text-align: center; }
+  .feedback-share-poster-logo { width: 88px; height: auto; }
+  .feedback-share-poster-eyebrow { margin: 0; font-size: 14px; letter-spacing: 1.5px; font-weight: 700; color: #111; }
+  .feedback-share-poster-title { margin: 0; font-size: 34px; line-height: 42px; font-weight: 700; }
+  .feedback-share-poster-label { margin: 0; font-size: 17px; font-weight: 600; }
+  .feedback-share-poster-qr svg { width: 330px; height: 330px; }
+  .feedback-share-poster-url { margin: 0; font-size: 16px; font-weight: 600; overflow-wrap: anywhere; max-width: 90%; }
+  .feedback-share-poster-note { margin: 0; font-size: 14px; color: #444; max-width: 60%; }
 }

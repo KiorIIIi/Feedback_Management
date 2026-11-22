@@ -59,7 +59,10 @@ class FeedbackReader {
     }
     public function detail(User $user, string $kind, int $id): array {
         if ($kind==='general') {
-            $record=$this->generalScope($user)->where('id',$id)->first();
+            $record=$this->generalScope($user)
+                ->leftJoin('feedback_forms','feedback_forms.id','=','general_feedback.feedback_form_id')
+                ->where('general_feedback.id',$id)
+                ->select('general_feedback.*','feedback_forms.title as form_title')->first();
         } elseif ($kind==='evaluation') {
             $record=$this->evaluations($user)
                 ->leftJoin('service_types','service_types.id','=','service_requests.service_type_id')

@@ -89,11 +89,13 @@ class ServiceEvaluationReport {
                 ->get(['id','status','priority','subject','job_number','category_id','service_type_id','requesting_office_id','created_at','completed_at']);
             $ids = $requests->modelKeys();
             $categories = DB::table('request_categories')->where('handling_office_id', $actor->office_id)->pluck('name', 'id');
+            // Narrow columns only (A13): evaluations and assignments feed per-row
+            // grouping; remarks and unneeded columns are never loaded here.
             $assignments = DB::table('assignments')->join('users', 'users.id', '=', 'assignments.personnel_id')
                 ->whereIn('service_request_id', $ids)->orderByDesc('assignments.id')
-                ->get(['assignments.*', 'users.name as personnel_name'])->groupBy('service_request_id');
+                ->get(['assignments.id','assignments.service_request_id','assignments.personnel_id','assignments.ended_at','users.name as personnel_name'])->groupBy('service_request_id');
             $ratings = DB::table('service_evaluations')->whereIn('request_id', $ids)
-                ->whereBetween('rating', [1,5])->where('created_at', '<=', $asOf)->get()->keyBy('request_id');
+                ->whereBetween('rating', [1,5])->where('created_at', '<=', $asOf)->get(['request_id','rating'])->keyBy('request_id');
             $rows = $requests->map(function ($request) use ($assignments, $ratings, $categories, $asOf) {
                 $history = $assignments->get($request->id, collect());
                 $assignment = $request->status === 'Completed' ? $history->first() : $history->firstWhere('ended_at', null);

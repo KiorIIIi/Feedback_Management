@@ -5,7 +5,7 @@ Build and maintain the CLSU Feedback Management System and Service Tracker using
 ## Branch and current implementation
 
 - Use `front-main`, tracking `origin/front-main`, for ongoing development. Follow [development workflow](docs/project/development-workflow.md); commit and push verified changes there. Keep `main` for the final integration approved by the user.
-- This is an implemented React/TypeScript/Vite, Laravel 12 and MySQL 8 prototype. Preserve existing requester, administrator and personnel workflows and their server authorization checks.
+- This is an implemented React/TypeScript/Vite, Laravel 13 and MySQL 8 prototype. Preserve existing requester, administrator and personnel workflows and their server authorization checks.
 - Admin MCP setup, ChatGPT OAuth and local synthetic read tools are implemented. Provider calls are disabled, operational MCP writes remain deferred, and no public MCP deployment is enabled. Do not infer a working external connection from configuration screens.
 - Configurable demo policies are delegated prototype decisions, not MISO-approved production policy. Use the current product context and implementation notes to distinguish them from unresolved requirements.
 - Use the fresh-install instructions for new checkouts. Windows paths and local port 3307 describe the existing isolated demo, not a mandatory system-wide database configuration. Never reseed populated data.

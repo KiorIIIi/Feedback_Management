@@ -6,18 +6,23 @@ for (const [role, email, home, heading] of [
   ["requester", "andrea@clsu.demo", "/app/requester", "Good morning, Andrea."],
 ])
   test(`${role} login opens the correct workspace and survives refresh`, async ({
-    page,
+    page, baseURL,
   }, testInfo) => {
     await page.goto("/login?role=" + role);
     if (role === "admin") {
+      // Since the shared sign-in change (sprint 017), legacy role URLs use the
+      // same shared form: a personnel account signs in and is routed to its own
+      // workspace instead of being rejected by a role-specific check.
       await page
         .getByLabel("Email address", { exact: true })
         .fill("mark@clsu.demo");
       await page.getByLabel("Password", { exact: true }).fill("DemoPass!2026");
       await page.getByRole("button", { name: "Sign in", exact: true }).click();
-      await expect(page.getByRole("alert")).toContainText(
-        "valid admin account",
-      );
+      await expect(page).toHaveURL(/\/app\/work$/);
+      page.once("dialog", (dialog) => dialog.accept());
+      await page.getByRole("button", { name: "Sign out" }).click();
+      await expect(page).toHaveURL(baseURL + "/");
+      await page.goto("/login?role=admin");
     }
     await page.getByLabel("Email address", { exact: true }).fill(email);
     await page.getByLabel("Password", { exact: true }).fill("DemoPass!2026");
@@ -43,20 +48,10 @@ for (const [role, email, home, heading] of [
       await expect(page).toHaveURL(/\/app\/requests$/);
     }
     if (role === "requester") {
+      // Shared sign-in: an existing session on a legacy role URL redirects to
+      // the signed-in account's workspace instead of offering a role switch.
       await page.goto("/login?role=admin");
-      await expect(
-        page.getByRole("heading", { name: "Switch account to continue" }),
-      ).toBeVisible();
-      page.once("dialog", (dialog) => dialog.accept());
-      await page
-        .getByRole("button", { name: "Sign out and switch account" })
-        .click();
-      await expect(
-        page.getByRole("heading", { name: "Sign in to continue" }),
-      ).toBeVisible();
-      await expect(
-        page.getByLabel("Email address", { exact: true }),
-      ).toBeVisible();
+      await expect(page).toHaveURL(/\/app\/requester$/);
     }
     if (role === "admin") {
       await page.goto("/app/requests/new");

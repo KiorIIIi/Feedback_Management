@@ -16,8 +16,10 @@ class AppServiceProvider extends ServiceProvider {
    'demo_seed'=>config('security.demo_seed'),'mcp'=>config('mcp'),'queue'=>config('queue'),
   ]);
   \Illuminate\Support\Facades\RateLimiter::for('portal-login',fn($r)=>[
+   // A scalar guard: array/missing emails must not raise while the limiter key is
+   // derived, or malformed anonymous requests would bypass throttle accounting (A1).
    \Illuminate\Cache\RateLimiting\Limit::perMinute(config('security.login_ip_per_minute'))->by('login-ip:'.$r->ip()),
-   \Illuminate\Cache\RateLimiting\Limit::perMinute(config('security.login_account_per_minute'))->by('login-account:'.hash('sha256',mb_strtolower(trim((string)$r->input('email'))))),
+   \Illuminate\Cache\RateLimiting\Limit::perMinute(config('security.login_account_per_minute'))->by('login-account:'.hash('sha256',is_string($r->input('email'))?mb_strtolower(trim($r->input('email'))):'malformed')),
   ]);
   \Illuminate\Support\Facades\RateLimiter::for('portal-feedback',fn($r)=>\Illuminate\Cache\RateLimiting\Limit::perMinute(config('security.feedback_per_minute'))->by('feedback:'.($r->user()?->id??$r->ip())));
   \Illuminate\Support\Facades\RateLimiter::for('portal-reports',fn($r)=>\Illuminate\Cache\RateLimiting\Limit::perMinute(config('security.report_per_minute'))->by('reports:'.$r->user()->id));

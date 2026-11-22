@@ -106,4 +106,15 @@ class AssistantSetupTest extends TestCase
         $this->actingAs($other)->get($url)->assertForbidden();
         $this->deleteJson('/api/assistant/clients/'.$client['id'], ['password' => 'DemoPass!2026'])->assertNotFound();
     }
+
+    public function test_key_listing_is_not_budgeted_against_admin_writes(): void
+    {
+        $this->actingAs($this->admin());
+        // The unified assistant page refetches this list on every visit and after
+        // each settings save; ten rapid reads must stay available under the
+        // portal-reads budget instead of the 6/min assistant-admin write limiter.
+        for ($i = 0; $i < 10; $i++) {
+            $this->getJson('/api/assistant/keys')->assertOk();
+        }
+    }
 }

@@ -4,6 +4,11 @@ User-designated grouping: **23 October 2026, Asia/Manila**. Major feature: authe
 
 | Record | Scope |
 | --- | --- |
+| [024 — GitHub Actions test fixes](024-github-actions-test-fixes.md) | MySQL JSON audit assertion and browser sign-out navigation synchronization |
+| [023 — PHP, Composer and Laravel upgrade](023-php-composer-laravel-upgrade.md) | Laragon PHP 8.6, Composer 2.11 and the backend upgrade to Laravel 13 |
+| [022 — System audit remediation](022-system-audit-remediation.md) | Audit findings A1, A4–A10, A13–A15 fixed with regression tests; six dependency advisories resolved; A11 deferred |
+| [021 — Browser-suite remediation for stale specs and the assistant key-list budget](021-e2e-suite-remediation.md) | Playwright suite red at HEAD: roles/assistant specs updated to the recorded 017 and 010/014 behavior, portal sign-out viewport fix, and assistant key listing moved out of the 6/min write limiter with a regression test |
+| [020 — Shareable feedback form link with event QR](020-shareable-feedback-form-link.md) | Admin share panel: public form link, copy button, client-side QR (PNG/SVG), event poster printing, and optional `?event=` collection label stored with general feedback |
 | [019 — Backend error audit remediation](019-backend-error-audit-remediation.md) | Audit findings M01–M06 and L01–L12 fixed; policy dead-end documented, tests added |
 | [018 — Personnel workspace finish](018-personnel-workspace-finish.md) | Personnel dashboard and mobile visual consistency |
 | [017 — Shared staff login](017-shared-staff-login.md) | Shared staff sign-in and legacy link handling |

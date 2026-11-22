@@ -31,6 +31,7 @@ The [admin assistant setup record](../changes/iteration-03/sprint-03/006-admin-a
 - [Security audit follow-up](audits/security-audit-follow-up.md)
 - [Independent security review — 24 October 2026](audits/deepseek-security-review-2026-10-24.md)
 - [Backend error audit — 16 November 2026](audits/backend-error-audit-2026-11-16.md)
+- [Full-system audit — 20 November 2026](audits/system-audit-2026-11-20.md)
 - [Security remediation — 24 October 2026](../changes/iteration-03/sprint-03/004-security-audit-remediation.md)
 
 ## Continuous verification

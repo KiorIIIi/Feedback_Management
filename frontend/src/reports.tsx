@@ -30,18 +30,34 @@ export function ReportControls({ days, setDays, month = "", setMonth }: {
     if (!report || ["completed", "failed"].includes(report.status)) return;
     const controller = new AbortController();
     let timer: ReturnType<typeof setTimeout>;
-    async function poll() {
-      let finished = false;
+    let failures = 0;
+    // Poll only while the page is visible and online, backing off on failures
+    // (audit finding A9); the live workspace already uses the same gating.
+    const available = () => document.visibilityState !== "hidden" && navigator.onLine !== false;
+    async function poll(background = false) {
+      if (background && !available()) {
+        if (!controller.signal.aborted) timer = setTimeout(() => void poll(true), 5000);
+        return;
+      }
       try {
         const next = await api<Export>("/reports/" + report!.id, { signal: controller.signal });
         if (controller.signal.aborted) return;
-        setReport(next); setError(null);
-        finished = ["completed", "failed"].includes(next.status);
-      } catch (e) { if (!controller.signal.aborted) setError(e); }
-      if (!finished && !controller.signal.aborted) timer = setTimeout(poll, 1500);
+        setReport(next); setError(null); failures = 0;
+      } catch (e) { if (!controller.signal.aborted) { setError(e); failures += 1; } }
+      if (!controller.signal.aborted)
+        timer = setTimeout(() => void poll(true), Math.min(30000, 1500 * 2 ** Math.min(failures, 4)));
     }
-    timer = setTimeout(poll, 1500);
-    return () => { controller.abort(); clearTimeout(timer); };
+    const wake = () => { if (available()) { clearTimeout(timer); void poll(true); } };
+    window.addEventListener("focus", wake);
+    window.addEventListener("online", wake);
+    document.addEventListener("visibilitychange", wake);
+    timer = setTimeout(() => void poll(true), 1500);
+    return () => {
+      controller.abort(); clearTimeout(timer);
+      window.removeEventListener("focus", wake);
+      window.removeEventListener("online", wake);
+      document.removeEventListener("visibilitychange", wake);
+    };
   }, [report?.id, report?.status]);
   async function exportReport() {
     setBusy(true); setError(null);
@@ -77,6 +93,9 @@ export function ReportControls({ days, setDays, month = "", setMonth }: {
       {exportPeriod} · {(report.format ?? "csv").toUpperCase()} · {report.status === "completed" && report.download_url ?
         <a href={report.download_url}>Download report {(report.format ?? "csv").toUpperCase()} <Icon name="download" /></a> :
         report.status === "failed" || report.status === "completed" ? report.error || "Export unavailable. Generate a new report." : "Your report is queued. The queue worker will prepare the export."}
+      {!["completed", "failed"].includes(report.status) && <>
+        {" "}<button type="button" className="text-button" onClick={() => { setReport(undefined); setExportPeriod(""); }}>Dismiss this export</button>
+      </>}
     </div>}
     <ErrorNotice error={error} />
   </>;

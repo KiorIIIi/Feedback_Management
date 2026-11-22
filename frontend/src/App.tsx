@@ -16,6 +16,7 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useParams,
 } from "react-router-dom";
 import {
   api,
@@ -47,6 +48,7 @@ import {
   FeedbackPage,
   FeedbackHistory,
   FeedbackDetail,
+  EventFormPage,
   Personnel,
   Reports,
   Notifications,
@@ -164,6 +166,19 @@ export default function App() {
           }
         />
         <Route
+          path="/feedback/f/:token"
+          element={
+            <>
+              <header className="public-header">
+                <Identity />
+              </header>
+              <div className="public-feedback">
+                <EventFormRoute />
+              </div>
+            </>
+          }
+        />
+        <Route
           path="/app"
           element={user ? <Shell key={`${user.id}:${user.role}:${user.office_id}`} /> : <Navigate to="/login" replace />}
         >
@@ -232,6 +247,10 @@ function HomeRedirect() {
   const { user } = useAuth();
   return <Navigate to={user ? roleHome(user.role) : "/login"} replace />;
 }
+function EventFormRoute() {
+  const { token } = useParams();
+  return <EventFormPage token={token ?? ""} />;
+}
 function RolePage({
   role,
   children,
@@ -273,7 +292,6 @@ function Welcome({ login = false }: { login?: boolean }) {
   const { user, refresh } = useAuth();
   const nav = useNavigate();
   const loc = useLocation();
-  const expectedRole: null = null;
   const [error, setError] = useState<unknown>(),
     [busy, setBusy] = useState(false),
     [show, setShow] = useState(false);
@@ -301,56 +319,9 @@ function Welcome({ login = false }: { login?: boolean }) {
       setBusy(false);
     }
   }
-  if (user && login) {
-    if (
-      !expectedRole ||
-      user.role === expectedRole ||
-      (expectedRole === "staff" && ["admin", "personnel"].includes(user.role))
-    )
-      return <Navigate to={roleHome(user.role)} replace />;
-    return (
-      <>
-        <header className="public-header">
-          <Identity />
-        </header>
-        <main className="public-feedback">
-          <h1>Switch account to continue</h1>
-          <p>
-            You are signed in as {user.name} ({user.role}). This sign-in is for
-            a {expectedRole} account.
-          </p>
-          <ErrorNotice error={error} />
-          <div className="actions">
-            <button
-              className="button primary"
-              disabled={busy}
-              onClick={async () => {
-                if (
-                  !window.confirm(
-                    "Sign out of your current account and switch accounts?",
-                  )
-                )
-                  return;
-                setBusy(true);
-                try {
-                  await api("/logout", { method: "POST", body: "{}" });
-                  window.location.assign(loc.pathname + loc.search);
-                } catch (e) {
-                  setError(e);
-                  setBusy(false);
-                }
-              }}
-            >
-              Sign out and switch account
-            </button>
-            <Link className="button" to={roleHome(user.role)}>
-              Return to my workspace
-            </Link>
-          </div>
-        </main>
-      </>
-    );
-  }
+  // Shared sign-in (sprint 017): an existing session on any login entry
+  // redirects to its own workspace; switching accounts is a plain sign-out.
+  if (user && login) return <Navigate to={roleHome(user.role)} replace />;
   return (
     <>
       <header className="public-header">

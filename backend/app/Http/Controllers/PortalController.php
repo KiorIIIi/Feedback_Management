@@ -39,9 +39,19 @@ class PortalController {
  }
  public function evaluate(Request $request,int $id,RequestWorkflow $workflow){$data=$request->validate(['rating'=>'required|integer|min:1|max:5','category'=>['nullable',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'remarks'=>'nullable|string|max:5000']);$workflow->evaluate($request->user(),$id,$data);return response()->json(['message'=>'Thank you. Your service evaluation has been recorded.'],201);}
  public function feedback(Request $request){
-  $data=$request->validate(['category'=>['required',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'subject'=>'required|string|max:200','message'=>'required|string|min:10|max:10000','unverified_job_number'=>'nullable|string|max:100','rating'=>'nullable|integer|min:1|max:5','contact_name'=>'nullable|string|max:100','contact_email'=>'nullable|email|max:200']);
-  app(\App\Services\GeneralFeedback::class)->submit($request->user(),$data);
-  return response()->json(['message'=>'Thank you. Your feedback has been received for private review.'],201);
+ $data=$request->validate(['category'=>['required',Rule::in(['Complaint','Suggestion','Compliment','Other'])],'subject'=>'required|string|max:200','message'=>'required|string|min:10|max:10000','unverified_job_number'=>'nullable|string|max:100','rating'=>'nullable|integer|min:1|max:5','contact_name'=>'nullable|string|max:100','contact_email'=>'nullable|email|max:200','source_label'=>'nullable|string|max:120','feedback_form_id'=>'nullable|integer|exists:feedback_forms,id']);
+ app(\App\Services\GeneralFeedback::class)->submit($request->user(),$data);
+ return response()->json(['message'=>'Thank you. Your feedback has been received for private review.'],201);
+ }
+ public function publicForm(Request $request,string $token,\App\Services\FeedbackForms $forms){return response()->json($forms->publicByToken($token))->header('Cache-Control','private, no-store');}
+ public function formsIndex(Request $request,\App\Services\FeedbackForms $forms){return ['forms'=>$forms->list($request->user())];}
+ public function formsCreate(Request $request,\App\Services\FeedbackForms $forms){
+ $data=$request->validate(['title'=>'required|string|max:200','description'=>'nullable|string|max:1000','opens_at'=>'nullable|date','closes_at'=>'nullable|date']);
+ return response()->json($forms->create($request->user(),$data),201);
+ }
+ public function formsUpdate(Request $request,int $id,\App\Services\FeedbackForms $forms){
+ $data=$request->validate(['title'=>'sometimes|required|string|max:200','description'=>'sometimes|nullable|string|max:1000','opens_at'=>'sometimes|nullable|date','closes_at'=>'sometimes|nullable|date','is_active'=>'sometimes|boolean']);
+ $forms->update($request->user(),$id,$data);return ['message'=>'Form updated.'];
  }
  public function feedbackIndex(Request $request,\App\Services\FeedbackReader $feedback){
   $filters=$request->validate([

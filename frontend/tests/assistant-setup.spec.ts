@@ -9,13 +9,15 @@ test("admin can configure MCP, authorize scoped ChatGPT access, and revoke it", 
   expect((await page.request.post("/api/login", { headers, data: {email:"admin@clsu.demo", password:"DemoPass!2026", role:"staff"} })).ok()).toBeTruthy();
   await page.goto("/app/assistant");
   await expect(page.getByRole("heading", {name:"Local demo tools"})).toBeVisible();
-  await page.getByRole("navigation", {name:"Assistant navigation"}).getByRole("link", {name:"Connection settings",exact:true}).click();
+  // The unified assistant page (sprint 010/014) renders connection settings and
+  // local demo tools as sections on one page; the old nav "Connection settings"
+  // tab no longer exists, so the MCP form below is already visible.
   await page.getByLabel("Enable the MCP server", {exact:true}).check();
   await page.getByLabel("Current password", {exact:true}).fill("DemoPass!2026");
   const saved = page.waitForResponse(r => r.url().endsWith("/api/assistant/settings") && r.request().method() === "PUT");
   await page.getByRole("button", {name:"Save connection settings"}).click();
   expect((await saved).status()).toBe(200);
-  await expect(page.locator(".connection")).toHaveText("MCP ready", {timeout:15000});
+  await expect(page.locator(".mcp-settings-status")).toHaveText("MCP server: Enabled", {timeout:15000});
   await expect(page.getByRole("button", {name:"Register ChatGPT client",exact:true})).toBeEnabled();
   await page.getByLabel("ChatGPT callback URL", {exact:true}).fill("https://chatgpt.com/connector/oauth/synthetic_browser_callback");
   await page.getByLabel("Current password for client setup", {exact:true}).fill("DemoPass!2026");

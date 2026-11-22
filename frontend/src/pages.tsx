@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   Link,
   Navigate,
@@ -16,7 +16,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { api, ApiError, date, type RequestRecord, type Catalog } from "./api";
+import { api, ApiError, date, parseDate, type RequestRecord, type Catalog } from "./api";
 import { useAuth, useNotifications } from "./App";
 import { ReportControls, ReportWorkspace } from "./reports";
 import {
@@ -523,6 +523,11 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
     total: number;
     last_page: number;
   }>("/requests?" + qs.toString(), { live: true });
+  // A live reload can shrink the result below the current page; clamp instead of
+  // showing an empty out-of-range page with no way back (audit finding A7).
+  useEffect(() => {
+    if (data && data.last_page < page) setPage(Math.max(1, data.last_page));
+  }, [data?.last_page]);
   return (
     <Panel
       title={
@@ -693,7 +698,7 @@ function RequestTable({ compact = false }: { compact?: boolean }) {
               </button>
               <span>Page {page}</span>
               <button
-                disabled={page === data?.last_page}
+                disabled={!data?.last_page || page >= data.last_page}
                 onClick={() => setPage(page + 1)}
               >
                 Next
@@ -970,6 +975,10 @@ export function NewRequest() {
 export function RequestDetail() {
   const { id } = useParams();
   const { user, catalog, refresh } = useAuth();
+  // Tracks the currently displayed record so a response for a previously
+  // opened request cannot reset this one's state (audit finding A6).
+  const currentId = useRef(id);
+  currentId.current = id;
   const [editing, setEditing] = useState(false);
   const [saveError, setSaveError] = useState<unknown>(),
     [busy, setBusy] = useState(false),
@@ -1007,9 +1016,10 @@ export function RequestDetail() {
     setSaveError(null);
     setSuccess("");
     setBusy(true);
+    const savedId = id;
     const f = Object.fromEntries(new FormData(e.currentTarget));
     try {
-      await api("/requests/" + id, {
+      await api("/requests/" + savedId, {
         method: "PATCH",
         body: JSON.stringify({
           ...f,
@@ -1019,6 +1029,9 @@ export function RequestDetail() {
           ...("category_id" in f ? { category_id: f.category_id ? Number(f.category_id) : null } : {}),
         }),
       });
+      // The save targeted a previously opened record; do not reset the editor
+      // now showing a different request (audit finding A6).
+      if (currentId.current !== savedId) return;
       setSuccess(
         action === "reply"
           ? "Your clarification has been sent for review."
@@ -1036,8 +1049,8 @@ export function RequestDetail() {
         );
       }
     } catch (e) {
-      setSaveError(e);
       // Keep the draft and the version it was based on until the user reviews current state.
+      if (currentId.current === savedId) setSaveError(e);
     } finally {
       setBusy(false);
     }
@@ -1543,7 +1556,61 @@ export function RateService() {
     </>
   );
 }
-export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
+export type FeedbackFormMeta = {
+  id: number;
+  title: string;
+  description: string | null;
+  opens_at: string | null;
+  closes_at: string | null;
+  status: "open" | "scheduled" | "expired" | "closed";
+};
+
+const manilaStamp = (value: string) =>
+  `${date(value)}, ${parseDate(value).toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Manila" })} (PHT)`;
+
+/** Public gate for a shareable event form: checks the token, then renders the
+ * form only while it is open. Closed/expired/scheduled states explain instead. */
+export function EventFormPage({ token }: { token: string }) {
+  const { data, error, loading, reload } = useLoad<FeedbackFormMeta>(`/feedback-forms/${token}`);
+  if (loading) return <Loading />;
+  if (error || !data)
+    return (
+      <>
+        <Link className="back" to="/">‹ Back to options</Link>
+        <h1>This form link is not available</h1>
+        <p>
+          The feedback form could not be found. Check the link you were given, or
+          use the general feedback form instead.
+        </p>
+        <ErrorNotice error={error} />
+        <div className="actions">
+          <button className="button" onClick={reload}>Retry</button>
+          <Link className="button primary" to="/feedback">Use the general feedback form</Link>
+        </div>
+      </>
+    );
+  if (data.status !== "open")
+    return (
+      <div className="feedback-form-closed">
+        <Link className="back" to="/">‹ Back to options</Link>
+        <Icon name="evaluation" />
+        <h1>{data.status === "scheduled" ? "This form has not opened yet" : "This form is no longer accepting responses"}</h1>
+        <p>
+          {data.status === "scheduled" && data.opens_at
+            ? `Feedback collection for ${data.title} opens ${manilaStamp(data.opens_at)}.`
+            : data.status === "expired"
+              ? `Feedback collection for ${data.title} ended${data.closes_at ? ` ${manilaStamp(data.closes_at)}` : ""}.`
+              : `Feedback collection for ${data.title} was closed by the administrators.`}
+        </p>
+        <Link className="button primary" to="/">Return to the portal</Link>
+      </div>
+    );
+  return <FeedbackPage publicPage eventForm={data} />;
+}
+
+export function FeedbackPage({ publicPage = false, eventForm }: { publicPage?: boolean; eventForm?: FeedbackFormMeta }) {
+  const [searchParams] = useSearchParams();
+  const sourceLabel = eventForm ? "" : (searchParams.get("event") ?? "").slice(0, 120).trim();
   const [error, setError] = useState<unknown>(),
     [done, setDone] = useState(false),
     [busy, setBusy] = useState(false);
@@ -1596,8 +1663,33 @@ export function FeedbackPage({ publicPage = false }: { publicPage?: boolean }) {
         Tell us about your experience with a CLSU service. Fields marked * are
         required.
       </p>
+      {eventForm ? (
+        <div className="feedback-source-note">
+          <p>
+            This form was shared for <strong>{eventForm.title}</strong>. Your
+            response is recorded against this event.
+          </p>
+          {eventForm.description && <p>{eventForm.description}</p>}
+          {eventForm.closes_at && (
+            <p className="feedback-form-window">
+              Accepting responses until {manilaStamp(eventForm.closes_at)}.
+            </p>
+          )}
+        </div>
+      ) : sourceLabel ? (
+        <p className="feedback-source-note">
+          This form was shared for <strong>{sourceLabel}</strong>. The collection
+          label is recorded with your response for staff review.
+        </p>
+      ) : null}
       <form onSubmit={submit} className="feedback-form">
         <ErrorNotice error={error} />
+        {sourceLabel && (
+          <input type="hidden" name="source_label" value={sourceLabel} />
+        )}
+        {eventForm && (
+          <input type="hidden" name="feedback_form_id" value={eventForm.id} />
+        )}
         <Panel
           title="Feedback details"
           subtitle="Complaint · Suggestion · Compliment · Other"

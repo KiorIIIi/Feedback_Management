@@ -1,5 +1,7 @@
 # PHP runtime security update — 22 October 2026
 
+For the current Windows runtime, see the [22 November PHP, Composer and Laravel upgrade](../changes/iteration-03/sprint-03/023-php-composer-laravel-upgrade.md). The October record below describes the versions and checks from that update.
+
 ## Advisory and scope
 
 The [PHP security advisory published 21 October 2026](https://www.php.net/index.php) identifies CVE-2026-109618 and CVE-2026-109619 and lists PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35 as fixed releases. This update addresses those runtime vulnerabilities; it is not a claim that the entire application is vulnerability-free.

@@ -1,6 +1,6 @@
 # CLSU Feedback Management System and Service Tracker
 
-The CLSU Feedback Management System and Service Tracker is a working prototype for authenticated service submission, request tracking, staff handling, service evaluation and scoped reporting. React + TypeScript + Vite frontend, Laravel 12 API, and MySQL 8 database. An authenticated read-only MCP pilot, [admin setup](docs/project/assistant-admin-setup.md), ChatGPT OAuth and local synthetic demo tools are implemented. Outbound model calls are disabled. Operational MCP writes remain deferred.
+The CLSU Feedback Management System and Service Tracker is a working prototype for authenticated service submission, request tracking, staff handling, service evaluation and scoped reporting. React + TypeScript + Vite frontend, Laravel 13 API, and MySQL 8 database. An authenticated read-only MCP pilot, [admin setup](docs/project/assistant-admin-setup.md), ChatGPT OAuth and local synthetic demo tools are implemented. Outbound model calls are disabled. Operational MCP writes remain deferred.
 
 The implementation follows the supplied Figma layouts and uses locally exported Figma assets. Requesters can submit, track, clarify, and evaluate services. MISO can review, prioritize, assign, and export scoped reports; personnel can update their assigned work. The user delegated configurable demo workflow rules for this prototype.
 
@@ -34,30 +34,32 @@ All accounts and service records are synthetic. These credentials are for the lo
 
 [Live workspace updates](docs/project/live-updates.md) check for new requests, feedback and notifications about every five seconds while visible/online. Badges, open lists and dashboards update automatically; request editing drafts are preserved. Existing installations must apply the additive migration with `php backend/artisan migrate` before using the updated notification feed.
 
+Administrators can share feedback through **Feedback & ratings → Share feedback forms**. Two modes are available: **Event form** — create any number of named forms at the same time, each with its own unguessable link and QR code (copy button, PNG/SVG download, print-ready event poster), an optional open/close window in Manila time after which the form automatically stops accepting responses, and manual Close/Reopen; and **Quick label link** — the general form with an optional event label. The public forms require no account; responses stay private to authorized CLSU staff, and an entered job number or form label grants no private access. Existing installations need the additive 20 November `feedback_forms` migration (`php backend/artisan migrate`).
+
 Administrators can open **MCP Assistant → Connection settings** or **Assistant settings** in the management menu to enable MCP, register/revoke their own ChatGPT clients, select read permissions and inspect provider-disabled status. Existing installations need the additive 25 October migration and PHP Sodium. The [setup guide](docs/project/assistant-admin-setup.md) distinguishes local readiness, HTTPS/ChatGPT sign-in and the local-only assistant mode and disabled provider calls.
 
-Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session for an incompatible role offers an explicit account switch. See [login routing](docs/architecture/system-architecture.md#login-routing-implemented-prototype).
+Accounts land in separate workspaces: MISO administrators at `/app/admin`, service personnel at `/app/work`, and requesters at `/app/requester`. The shared `/app` URL forwards to the signed-in account's workspace. One **Staff login** (`/login?role=staff`) serves both administrators and personnel; the authenticated account's stored role determines its destination automatically. Request a service uses requester sign-in. An existing session on any login entry simply returns to its own workspace; switching accounts is a plain sign-out. See [login routing](docs/architecture/system-architecture.md#login-routing-implemented-prototype).
 
 ## Start again on this Windows machine
 
-The local Windows setup runs Laravel using **Laragon's PHP 8.5**. **Composer installs the backend's PHP/Laravel dependencies** (`composer install --working-dir=backend`); **npm installs the React/TypeScript frontend dependencies** (`npm --prefix frontend ci`). Composer manages dependencies; the project launcher starts the application services. The current setup uses the isolated MySQL instance on port 3307 and the browser address `http://127.0.0.1:5173`, rather than a Laragon `.test` virtual host.
+The local Windows setup runs Laravel using **Laragon's PHP 8.6**. **Composer installs the backend's PHP/Laravel dependencies** (`composer install --working-dir=backend`); **npm installs the React/TypeScript frontend dependencies** (`npm --prefix frontend ci`). Composer manages dependencies; the project launcher starts the application services. The current setup uses the isolated MySQL instance on port 3307 and the browser address `http://127.0.0.1:5173`, rather than a Laragon `.test` virtual host.
 
 ```powershell
 cd D:\Projects_26\Feedback_Management
 .\scripts\init-local-db.ps1
-.\scripts\start.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe'
+.\scripts\start.ps1 -PhpPath 'C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe'
 ```
 
-The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. The launchers explicitly select the patched PHP 8.5.12 runtime. The Windows user PATH also selects this version after reopening the terminal. The default path is `C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
+The launcher starts the API at port 8000, Vite at 5173, and a report queue worker in hidden processes. Logs and process IDs are in `.local/`. The launchers explicitly select the PHP 8.6.0 runtime. The Windows user PATH also selects this version after reopening the terminal. The default path is `C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe`; pass `-PhpPath` to `start.ps1` to override it.
 
-See the [22 October PHP security update](docs/project/php-runtime-security.md) for the advisory, verified versions, and retired-runtime details.
+See the [22 November PHP, Composer and Laravel upgrade](docs/changes/iteration-03/sprint-03/023-php-composer-laravel-upgrade.md) for the current runtime and the [22 October PHP security update](docs/project/php-runtime-security.md) for the advisory, verified versions, and retired-runtime details.
 
 ## Fresh installation
 
-Requirements: PHP 8.5.12 or a newer patched PHP 8.5 release with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo, zip and Sodium; Composer; Node 20.19+ or 22.12+; MySQL 8. Tested here with PHP 8.5.12, Node 26.3.1 and MySQL 8.0.30. Exact dependency versions are committed in lockfiles.
+Requirements: PHP 8.5 or 8.6 with PDO MySQL/SQLite, mbstring, OpenSSL, GD, DOM/XML, curl, fileinfo, zip and Sodium. Use Composer 2, Node 20.19+ or 22.12+, and MySQL 8. The local Windows setup uses PHP 8.6.0 and Composer 2.11.2. Exact project dependencies are recorded in the lockfiles.
 
 ```powershell
-$env:PATH='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64;'+$env:PATH
+$env:PATH='C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64;'+$env:PATH
 composer install --working-dir=backend
 npm --prefix frontend ci
 Copy-Item backend/.env.example backend/.env
@@ -79,16 +81,16 @@ The device-hosted demo uses the complete React/Laravel/MySQL app through a tempo
 # One-time project-local client installation; verifies the official SHA-256.
 .\scripts\install-cloudflared.ps1
 # Build and start the isolated public demo.
-.\scripts\start-public.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe' -UseWindowsDns
+.\scripts\start-public.ps1 -PhpPath 'C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe' -UseWindowsDns
 # Disconnect the public link and stop only its web process and queue worker.
-.\scripts\stop-public.ps1 -PhpPath 'C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe'
+.\scripts\stop-public.ps1 -PhpPath 'C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe'
 ```
 
 The client is pinned to cloudflared 2026.10.2 (Windows amd64). `-UseWindowsDns` is a version-specific workaround for this machine's connector DNS failures: Windows resolves the official Cloudflare edge names, which are passed through the client's explicit-edge option. TLS verification stays enabled and system DNS/firewall settings are unchanged. Omit the switch where ordinary connector DNS works. Hostname propagation can take time; startup verifies the public HTTPS `/up` endpoint and stops the public processes if it fails.
 
 The launcher uses the project-owned MySQL server on loopback port 3307, creates a separate `clsu_public_demo_<random>` database and scoped MySQL user, and seeds only synthetic records on first use. Public runtime gets only SELECT/INSERT/UPDATE/DELETE privileges on that new database. All account passwords are replaced with random passwords. Existing local records and credentials are retained. Restarting reuses the public demo database and credentials and updates its trusted origin.
 
-The frontend build is copied into `.local/public-host/site`; a loopback-only PHP 8.5 web process on port 4180 serves that artifact and routes `/api` to Laravel. It serves the built frontend rather than the Vite development server. A separate worker processes report jobs. Runtime uses `APP_ENV=production`, debug off, a new application key, encrypted Secure/HttpOnly session cookies, explicit loopback proxy trust, trusted-origin checks, and security headers for the SPA and API. Sessions, cache, logs, and private exports are isolated under `.local/public-host`. Source files, environment files, and credentials are outside the document root.
+The frontend build is copied into `.local/public-host/site`; a loopback-only PHP 8.6 web process on port 4180 serves that artifact and routes `/api` to Laravel. It serves the built frontend rather than the Vite development server. A separate worker processes report jobs. Runtime uses `APP_ENV=production`, debug off, a new application key, encrypted Secure/HttpOnly session cookies, explicit loopback proxy trust, trusted-origin checks, and security headers for the SPA and API. Sessions, cache, logs, and private exports are isolated under `.local/public-host`. Source files, environment files, and credentials are outside the document root.
 
 The public URL is saved in `.local/public-host/url.txt`. Sign-in credentials are in **`.local/public-host/access.json`**; keep that file private. `.local/public-host/runtime.json` contains deployment secrets and must also stay private. These files are ignored by Git. Share only the generated HTTPS URL and the demo account access intended for each tester.
 
@@ -112,7 +114,7 @@ For an existing development installation, run `php backend/artisan migrate` afte
 
 The [Gemini security review](docs/testing/audits/security-review.md) distinguishes verified fixes, unconfirmed claims, local-development choices, and production prerequisites. Backend test bootstrap rejects unsafe database targets and cached configuration before migrations; local report storage is faked during backend tests. Cookie-authenticated write clients must send the configured trusted Origin or a trusted Referer.
 
-The [bug audit and fixes](docs/testing/audits/bug-audit.md) records the confirmed defects corrected during the 20 October 2026 review. Run `./scripts/test-local-runtime.ps1` for non-destructive launcher checks. Playwright automatically starts an isolated test app on ports 5174/8001, with a new SQLite database, sessions, cache, queue and private exports under `.local/e2e/<run-id>/`. It leaves the demo's MySQL records and remembered-login tokens alone. Ports must be free; existing services are never reused. The runner uses the same PHP 8.5 executable, overridable through `PORTAL_TEST_PHP`. Logs are in the run's `services.log`; screenshots are in `frontend/test-results/`.
+The [bug audit and fixes](docs/testing/audits/bug-audit.md) records the confirmed defects corrected during the 20 October 2026 review. Run `./scripts/test-local-runtime.ps1` for non-destructive launcher checks. Playwright automatically starts an isolated test app on ports 5174/8001, with a new SQLite database, sessions, cache, queue and private exports under `.local/e2e/<run-id>/`. It leaves the demo's MySQL records and remembered-login tokens alone. Ports must be free; existing services are never reused. The runner uses the same PHP 8.6 executable, overridable through `PORTAL_TEST_PHP`. Logs are in the run's `services.log`; screenshots are in `frontend/test-results/`.
 
 ```powershell
 npm --prefix frontend run build

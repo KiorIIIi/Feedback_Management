@@ -1,11 +1,11 @@
-param([string]$PhpPath='C:\laragon\bin\php\php-8.5.12-Win32-vs17-x64\php.exe')
+param([string]$PhpPath='C:\laragon\bin\php\php-8.6.0-Win32-vs18-x64\php.exe')
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'local-runtime.ps1')
 $projectRoot=Split-Path -Parent $PSScriptRoot
 $runtimeDir=Join-Path $projectRoot '.local'
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
 if(-not (Test-Path "$projectRoot\backend\.env")){throw 'Run the setup steps in README.md first.'}
-if(-not (Test-Path -LiteralPath $PhpPath -PathType Leaf)){throw 'PHP was not found. Pass the installed PHP 8.5 executable with -PhpPath.'}
+if(-not (Test-Path -LiteralPath $PhpPath -PathType Leaf)){throw 'PHP was not found. Pass the installed PHP executable with -PhpPath.'}
 if(-not (Test-Path "$projectRoot\backend\vendor\autoload.php")){throw 'Backend dependencies are missing. Run composer install --working-dir=backend.'}
 if(-not (Test-Path "$projectRoot\frontend\node_modules\vite\bin\vite.js")){throw 'Frontend dependencies are missing. Run npm --prefix frontend ci.'}
 $PhpPath=(Resolve-Path -LiteralPath $PhpPath).Path
@@ -27,7 +27,9 @@ $workerRunning=$false
 $workerProcessId=Get-LocalRuntimePid "$runtimeDir\queue.pid"
 if($workerProcessId){
  $existingWorker=Get-CimInstance Win32_Process -Filter "ProcessId=$workerProcessId" -ErrorAction SilentlyContinue
- $workerRunning=$existingWorker -and $existingWorker.CommandLine -like '*artisan*queue:work*' -and $existingWorker.ExecutablePath -eq $PhpPath
+ # Match this project's artisan path too: another project's worker using the same
+ # PHP executable must not suppress starting this project's queue worker (A10).
+ $workerRunning=$existingWorker -and $existingWorker.CommandLine -like "*$projectRoot\backend\artisan*queue:work*" -and $existingWorker.ExecutablePath -eq $PhpPath
 }
 if(-not $workerRunning){
  $worker=Start-Process -FilePath $PhpPath -ArgumentList @("`"$projectRoot\backend\artisan`"",'queue:work','--sleep=1','--tries=3','--timeout=90') -WorkingDirectory "$projectRoot\backend" -WindowStyle Hidden -PassThru -RedirectStandardOutput "$runtimeDir\queue.out.log" -RedirectStandardError "$runtimeDir\queue.err.log"

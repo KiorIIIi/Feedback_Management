@@ -6,6 +6,7 @@ Goal: Implement the MCP integration as a major feature of the CLSU Feedback Mana
 
 | Sprint | Scope | Current outcome |
 | --- | --- | --- |
+| [Sprint 04 — Shareable event feedback forms](sprint-04/sprint-overview.md) | User-requested 20 November: simultaneous per-event feedback forms with unguessable public links, QR codes and optional open/close windows or expiration; published to `main` at the user's instruction | Implemented and verified; calendar Manila-time windows only |
 | [Sprint 03 — Implementation of major feature](sprint-03/sprint-overview.md) | US-012 MCP foundation, authorization/audit, shared read services, Claude/ChatGPT/Gemini guide and verification | Foundation implemented and tested; guide checked; external interoperability not verified |
 
 The implementation and guide were first recorded under Iteration 02 / Sprint 02. At the user's explicit request, their canonical records now live here as records 001 and 002 with original dates and evidence preserved. The former paths remain relocation notices. [Record 003](sprint-03/003-iteration-and-sprint-classification.md) documents this classification change.
